@@ -95,6 +95,7 @@ service cloud.firestore {
       match /messages/{messageId} {
         allow read: if chatMember(chatId);
         allow create: if chatMember(chatId)
+          && request.resource.data.createdAt == request.time
           && (request.resource.data.senderId == request.auth.uid
             || (get(/databases/$(database)/documents/chats/$(chatId)).data.kind == 'bot'
               && request.resource.data.senderId == 'speen_ai_bot'));
@@ -119,6 +120,8 @@ service cloud.firestore {
 ```
 
 Правило удаления сообщений разрешает очистить историю только участнику соответствующего чата. Очистка удаляет общие документы сообщений, поэтому история исчезнет у всех участников диалога.
+
+Каждое сообщение записывается с `createdAt: serverTimestamp()`. Отправка сообщения и обновление превью чата выполняются одной Firestore batch-операцией; `onSnapshot` доставляет изменения открытым участникам, а локальные ожидающие записи получают оценочное время до подтверждения сервера. `users/{uid}.lastActiveAt` обновляется при входе, переключении видимости/закрытии вкладки и раз в минуту, пока приложение активно. Правило Firestore требует серверную метку времени у каждого нового сообщения.
 
 Индекс `phoneLookup` создаётся приложением для номера, подтверждённого Firebase Authentication. Нормализованный номер используется как ID документа, тело содержит только UID; массовое чтение индекса запрещено. `userDirectory` содержит только имя, username и аватар, чтобы находить людей по префиксу имени; каталог доступен вошедшим пользователям, а запросы ограничены 10 результатами. Номер телефона в профиле и каталоге не хранится.
 

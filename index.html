@@ -214,7 +214,7 @@ const firebaseConfig = {
     const appCheckSiteKey = 'PASTE_RECAPTCHA_ENTERPRISE_SITE_KEY';
     const configured = Object.values(firebaseConfig).every(value => value && !value.includes('PASTE_'));
     let auth, db, storage, aiModel, appCheckReady=false, confirmation, verifier, currentUser, activeChatId = null, activeChatKind = 'saved';
-    let stopMessages, stopContacts, stopChatDocs, stopChatList, contactProfileStops = [], contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], lastMarkedReadAt = 0, availabilityMode = 'online', showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], chatProfileLoads = new Set();
+    let stopMessages, stopContacts, stopChatDocs, stopChatList, contactProfileStops = [], contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], lastMarkedReadAt = 0, availabilityMode = 'online', showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], chatProfileLoads = new Set(), lastSeenHeartbeat = null, lastSeenWriteAt = 0;
     const $ = selector => document.querySelector(selector);
     const loginView = $('#loginView'), appView = $('#appView'), errorBox = $('#authError');
     const appearanceDefaults = {theme:'light', wallpaper:'dots', animations:true, hidePreviews:false, fontSize:14, bubbleRadius:16};
@@ -355,7 +355,7 @@ const firebaseConfig = {
     function showLogin() { document.body.classList.remove('app-active');document.documentElement.classList.remove('app-active');loginView.classList.remove('hidden'); appView.classList.add('hidden'); }
     function showApp() { document.body.classList.add('app-active');document.documentElement.classList.add('app-active');loginView.classList.add('hidden'); appView.classList.remove('hidden'); }
     function clearActiveChatListeners() { stopMessages?.(); stopChatDocs?.(); stopMessages = stopChatDocs = null; activeMessages = []; }
-    function clearListeners() { clearActiveChatListeners(); stopContacts?.(); stopChatList?.(); contactProfileStops.forEach(stop=>stop()); contactProfileStops=[]; contactProfiles.clear(); chatProfileLoads.clear(); stopContacts = stopChatList = null; chatRows = []; contactRows = []; }
+    function clearListeners() { clearActiveChatListeners(); stopContacts?.(); stopChatList?.(); contactProfileStops.forEach(stop=>stop()); contactProfileStops=[]; contactProfiles.clear(); chatProfileLoads.clear(); clearInterval(lastSeenHeartbeat); lastSeenHeartbeat=null; lastSeenWriteAt=0; stopContacts = stopChatList = null; chatRows = []; contactRows = []; }
     function makeChatId(first, second) { return [first, second].sort().join('__'); }
 
     if (configured) {
@@ -411,6 +411,7 @@ const firebaseConfig = {
         availabilityMode=snapshot.data()?.availabilityMode||'online';
         await Promise.all([syncPhoneLookup().catch(error=>console.error('Phone lookup index sync failed:',error)),syncUserDirectory(snapshot.data()||{}).catch(error=>console.error('User directory sync failed:',error))]);
         await setDoc(userRef,{availabilityMode,lastActiveAt:serverTimestamp()},{merge:true});
+        startLastSeenHeartbeat();
         const savedId = `saved_${user.uid}`;
         const savedChatRef=doc(db,'chats',savedId);
         if(!(await getDoc(savedChatRef)).exists()) await setDoc(savedChatRef,{participants:[user.uid],kind:'saved',updatedAt:serverTimestamp(),lastMessage:''});
@@ -540,7 +541,7 @@ const firebaseConfig = {
             renderMessages(activeMessages);
         }, error => { console.error(error); toast('Не удалось синхронизировать статус прочтения.'); });
         stopMessages = onSnapshot(query(collection(db,'chats',chatId,'messages'),orderBy('createdAt','asc')), snapshot => {
-            activeMessages = snapshot.docs.map(item => ({id:item.id,...item.data()}));
+            activeMessages = snapshot.docs.map(item => ({id:item.id,...item.data({serverTimestamps:'estimate'})}));
             renderMessages(activeMessages);
             markChatAsRead(activeMessages);
         }, error => { console.error(error); toast('Не удалось загрузить сообщения.'); });
@@ -564,12 +565,24 @@ const firebaseConfig = {
         updateDoc(doc(db,'chats',activeChatId),{[`lastReadAt.${currentUser.uid}`]:serverTimestamp()})
             .catch(error=>{lastMarkedReadAt=0;console.error(error);});
     }
+    function updateLastSeen(force=false){
+        if(!currentUser)return;
+        const now=Date.now();
+        if(!force&&now-lastSeenWriteAt<15_000)return;
+        lastSeenWriteAt=now;
+        updateDoc(doc(db,'users',currentUser.uid),{lastActiveAt:serverTimestamp()}).catch(error=>console.error('Last seen update failed:',error));
+    }
+    function startLastSeenHeartbeat(){
+        clearInterval(lastSeenHeartbeat);lastSeenWriteAt=0;
+        updateLastSeen();
+        lastSeenHeartbeat=setInterval(()=>{if(document.visibilityState==='visible')updateLastSeen();},60_000);
+    }
     document.addEventListener('visibilitychange',()=>{
-        if(document.visibilityState==='visible'){
-            markChatAsRead(activeMessages);
-            if(currentUser)setDoc(doc(db,'users',currentUser.uid),{lastActiveAt:serverTimestamp()},{merge:true}).catch(error=>console.error(error));
-        }
+        if(document.visibilityState==='visible')markChatAsRead(activeMessages);
+        updateLastSeen(true);
     });
+    window.addEventListener('focus',()=>updateLastSeen());
+    window.addEventListener('pagehide',()=>updateLastSeen(true));
     function renderMessages(messages) {
         const target=$('#messages');
         if (!messages.length) { target.innerHTML='<div class="blank-state"><div class="blank-icon">✦</div><strong>Это ваше место.</strong>Записывайте мысли и сохраняйте то, что важно.</div>'; return; }
@@ -606,16 +619,24 @@ const firebaseConfig = {
         if (!activeChatId || !currentUser) return;
         if(activeChatKind==='direct'&&activeChatBlockedBy.length){toast('Сначала снимите блокировку в меню чата.');return;}
         try {
-            await addDoc(collection(db,'chats',activeChatId,'messages'),{...payload,senderId:currentUser.uid,createdAt:serverTimestamp()});
-            await updateDoc(doc(db,'chats',activeChatId),{lastMessage:payload.text||labelForType(payload.type),lastMessageType:payload.type,lastMessageSenderId:currentUser.uid,updatedAt:serverTimestamp()});
+            updateLastSeen();
+            await persistMessage(payload,currentUser.uid);
         } catch(error) { console.error(error); toast('Не удалось отправить. Проверьте интернет и правила Firebase.'); }
+    }
+    async function persistMessage(payload,senderId){
+        const messageRef=doc(collection(db,'chats',activeChatId,'messages'));
+        const batch=writeBatch(db);
+        batch.set(messageRef,{...payload,senderId,createdAt:serverTimestamp()});
+        batch.update(doc(db,'chats',activeChatId),{lastMessage:payload.text||labelForType(payload.type),lastMessageType:payload.type,lastMessageSenderId:senderId,updatedAt:serverTimestamp()});
+        await batch.commit();
+        return messageRef;
     }
     async function sendBotMessage(text){
         if(!aiModel){toast('ИИ-помощник ещё не включён в Firebase Console → AI Logic.');return;}
         if(!appCheckReady){toast('Добавьте публичный ключ reCAPTCHA Enterprise в appCheckSiteKey для защиты AI-запросов.');return;}
         const history=activeMessages.filter(message=>message.type==='text'&&(message.senderId===currentUser.uid||message.senderId==='speen_ai_bot')).slice(-20).map(message=>({role:message.senderId===currentUser.uid?'user':'model',parts:[{text:message.text||''}]}));
-        const userMessageRef=await addDoc(collection(db,'chats',activeChatId,'messages'),{type:'text',text,senderId:currentUser.uid,createdAt:serverTimestamp()});
-        await updateDoc(doc(db,'chats',activeChatId),{lastMessage:text,lastMessageType:'text',lastMessageSenderId:currentUser.uid,updatedAt:serverTimestamp()});
+        updateLastSeen();
+        const userMessageRef=await persistMessage({type:'text',text},currentUser.uid);
         const typing=document.createElement('div');typing.className='bot-typing';typing.setAttribute('aria-label','Speen AI печатает');typing.innerHTML='<span></span><span></span><span></span>';$('#messages').appendChild(typing);$('#messages').scrollTop=$('#messages').scrollHeight;
         try{
             const chat=aiModel.startChat({history});
@@ -623,8 +644,7 @@ const firebaseConfig = {
             const response=result.response||result;
             const reply=typeof response.text==='function'?response.text():response.text;
             if(!reply)throw new Error('AI returned an empty response');
-            await addDoc(collection(db,'chats',activeChatId,'messages'),{type:'text',text:reply,senderId:'speen_ai_bot',createdAt:serverTimestamp()});
-            await updateDoc(doc(db,'chats',activeChatId),{lastMessage:reply,lastMessageType:'text',lastMessageSenderId:'speen_ai_bot',updatedAt:serverTimestamp()});
+            await persistMessage({type:'text',text:reply},'speen_ai_bot');
         }catch(error){console.error(error);await updateDoc(userMessageRef,{aiReplyError:true}).catch(()=>{});toast('Не удалось получить ответ ИИ. Проверьте AI Logic и App Check в Firebase Console.');}
         finally{typing.remove();}
     }
