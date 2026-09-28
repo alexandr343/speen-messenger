@@ -124,6 +124,7 @@
         @keyframes typing-bounce{0%,60%,100%{opacity:.38;transform:translateY(0) scale(.82)}30%{opacity:1;transform:translateY(-4px) scale(1.08)}}
         @media(prefers-reduced-motion:reduce){.typing-indicator,.typing-indicator.is-visible{transition:none;transform:none}.typing-dots span{animation:none;opacity:.7}}
         .public-profile{width:min(100%,720px);margin:0 auto;padding-bottom:30px;animation:panel-arrive .4s both}.public-profile-hero{position:relative;min-height:176px;padding:30px 28px 24px;display:flex;align-items:flex-end;gap:19px;overflow:hidden;border-radius:14px;background:linear-gradient(125deg,#dceee3,#edf4da 56%,#f9e7d9);isolation:isolate}.public-profile-hero::before{content:"";position:absolute;inset:-25%;z-index:-1;background:radial-gradient(ellipse at 12% 90%,#71ad8845,transparent 38%),radial-gradient(ellipse at 88% 10%,#f1a37a33,transparent 35%);animation:profile-glow 9s ease-in-out infinite alternate}.public-profile-avatar{width:100px;height:100px;flex:0 0 100px;border:4px solid #ffffffd9;border-radius:50%;background:#c9e3d2;box-shadow:0 12px 32px #294b3426;color:#345044;font:800 28px Manrope,sans-serif;overflow:hidden}.public-profile-avatar img{width:100%;height:100%;object-fit:cover}.public-profile-heading{min-width:0;padding-bottom:5px}.public-profile-heading h2{margin:0;font:800 25px/1.15 Manrope,sans-serif;overflow-wrap:anywhere}.public-profile-heading p{margin:7px 0 0;color:#526b5c;font-size:13px}.public-profile-status{display:inline-flex;align-items:center;gap:7px;margin-top:11px;color:#4e765b;font-size:11px;font-weight:700}.public-profile-status::before{content:"";width:7px;height:7px;border-radius:50%;background:#65ae7a;box-shadow:0 0 0 4px #65ae7a20}.public-profile-status.is-hidden{color:#89958f}.public-profile-status.is-hidden::before{background:#aab4ad;box-shadow:0 0 0 4px #aab4ad20}.public-profile-actions{display:flex;gap:9px;justify-content:flex-end;margin:17px 0 8px}.public-profile-details{margin-top:20px;border-top:1px solid var(--line)}.public-profile-detail{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;padding:15px 4px;border-bottom:1px solid var(--line)}.public-profile-detail dt{color:var(--muted);font-size:12px}.public-profile-detail dd{margin:0;font-size:13px;font-weight:600;overflow-wrap:anywhere}.privacy-group .setting-row{padding-block:16px}.privacy-group .setting-row-copy{max-width:440px;line-height:1.5}body[data-theme="night"] .public-profile-hero{background:linear-gradient(125deg,#294139,#34453b 56%,#4a3934)}body[data-theme="night"] .public-profile-heading p,body[data-theme="night"] .public-profile-status{color:#bbd4c2}
+        .nav-badge,.chat-unread-badge{display:inline-flex;align-items:center;justify-content:center;min-width:19px;height:19px;padding:0 6px;border-radius:99px;background:#df705d;color:#fff;font-size:10px;line-height:1;font-weight:800;font-variant-numeric:tabular-nums;box-shadow:0 2px 6px #ab4a3b33}.nav-badge{position:absolute;top:1px;right:0;min-width:18px;height:18px;padding:0 5px}.nav-badge.hidden{display:none!important}.chat-unread-badge{flex:0 0 auto;margin-left:auto}.chat-line .chat-time+.chat-unread-badge{margin-left:0}.bubble.is-updating{animation:none!important}.settings-account{width:100%;display:flex;align-items:center;gap:14px;margin:0 0 20px;padding:15px;border:1px solid var(--line);border-radius:12px;background:var(--white);color:var(--ink);text-align:left;transition:transform .2s,border-color .2s,box-shadow .2s}.settings-account:hover{transform:translateY(-2px);border-color:#a9d6c1;box-shadow:0 10px 24px #315a3812}.settings-account-avatar{width:50px;height:50px;flex:0 0 50px;display:grid;place-items:center;border-radius:50%;overflow:hidden;background:#d8e9dc;color:#45675a;font-weight:700}.settings-account-avatar img{width:100%;height:100%;object-fit:cover}.settings-account-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}.settings-account-copy strong{font:700 14px Manrope,sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.settings-account-copy span{color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.settings-account-arrow{font-size:25px;line-height:1;color:var(--muted);transition:transform .2s}.settings-account:hover .settings-account-arrow{transform:translateX(3px)}body[data-theme="night"] .settings-account{background:#202f31;border-color:#405152;color:#e5eeea}
         .contact-person{display:flex;align-items:center;gap:12px;flex:1;min-width:0;padding:0;border:0;border-radius:8px;background:transparent;color:inherit;text-align:left}.contact-person .chat-meta{display:flex;flex-direction:column;align-items:flex-start}.contact-person:hover .chat-name{color:var(--green-deep)}.contact-profile-action{flex:0 0 36px}.contact-row .contact-open{margin-left:0;flex:0 0 auto;height:38px;padding:0 13px}.contact-row{cursor:default}#headerAvatar[data-profile-enabled="true"],#headerTitle[data-profile-enabled="true"]{cursor:pointer}#headerTitle[data-profile-enabled="true"]:hover{color:var(--green-deep)}
         @keyframes profile-glow{from{transform:translate3d(-1%,0,0) scale(1)}to{transform:translate3d(1%,2%,0) scale(1.05)}}
         @media(max-width:600px){.public-profile-hero{min-height:142px;padding:20px 17px;gap:13px}.public-profile-avatar{width:76px;height:76px;flex-basis:76px}.public-profile-heading h2{font-size:20px}.public-profile-actions{justify-content:stretch}.public-profile-actions .primary{flex:1}.public-profile-detail{grid-template-columns:105px minmax(0,1fr);gap:9px;padding:13px 2px}}
@@ -166,7 +167,7 @@
         <span class="brand-mark" aria-label="Speen Messenger"><svg viewBox="0 0 32 32"><path d="M7 19.5c2.2 4.1 7.2 6.1 11.7 4.6 4.6-1.5 7.2-6.1 6-10.6C23.5 8.7 19.2 5.8 14.5 6.7M9 11.5l5.2-5.1 4.7 5.6"/><circle cx="23.5" cy="7.5" r="2.4"/></svg></span>
         <nav class="nav-stack" aria-label="Разделы">
             <button class="nav-button" data-view="contacts" aria-label="Контакты" title="Контакты"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-4 2.7-6 6.5-6s6 2 6.5 6M17 8h5m-2.5-2.5v5M17 15c2.5.5 3.7 2.2 4 5"/></svg></button>
-                <button class="nav-button" data-view="chats" aria-label="Чаты" title="Чаты"><svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H7l-4 2 1.5-4A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg></button>
+                <button class="nav-button" data-view="chats" aria-label="Чаты" title="Чаты"><svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H7l-4 2 1.5-4A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg><span class="nav-badge hidden" data-unread-total></span></button>
             <button class="nav-button" data-view="saved" aria-label="Избранное" title="Избранное"><svg class="bookmark-icon" viewBox="0 0 24 24"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.8L6 21V4.75Z"/></svg></button>
             <button class="nav-button" data-view="settings" aria-label="Настройки" title="Настройки"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.8 1.8 0 1 1-2.5 2.5l-.1-.1a1.8 1.8 0 0 0-3.1 1.3v.2a1.8 1.8 0 1 1-3.6 0v-.2a1.8 1.8 0 0 0-3.1-1.3l-.1.1a1.8 1.8 0 1 1-2.5-2.5l.1-.1a1.8 1.8 0 0 0-1.3-3.1h-.2a1.8 1.8 0 1 1 0-3.6h.2a1.8 1.8 0 0 0 1.3-3.1l-.1-.1a1.8 1.8 0 1 1 2.5-2.5l.1.1a1.8 1.8 0 0 0 3.1-1.3v-.2a1.8 1.8 0 1 1 3.6 0v.2a1.8 1.8 0 0 0 3.1 1.3l.1-.1a1.8 1.8 0 1 1 2.5 2.5l-.1.1a1.8 1.8 0 0 0 1.3 3.1h.2a1.8 1.8 0 1 1 0 3.6h-.2a1.8 1.8 0 0 0-1.3 3.1Z"/></svg></button>
         </nav>
@@ -197,7 +198,7 @@
     </section>
     <nav class="mobile-nav" aria-label="Разделы">
         <button class="nav-button" data-view="contacts"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-4 2.7-6 6.5-6s6 2 6.5 6M17 8h5m-2.5-2.5v5M17 15c2.5.5 3.7 2.2 4 5"/></svg>Контакты</button>
-        <button class="nav-button" data-view="chats"><svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H7l-4 2 1.5-4A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>Чаты</button>
+        <button class="nav-button" data-view="chats"><svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H7l-4 2 1.5-4A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/></svg>Чаты<span class="nav-badge hidden" data-unread-total></span></button>
         <button class="nav-button" data-view="saved"><svg class="bookmark-icon" viewBox="0 0 24 24"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.8L6 21V4.75Z"/></svg>Избранное</button>
         <button class="nav-button" data-view="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.8 1.8 0 1 1-2.5 2.5l-.1-.1a1.8 1.8 0 0 0-3.1 1.3v.2a1.8 1.8 0 1 1-3.6 0v-.2a1.8 1.8 0 0 0-3.1-1.3l-.1.1a1.8 1.8 0 1 1-2.5-2.5l.1-.1a1.8 1.8 0 0 0-1.3-3.1h-.2a1.8 1.8 0 1 1 0-3.6h.2a1.8 1.8 0 0 0 1.3-3.1l-.1-.1a1.8 1.8 0 1 1 2.5-2.5l.1.1a1.8 1.8 0 0 0 3.1-1.3v-.2a1.8 1.8 0 1 1 3.6 0v.2a1.8 1.8 0 0 0 3.1 1.3l.1-.1a1.8 1.8 0 1 1 2.5 2.5l-.1.1a1.8 1.8 0 0 0 1.3 3.1h.2a1.8 1.8 0 1 1 0 3.6h-.2a1.8 1.8 0 0 0-1.3 3.1Z"/></svg>Настройки</button>
         <button class="nav-button" data-view="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Профиль</button>
@@ -208,7 +209,7 @@
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
     import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js';
-    import { getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, collection, query, where, onSnapshot, orderBy, serverTimestamp, runTransaction, arrayUnion, arrayRemove, deleteField, getDocs, writeBatch, limit } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, collection, query, where, onSnapshot, orderBy, serverTimestamp, runTransaction, arrayUnion, arrayRemove, deleteField, getDocs, writeBatch, limit, increment } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
     import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js';
     import { getAI, GoogleAIBackend, getGenerativeModel } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-ai.js';
     import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js';
@@ -227,7 +228,7 @@ const firebaseConfig = {
     const appCheckSiteKey = 'PASTE_RECAPTCHA_ENTERPRISE_SITE_KEY';
     const configured = Object.values(firebaseConfig).every(value => value && !value.includes('PASTE_'));
     let auth, db, storage, aiModel, appCheckReady=false, confirmation, verifier, currentUser, activeChatId = null, activeChatKind = 'saved';
-    let stopMessages, stopContacts, stopChatDocs, stopChatList, profileStops = new Map(), contactUids = new Set(), chatPeerUids = new Set(), contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], activeRemoteTypingUntil = 0, localTypingChatId = null, localTypingActive = false, lastTypingWriteAt = 0, typingPauseTimer = null, typingExpiryTimer = null, lastMarkedReadAt = 0, availabilityMode = 'online', userPrivacy = {hidePhoneNumber:true,hideLastSeen:false}, viewedProfileUid = null, showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], lastSeenHeartbeat = null, presenceRefreshTimer = null, lastSeenWriteAt = 0, appearanceSaveTimer = null;
+    let stopMessages, stopContacts, stopChatDocs, stopChatList, profileStops = new Map(), contactUids = new Set(), chatPeerUids = new Set(), contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], messageElements = new Map(), renderedChatId = null, activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], activeRemoteTypingUntil = 0, localTypingChatId = null, localTypingActive = false, lastTypingWriteAt = 0, typingPauseTimer = null, typingExpiryTimer = null, lastMarkedReadAt = 0, availabilityMode = 'online', currentProfile = {}, userPrivacy = {hidePhoneNumber:true,hideLastSeen:false}, viewedProfileUid = null, showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], lastSeenHeartbeat = null, presenceRefreshTimer = null, lastSeenWriteAt = 0, appearanceSaveTimer = null;
     const $ = selector => document.querySelector(selector);
     const loginView = $('#loginView'), appView = $('#appView'), errorBox = $('#authError');
     const appearanceDefaults = {theme:'light', wallpaper:'dots', animations:true, hidePreviews:false, fontSize:14, bubbleRadius:16};
@@ -375,13 +376,15 @@ const firebaseConfig = {
                 if(snapshot.empty)break;
                 const batch=writeBatch(db);snapshot.docs.forEach(message=>batch.delete(message.ref));await batch.commit();
             }
-            await updateDoc(doc(db,'chats',activeChatId),{lastMessage:'',lastMessageType:'',lastMessageSenderId:'',updatedAt:serverTimestamp()});
+            const chat=chatRows.find(item=>item.id===activeChatId)||activeChatDocument;
+            const unreadReset=Object.fromEntries((chat?.participants||[currentUser.uid]).map(uid=>[`unreadCounts.${uid}`,0]));
+            await updateDoc(doc(db,'chats',activeChatId),{lastMessage:'',lastMessageType:'',lastMessageSenderId:'',updatedAt:serverTimestamp(),...unreadReset});
             $('#userMenu').classList.add('hidden');toast('История чата очищена.');
         }catch(error){console.error(error);toast('Не удалось очистить историю. Проверьте правила Firebase.');}
     }
     function showLogin() { document.body.classList.remove('app-active');document.documentElement.classList.remove('app-active');loginView.classList.remove('hidden'); appView.classList.add('hidden'); }
     function showApp() { document.body.classList.add('app-active');document.documentElement.classList.add('app-active');loginView.classList.add('hidden'); appView.classList.remove('hidden'); }
-    function clearActiveChatListeners() { stopLocalTyping();clearTimeout(typingExpiryTimer);activeRemoteTypingUntil=0;stopMessages?.();stopChatDocs?.();stopMessages=stopChatDocs=null;activeMessages=[]; }
+    function clearActiveChatListeners() { stopLocalTyping();clearTimeout(typingExpiryTimer);activeRemoteTypingUntil=0;stopMessages?.();stopChatDocs?.();stopMessages=stopChatDocs=null;activeMessages=[];messageElements.clear();renderedChatId=null; }
     function clearListeners() { clearActiveChatListeners(); stopContacts?.(); stopChatList?.(); profileStops.forEach(stop=>stop()); profileStops.clear(); contactUids.clear(); chatPeerUids.clear(); contactProfiles.clear(); clearInterval(lastSeenHeartbeat);clearInterval(presenceRefreshTimer);lastSeenHeartbeat=presenceRefreshTimer=null;lastSeenWriteAt=0;stopContacts=stopChatList=null;chatRows=[];contactRows=[]; }
     function makeChatId(first, second) { return [first, second].sort().join('__'); }
 
@@ -436,6 +439,7 @@ const firebaseConfig = {
         showApp();
         const userRef = doc(db, 'users', user.uid), snapshot = await getDoc(userRef);
         const profileData=snapshot.data()||{};
+        currentProfile=profileData;
         availabilityMode=profileData.availabilityMode||'online';
         userPrivacy={hidePhoneNumber:profileData.hidePhoneNumber!==false,hideLastSeen:Boolean(profileData.hideLastSeen)};
         if(profileData.appearance){appearanceSettings=normalizeAppearanceSettings({...appearanceSettings,...profileData.appearance});applyAppearanceSettings();try{localStorage.setItem('speen-appearance',JSON.stringify(appearanceSettings));}catch{}}
@@ -512,6 +516,14 @@ const firebaseConfig = {
             syncProfileListeners();
         }, error => { console.error(error); toast('Не удалось обновить список чатов.'); });
     }
+    function updateUnreadBadges(){
+        const total=chatRows.reduce((count,chat)=>chat.kind==='direct'?count+Math.max(0,Number(chat.unreadCounts?.[currentUser.uid])||0):count,0);
+        document.querySelectorAll('[data-unread-total]').forEach(badge=>{
+            badge.textContent=total>99?'99+':String(total);
+            badge.classList.toggle('hidden',total===0);
+            badge.setAttribute('aria-label',`${total} непрочитанных сообщений`);
+        });
+    }
     function renderSideList() {
         if (currentView === 'contacts' || currentView === 'chats' || currentView === 'settings') $('#sideTitle').textContent = showingArchive?'Архив':currentView === 'contacts' ? 'Контакты' : currentView === 'settings' ? 'Настройки' : 'Сообщения';
         const filter = $('#filterInput').value.trim().toLocaleLowerCase('ru');
@@ -535,11 +547,13 @@ const firebaseConfig = {
             const preview=chat.lastMessage?(chat.lastMessageSenderId===currentUser.uid?`Вы: ${chat.lastMessage}`:chat.lastMessage):'Нет сообщений';
             const blockedByViewer=Boolean(person?.isBlockedByViewer),avatar=blockedByViewer?'':person?.avatarUrl?`<img src="${escapeHtml(person.avatarUrl)}" alt="">`:escapeHtml(initials(name));
             const pinned=(chat.pinnedBy||[]).includes(currentUser.uid),muted=(chat.mutedBy||[]).includes(currentUser.uid);
-            return `<div class="chat-item ${activeChatId===chat.id?'active':''} ${pinned?'is-pinned':''} ${muted?'is-muted':''} ${showingArchive?'is-archived':''}" data-uid="${escapeHtml(peerUid)}"><div class="avatar ${blockedByViewer?'blocked-profile-avatar':''}">${avatar}</div><div class="chat-meta"><div class="chat-line"><span class="chat-name">${escapeHtml(name)}</span><span class="chat-time">${chat.updatedAt?stamp(chat.updatedAt):''}</span></div><div class="chat-preview">${escapeHtml(preview)}</div>${person?`<span class="contact-status ${blockedByViewer?'is-long':person.availabilityMode==='online'?'is-online':''}">${presenceLabel(person,blockedByViewer)}</span>`:''}</div></div>`;
+            const unread=Number(chat.unreadCounts?.[currentUser.uid])||0;
+            return `<div class="chat-item ${activeChatId===chat.id?'active':''} ${pinned?'is-pinned':''} ${muted?'is-muted':''} ${showingArchive?'is-archived':''}" data-uid="${escapeHtml(peerUid)}"><div class="avatar ${blockedByViewer?'blocked-profile-avatar':''}">${avatar}</div><div class="chat-meta"><div class="chat-line"><span class="chat-name">${escapeHtml(name)}</span><span class="chat-time">${chat.updatedAt?stamp(chat.updatedAt):''}</span>${unread?`<span class="chat-unread-badge" aria-label="${unread} непрочитанных сообщений">${unread>99?'99+':unread}</span>`:''}</div><div class="chat-preview">${escapeHtml(preview)}</div>${person?`<span class="contact-status ${blockedByViewer?'is-long':person.availabilityMode==='online'?'is-online':''}">${presenceLabel(person,blockedByViewer)}</span>`:''}</div></div>`;
         }).join('');
         const rows = contactRows.filter(contact => `${contact.displayName} ${contact.username}`.toLocaleLowerCase('ru').includes(filter));
         const contacts = rows.map(contact => {const name=contact.displayName||'Без имени';const avatar=contact.isBlockedByViewer?'':contact.avatarUrl?`<img src="${escapeHtml(contact.avatarUrl)}" alt="">`:escapeHtml(initials(name));return `<div class="chat-item ${activeChatId === makeChatId(currentUser.uid,contact.uid) ? 'active':''}" data-uid="${escapeHtml(contact.uid)}"><div class="avatar ${contact.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</div><div class="chat-meta"><div class="chat-line"><span class="chat-name">${escapeHtml(name)}</span><span class="chat-time"></span></div><div class="chat-preview">${contact.username?'@'+escapeHtml(contact.username):'Новый контакт'}</div><span class="contact-status ${contact.isBlockedByViewer?'is-long':contact.availabilityMode==='online'?'is-online':''}">${presenceLabel(contact,contact.isBlockedByViewer)}</span></div></div>`;}).join('');
         list.innerHTML = showingArchive?archiveRow+`<div class="section-caption">В архиве</div>`+(directChats||'<div class="empty-list">В архиве пока пусто.</div>'):archiveRow+saved+bot+(directChats?`<div class="section-caption">Чаты</div>${directChats}`:'')+`<div class="section-caption">Люди</div>`+(contacts||'<div class="empty-list">Контактов пока нет. Найдите человека по его имени пользователя.</div>');
+        updateUnreadBadges();
         list.querySelector('[data-archive-toggle]')?.addEventListener('click',()=>{showingArchive=!showingArchive;renderSideList();});
         list.querySelectorAll('.chat-item').forEach(item=>{item.tabIndex=0;item.setAttribute('role','button');});
         list.querySelector('[data-archive-toggle]')?.addEventListener('click',()=>{showingArchive=!showingArchive;renderSideList();});
@@ -600,7 +614,7 @@ const firebaseConfig = {
         },0);
         if(!newestIncoming||newestIncoming<=lastMarkedReadAt)return;
         lastMarkedReadAt=newestIncoming;
-        updateDoc(doc(db,'chats',activeChatId),{[`lastReadAt.${currentUser.uid}`]:serverTimestamp()})
+        updateDoc(doc(db,'chats',activeChatId),{[`lastReadAt.${currentUser.uid}`]:serverTimestamp(),[`unreadCounts.${currentUser.uid}`]:0})
             .catch(error=>{lastMarkedReadAt=0;console.error(error);});
     }
     function updateRemoteTyping(chat){
@@ -633,6 +647,7 @@ const firebaseConfig = {
     }
     function renderTypingIndicator(){
         const messages=$('#messages');if(!messages)return;
+        const nearBottom=messages.scrollHeight-messages.scrollTop-messages.clientHeight<96;
         let indicator=$('#typingIndicator');
         if(!indicator){indicator=document.createElement('div');indicator.id='typingIndicator';indicator.className='typing-indicator';indicator.setAttribute('role','status');messages.appendChild(indicator);}
         const visible=activeRemoteTypingUntil>Date.now();
@@ -640,7 +655,7 @@ const firebaseConfig = {
         indicator.setAttribute('aria-hidden',String(!visible));
         const profile=activeRecipientUid?contactProfiles.get(activeRecipientUid):null;
         indicator.innerHTML=visible?`<span class="typing-dots" aria-hidden="true"><span></span><span></span><span></span></span><span class="typing-copy">${escapeHtml(profile?.displayName||profile?.username||'Собеседник')} печатает</span>`:'';
-        if(visible)messages.scrollTop=messages.scrollHeight;
+        if(visible&&nearBottom)requestAnimationFrame(()=>{messages.scrollTop=messages.scrollHeight;});
     }
     function updateLastSeen(force=false){
         if(!currentUser)return;
@@ -662,24 +677,53 @@ const firebaseConfig = {
     });
     window.addEventListener('focus',()=>updateLastSeen());
     window.addEventListener('pagehide',()=>updateLastSeen(true));
-    function renderMessages(messages) {
-        const target=$('#messages');
-        if (!messages.length) { target.innerHTML='<div class="blank-state"><div class="blank-icon">✦</div><strong>Это ваше место.</strong>Записывайте мысли и сохраняйте то, что важно.</div>';renderTypingIndicator();return; }
-        target.innerHTML='<div class="day-label">Сообщения синхронизируются онлайн</div>'+messages.map(message=>{
-            const mine=message.senderId===currentUser.uid; let body='';
-            const messageTime=timestampMilliseconds(message.createdAt), recipientReadTime=timestampMilliseconds(activeRecipientReadAt);
-            const isRead=mine&&(activeChatKind==='saved'||(recipientReadTime>0&&messageTime>0&&recipientReadTime>=messageTime));
-            if(message.type==='image') body=`<img src="${escapeHtml(message.url)}" alt="Фото">`;
-            else if(message.type==='video') body=`<video class="${message.videoNote?'note':''}" src="${escapeHtml(message.url)}" controls playsinline></video>`;
-            else if(message.type==='audio') body=`<audio src="${escapeHtml(message.url)}" controls></audio>`;
-            else if(message.type==='file') body=`<a href="${escapeHtml(message.url)}" target="_blank" rel="noopener">${escapeHtml(message.fileName||'Открыть файл')}</a>`;
-            else body=escapeHtml(message.text||'');
-            const receipt=isRead?`<span class="read-receipt ${activeChatKind==='saved'?'is-saved':'is-read'}" aria-label="${activeChatKind==='saved'?'Сохранено в избранном':'Прочитано'}">✓✓</span>`:'';
-            const reactionCounts=Object.values(message.reactions||{}).reduce((counts,emoji)=>{counts[emoji]=(counts[emoji]||0)+1;return counts;},{});
-            const reactionPills=Object.entries(reactionCounts).map(([emoji,count])=>`<button class="reaction-pill ${message.reactions?.[currentUser.uid]===emoji?'selected':''}" type="button" data-message-id="${escapeHtml(message.id)}" data-react-emoji="${escapeHtml(emoji)}" aria-pressed="${message.reactions?.[currentUser.uid]===emoji}">${emoji}<span>${count}</span></button>`).join('');
-            const reactionPicker=`<div class="emoji-picker hidden" role="group" aria-label="Выбрать реакцию">${['❤️','😂','👍','🔥','✨','🎉'].map(emoji=>`<button class="emoji-choice" type="button" data-message-id="${escapeHtml(message.id)}" data-react-emoji="${emoji}" aria-label="Реакция ${emoji}">${emoji}</button>`).join('')}</div>`;
-            return `<article class="bubble ${mine?'mine':''} ${message.senderId==='speen_ai_bot'?'bot-message':''}" data-message-id="${escapeHtml(message.id)}">${body}${message.caption?`<div>${escapeHtml(message.caption)}</div>`:''}<div class="bubble-footer"><time>${stamp(message.createdAt)}</time>${receipt}</div><div class="reaction-tray">${reactionPills}<button class="reaction-trigger" type="button" data-reaction-toggle="${escapeHtml(message.id)}" aria-label="Добавить реакцию" title="Добавить реакцию">☺<span>+</span></button>${reactionPicker}</div></article>`;
-        }).join('');renderTypingIndicator();target.scrollTop=target.scrollHeight;
+    function createMessageElement(message){
+        const mine=message.senderId===currentUser.uid,messageTime=timestampMilliseconds(message.createdAt),recipientReadTime=timestampMilliseconds(activeRecipientReadAt);
+        const isRead=mine&&(activeChatKind==='saved'||(recipientReadTime>0&&messageTime>0&&recipientReadTime>=messageTime));
+        let body='';
+        if(message.type==='image')body=`<img src="${escapeHtml(message.url)}" alt="Фото">`;
+        else if(message.type==='video')body=`<video class="${message.videoNote?'note':''}" src="${escapeHtml(message.url)}" controls playsinline></video>`;
+        else if(message.type==='audio')body=`<audio src="${escapeHtml(message.url)}" controls></audio>`;
+        else if(message.type==='file')body=`<a href="${escapeHtml(message.url)}" target="_blank" rel="noopener">${escapeHtml(message.fileName||'Открыть файл')}</a>`;
+        else body=escapeHtml(message.text||'');
+        const receipt=isRead?`<span class="read-receipt ${activeChatKind==='saved'?'is-saved':'is-read'}" aria-label="${activeChatKind==='saved'?'Сохранено в избранном':'Прочитано'}">✓✓</span>`:'';
+        const reactionCounts=Object.values(message.reactions||{}).reduce((counts,emoji)=>{counts[emoji]=(counts[emoji]||0)+1;return counts;},{});
+        const reactionPills=Object.entries(reactionCounts).map(([emoji,count])=>`<button class="reaction-pill ${message.reactions?.[currentUser.uid]===emoji?'selected':''}" type="button" data-message-id="${escapeHtml(message.id)}" data-react-emoji="${escapeHtml(emoji)}" aria-pressed="${message.reactions?.[currentUser.uid]===emoji}">${emoji}<span>${count}</span></button>`).join('');
+        const reactionPicker=`<div class="emoji-picker hidden" role="group" aria-label="Выбрать реакцию">${['❤️','😂','👍','🔥','✨','🎉'].map(emoji=>`<button class="emoji-choice" type="button" data-message-id="${escapeHtml(message.id)}" data-react-emoji="${emoji}" aria-label="Реакция ${emoji}">${emoji}</button>`).join('')}</div>`;
+        const template=document.createElement('template');
+        template.innerHTML=`<article class="bubble ${mine?'mine':''} ${message.senderId==='speen_ai_bot'?'bot-message':''}" data-message-id="${escapeHtml(message.id)}">${body}${message.caption?`<div>${escapeHtml(message.caption)}</div>`:''}<div class="bubble-footer"><time>${stamp(message.createdAt)}</time>${receipt}</div><div class="reaction-tray">${reactionPills}<button class="reaction-trigger" type="button" data-reaction-toggle="${escapeHtml(message.id)}" aria-label="Добавить реакцию" title="Добавить реакцию">☺<span>+</span></button>${reactionPicker}</div></article>`;
+        return template.content.firstElementChild;
+    }
+    function messageRenderSignature(message){
+        const messageTime=timestampMilliseconds(message.createdAt),recipientReadTime=timestampMilliseconds(activeRecipientReadAt);
+        const isRead=message.senderId===currentUser.uid&&(activeChatKind==='saved'||(recipientReadTime>0&&messageTime>0&&recipientReadTime>=messageTime));
+        return JSON.stringify([message,isRead]);
+    }
+    function renderMessages(messages){
+        const target=$('#messages'),nearBottom=target.scrollHeight-target.scrollTop-target.clientHeight<96;
+        if(renderedChatId!==activeChatId){target.replaceChildren();messageElements.clear();renderedChatId=activeChatId;}
+        if(!messages.length){
+            for(const element of messageElements.values())element.remove();
+            messageElements.clear();target.querySelector('.day-label')?.remove();
+            if(!target.querySelector('.blank-state')){const blank=document.createElement('div');blank.className='blank-state';blank.innerHTML='<div class="blank-icon">✦</div><strong>Это ваше место.</strong>Записывайте мысли и сохраняйте то, что важно.';target.insertBefore(blank,$('#typingIndicator'));}
+            renderTypingIndicator();return;
+        }
+        target.querySelector('.blank-state')?.remove();
+        let dayLabel=target.querySelector('.day-label');
+        if(!dayLabel){dayLabel=document.createElement('div');dayLabel.className='day-label';dayLabel.textContent='Сообщения синхронизируются онлайн';target.insertBefore(dayLabel,$('#typingIndicator'));}
+        const ids=new Set(messages.map(message=>message.id));
+        for(const [id,element] of messageElements){if(!ids.has(id)){element.remove();messageElements.delete(id);}}
+        let nextNode=dayLabel.nextElementSibling;
+        for(const message of messages){
+            const signature=messageRenderSignature(message);
+            let element=messageElements.get(message.id);
+            if(!element){element=createMessageElement(message);messageElements.set(message.id,element);element.dataset.renderSignature=signature;}
+            else if(element.dataset.renderSignature!==signature){const previous=element,replacement=createMessageElement(message);replacement.dataset.renderSignature=signature;replacement.classList.add('is-updating');previous.replaceWith(replacement);messageElements.set(message.id,replacement);if(nextNode===previous)nextNode=replacement;element=replacement;}
+            if(element!==nextNode)target.insertBefore(element,nextNode||$('#typingIndicator'));
+            nextNode=element.nextElementSibling;
+        }
+        renderTypingIndicator();
+        if(nearBottom)target.scrollTop=target.scrollHeight;
     }
     async function toggleMessageReaction(messageId,emoji){
         if(!activeChatId||!currentUser)return;
@@ -705,8 +749,10 @@ const firebaseConfig = {
     async function persistMessage(payload,senderId){
         const messageRef=doc(collection(db,'chats',activeChatId,'messages'));
         const batch=writeBatch(db);
+        const chatUpdate={lastMessage:payload.text||labelForType(payload.type),lastMessageType:payload.type,lastMessageSenderId:senderId,updatedAt:serverTimestamp()};
+        if(activeChatKind==='direct'&&senderId===currentUser.uid&&activeRecipientUid)chatUpdate[`unreadCounts.${activeRecipientUid}`]=increment(1);
         batch.set(messageRef,{...payload,senderId,createdAt:serverTimestamp()});
-        batch.update(doc(db,'chats',activeChatId),{lastMessage:payload.text||labelForType(payload.type),lastMessageType:payload.type,lastMessageSenderId:senderId,updatedAt:serverTimestamp()});
+        batch.update(doc(db,'chats',activeChatId),chatUpdate);
         await batch.commit();
         return messageRef;
     }
@@ -898,6 +944,9 @@ const firebaseConfig = {
         textStyleGroup.setAttribute('aria-labelledby','textStyleHeading');
         textStyleGroup.innerHTML=`<div class="settings-group-head"><div><h3 id="textStyleHeading">Оформление сообщений</h3><p>Размер шрифта и форма пузырей меняются сразу.</p></div></div><label class="settings-slider" for="fontSizeRange"><span class="settings-slider-label">Размер текста</span><output id="fontSizeOutput">${appearanceSettings.fontSize} px</output><input id="fontSizeRange" type="range" min="13" max="20" step="1" value="${appearanceSettings.fontSize}" data-setting-range="fontSize" aria-label="Размер текста сообщений"><span class="slider-ends"><span>Компактный</span><span>Крупный</span></span></label><label class="settings-slider" for="bubbleRadiusRange"><span class="settings-slider-label">Скругление пузырей</span><output id="bubbleRadiusOutput">${appearanceSettings.bubbleRadius} px</output><input id="bubbleRadiusRange" type="range" min="2" max="28" step="1" value="${appearanceSettings.bubbleRadius}" data-setting-range="bubbleRadius" aria-label="Скругление пузырей сообщений"><span class="slider-ends"><span>Квадратные</span><span>Мягкие</span></span></label><div class="text-preview"><span class="text-preview-label">Предпросмотр</span><div class="text-preview-bubble">Привет! Как тебе оформление?</div><div class="text-preview-bubble mine">Всё отлично, спасибо ✨</div></div>`;
         $('#behaviorHeading').closest('.settings-group').before(textStyleGroup);
+        const accountCard=document.createElement('button');accountCard.type='button';accountCard.className='settings-account';accountCard.dataset.openAccountProfile='';
+        accountCard.innerHTML=`<span class="settings-account-avatar">${currentProfile.avatarUrl?`<img src="${escapeHtml(currentProfile.avatarUrl)}" alt="">`:escapeHtml(initials(currentProfile.displayName||'Я'))}</span><span class="settings-account-copy"><strong>${escapeHtml(currentProfile.displayName||'Ваш профиль')}</strong><span>${currentProfile.username?'@'+escapeHtml(currentProfile.username):escapeHtml(currentUser.phoneNumber||'Заполните имя пользователя')}</span></span><span class="settings-account-arrow" aria-hidden="true">›</span>`;
+        $('#panelView .settings-page').insertBefore(accountCard,$('#panelView .settings-page .settings-group'));
         const privacyGroup=document.createElement('section');
         privacyGroup.className='settings-group privacy-group';
         privacyGroup.setAttribute('aria-labelledby','privacyHeading');
@@ -905,6 +954,7 @@ const firebaseConfig = {
         $('#panelView .settings-page').appendChild(privacyGroup);
     }
     $('#panelView').addEventListener('click',event=>{
+        if(event.target.closest('[data-open-account-profile]')){navigate('profile');return;}
         const presence=event.target.closest('[data-presence-mode]');
         const theme=event.target.closest('[data-theme-choice]');
         const wallpaper=event.target.closest('[data-wallpaper-choice]');
@@ -1018,8 +1068,8 @@ const firebaseConfig = {
     }
     async function addContact(uid){try{await setDoc(doc(db,'users',currentUser.uid,'contacts',uid),{createdAt:serverTimestamp()});toast('Контакт добавлен.');}catch(error){console.error(error);toast('Не удалось добавить контакт.');}}
 
-    async function updateProfileBadge(){try{const snapshot=await getDoc(doc(db,'users',currentUser.uid));if(!snapshot.exists())return;const profile=snapshot.data();renderAvatar($('#railAvatar'),profile);if(currentView==='profile')renderProfilePanel();}catch(error){console.error(error);}}
-    async function renderProfilePanel(){const snapshot=await getDoc(doc(db,'users',currentUser.uid));const profile=snapshot.data()||{};
+    async function updateProfileBadge(){try{const snapshot=await getDoc(doc(db,'users',currentUser.uid));if(!snapshot.exists())return;const profile=snapshot.data();currentProfile=profile;renderAvatar($('#railAvatar'),profile);if(currentView==='profile')renderProfilePanel();}catch(error){console.error(error);}}
+    async function renderProfilePanel(){const snapshot=await getDoc(doc(db,'users',currentUser.uid));const profile=snapshot.data()||{};currentProfile=profile;
         $('#panelView').innerHTML=`<h2 class="panel-heading">Ваш профиль</h2><p class="panel-copy">Расскажите близким, как вас найти.</p><div class="profile-layout"><div class="profile-photo-wrap"><div id="profilePhoto" class="profile-photo">${profile.avatarUrl?`<img src="${escapeHtml(profile.avatarUrl)}" alt="Аватар">`:escapeHtml(initials(profile.displayName||'Я'))}</div><button id="avatarButton" class="photo-edit" aria-label="Изменить аватар"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg></button><input id="avatarFile" class="attach-input" type="file" accept="image/*"></div><form id="profileForm" class="profile-form"><label class="field-label" for="displayName">Имя профиля</label><input id="displayName" class="text-field" maxlength="50" value="${escapeHtml(profile.displayName||'')}" placeholder="Как вас зовут?"><label class="field-label" for="username">Имя пользователя</label><input id="username" class="text-field" maxlength="24" value="${escapeHtml(profile.username||'')}" placeholder="например, anna_28"><label class="field-label" for="birthday">День рождения</label><input id="birthday" class="text-field" type="date" value="${escapeHtml(profile.birthday||'')}"><button class="primary" type="submit">Сохранить изменения</button><div class="profile-info">Номер виден только вам. Его нельзя изменить здесь.</div></form></div>`;
         const phoneField=document.createElement('label');phoneField.className='field-label profile-phone-field';phoneField.htmlFor='accountPhone';phoneField.innerHTML=`Номер, привязанный к аккаунту<input id="accountPhone" class="text-field" type="tel" value="${escapeHtml(currentUser.phoneNumber||'')}" readonly autocomplete="tel">`;
         $('#profileForm').prepend(phoneField);
