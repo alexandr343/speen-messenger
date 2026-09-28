@@ -510,13 +510,16 @@ const firebaseConfig = {
         list.querySelectorAll('[data-uid]').forEach(item => item.addEventListener('click', () => openDirect(item.dataset.uid)));
     }
     async function openDirect(uid, profile) {
-        let person=profile||contactRows.find(item=>item.uid===uid);
-        if(!person){const snapshot=await getDoc(doc(db,'users',uid));if(!snapshot.exists())return;person={uid,...snapshot.data()};}
-        contactProfiles.set(uid,person);refreshContactRows();
-        const id = makeChatId(currentUser.uid,uid);
-        const chatRef=doc(db,'chats',id);
-        if(!(await getDoc(chatRef)).exists()) await setDoc(chatRef,{participants:[currentUser.uid,uid].sort(),kind:'direct',updatedAt:serverTimestamp(),lastMessage:''});
-        openChat(id,'direct',person);
+        try {
+            let person=profile||contactRows.find(item=>item.uid===uid);
+            if(!person){const snapshot=await getDoc(doc(db,'users',uid));if(!snapshot.exists())return;person={uid,...snapshot.data()};}
+            contactProfiles.set(uid,person);refreshContactRows();
+            const id=makeChatId(currentUser.uid,uid),chatRef=doc(db,'chats',id);
+            await setDoc(chatRef,{participants:[currentUser.uid,uid].sort(),kind:'direct'},{merge:true});
+            openChat(id,'direct',person);
+        } catch(error) {
+            console.error(error);toast('Не удалось открыть чат. Проверьте правила Firebase.');
+        }
     }
     function openBotChat(){
         openChat(`bot_${currentUser.uid}`,'bot',{uid:'speen_ai_bot',displayName:'Speen AI',username:'speen_ai_bot',isBot:true});
