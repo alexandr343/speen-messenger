@@ -228,7 +228,7 @@ const firebaseConfig = {
     const appCheckSiteKey = 'PASTE_RECAPTCHA_ENTERPRISE_SITE_KEY';
     const configured = Object.values(firebaseConfig).every(value => value && !value.includes('PASTE_'));
     let auth, db, storage, aiModel, appCheckReady=false, confirmation, verifier, currentUser, activeChatId = null, activeChatKind = 'saved';
-    let stopMessages, stopContacts, stopChatDocs, stopChatList, profileStops = new Map(), contactUids = new Set(), chatPeerUids = new Set(), contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], messageElements = new Map(), renderedChatId = null, activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], activeRemoteTypingUntil = 0, localTypingChatId = null, localTypingActive = false, lastTypingWriteAt = 0, typingPauseTimer = null, typingExpiryTimer = null, lastMarkedReadAt = 0, availabilityMode = 'online', currentProfile = {}, userPrivacy = {hidePhoneNumber:true,hideLastSeen:false}, viewedProfileUid = null, showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], lastSeenHeartbeat = null, presenceRefreshTimer = null, lastSeenWriteAt = 0, appearanceSaveTimer = null;
+    let stopMessages, stopContacts, stopChatDocs, stopChatList, profileStops = new Map(), notificationStops = new Map(), notifiedMessageIds = new Set(), contactUids = new Set(), chatPeerUids = new Set(), contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], messageElements = new Map(), renderedChatId = null, activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], activeRemoteTypingUntil = 0, localTypingChatId = null, localTypingActive = false, lastTypingWriteAt = 0, typingPauseTimer = null, typingExpiryTimer = null, lastMarkedReadAt = 0, availabilityMode = 'online', currentProfile = {}, userPrivacy = {hidePhoneNumber:true,hideLastSeen:false}, notificationSettings = {incomingSound:true,outgoingSound:true,desktopNotifications:false}, notificationAudioContext = null, viewedProfileUid = null, showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], lastSeenHeartbeat = null, presenceRefreshTimer = null, lastSeenWriteAt = 0, appearanceSaveTimer = null;
     const $ = selector => document.querySelector(selector);
     const loginView = $('#loginView'), appView = $('#appView'), errorBox = $('#authError');
     const appearanceDefaults = {theme:'light', wallpaper:'dots', animations:true, hidePreviews:false, fontSize:14, bubbleRadius:16};
@@ -385,7 +385,7 @@ const firebaseConfig = {
     function showLogin() { document.body.classList.remove('app-active');document.documentElement.classList.remove('app-active');loginView.classList.remove('hidden'); appView.classList.add('hidden'); }
     function showApp() { document.body.classList.add('app-active');document.documentElement.classList.add('app-active');loginView.classList.add('hidden'); appView.classList.remove('hidden'); }
     function clearActiveChatListeners() { stopLocalTyping();clearTimeout(typingExpiryTimer);activeRemoteTypingUntil=0;stopMessages?.();stopChatDocs?.();stopMessages=stopChatDocs=null;activeMessages=[];messageElements.clear();renderedChatId=null; }
-    function clearListeners() { clearActiveChatListeners(); stopContacts?.(); stopChatList?.(); profileStops.forEach(stop=>stop()); profileStops.clear(); contactUids.clear(); chatPeerUids.clear(); contactProfiles.clear(); clearInterval(lastSeenHeartbeat);clearInterval(presenceRefreshTimer);lastSeenHeartbeat=presenceRefreshTimer=null;lastSeenWriteAt=0;stopContacts=stopChatList=null;chatRows=[];contactRows=[]; }
+    function clearListeners() { clearActiveChatListeners(); stopContacts?.(); stopChatList?.(); profileStops.forEach(stop=>stop());profileStops.clear();notificationStops.forEach(stop=>stop());notificationStops.clear();notifiedMessageIds.clear();contactUids.clear();chatPeerUids.clear();contactProfiles.clear();clearInterval(lastSeenHeartbeat);clearInterval(presenceRefreshTimer);lastSeenHeartbeat=presenceRefreshTimer=null;lastSeenWriteAt=0;stopContacts=stopChatList=null;chatRows=[];contactRows=[]; }
     function makeChatId(first, second) { return [first, second].sort().join('__'); }
 
     if (configured) {
@@ -442,10 +442,11 @@ const firebaseConfig = {
         currentProfile=profileData;
         availabilityMode=profileData.availabilityMode||'online';
         userPrivacy={hidePhoneNumber:profileData.hidePhoneNumber!==false,hideLastSeen:Boolean(profileData.hideLastSeen)};
+        notificationSettings={incomingSound:true,outgoingSound:true,desktopNotifications:false,...profileData.notificationSettings};
         if(profileData.appearance){appearanceSettings=normalizeAppearanceSettings({...appearanceSettings,...profileData.appearance});applyAppearanceSettings();try{localStorage.setItem('speen-appearance',JSON.stringify(appearanceSettings));}catch{}}
         else persistAppearanceSettings();
         await Promise.all([syncPhoneLookup().catch(error=>console.error('Phone lookup index sync failed:',error)),syncUserDirectory(snapshot.data()||{}).catch(error=>console.error('User directory sync failed:',error))]);
-        await setDoc(userRef,{availabilityMode,lastActiveAt:serverTimestamp(),hidePhoneNumber:userPrivacy.hidePhoneNumber,hideLastSeen:userPrivacy.hideLastSeen},{merge:true});
+        await setDoc(userRef,{availabilityMode,lastActiveAt:serverTimestamp(),hidePhoneNumber:userPrivacy.hidePhoneNumber,hideLastSeen:userPrivacy.hideLastSeen,notificationSettings},{merge:true});
         startLastSeenHeartbeat();
         const savedId = `saved_${user.uid}`;
         const savedChatRef=doc(db,'chats',savedId);
@@ -526,8 +527,63 @@ const firebaseConfig = {
         stopChatList = onSnapshot(query(collection(db,'chats'),where('participants','array-contains',currentUser.uid)), snapshot => {
             chatRows = snapshot.docs.map(item => ({id:item.id,...item.data()}));
             chatPeerUids=new Set(chatRows.filter(chat=>chat.kind==='direct').flatMap(chat=>chat.participants||[]).filter(uid=>uid!==currentUser.uid));
+            syncNotificationListeners();
             syncProfileListeners();
         }, error => { console.error(error); toast('Не удалось обновить список чатов.'); });
+    }
+    function primeMessageAudio(){
+        const AudioContextClass=window.AudioContext||window.webkitAudioContext;
+        if(!AudioContextClass)return;
+        try{
+            notificationAudioContext||=new AudioContextClass();
+            if(notificationAudioContext.state==='suspended')notificationAudioContext.resume().catch(()=>{});
+        }catch(error){console.warn('Audio notifications are unavailable:',error);}
+    }
+    document.addEventListener('pointerdown',primeMessageAudio,{once:true});
+    document.addEventListener('keydown',primeMessageAudio,{once:true});
+    function playMessageSound(kind,force=false){
+        if(!force&&!notificationSettings[kind==='incoming'?'incomingSound':'outgoingSound'])return;
+        if(!notificationAudioContext)return;
+        if(notificationAudioContext.state==='suspended'){notificationAudioContext.resume().then(()=>playMessageSound(kind,force)).catch(()=>{});return;}
+        if(notificationAudioContext.state!=='running')return;
+        const context=notificationAudioContext,now=context.currentTime;
+        const notes=kind==='incoming'?[740,988]:[587,784];
+        notes.forEach((frequency,index)=>{
+            const start=now+index*.105,oscillator=context.createOscillator(),gain=context.createGain();
+            oscillator.type='sine';oscillator.frequency.setValueAtTime(frequency,start);
+            gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.12,start+.018);gain.gain.exponentialRampToValueAtTime(.0001,start+.22);
+            oscillator.connect(gain);gain.connect(context.destination);oscillator.start(start);oscillator.stop(start+.23);
+        });
+    }
+    function syncNotificationListeners(){
+        const chats=chatRows.filter(chat=>chat.kind==='direct'||chat.kind==='bot'),wanted=new Set(chats.map(chat=>chat.id));
+        for(const [chatId,stop] of notificationStops){if(wanted.has(chatId))continue;stop();notificationStops.delete(chatId);}
+        for(const chat of chats){
+            if(notificationStops.has(chat.id))continue;
+            let firstSnapshot=true,lastMessageId=null;
+            const stop=onSnapshot(query(collection(db,'chats',chat.id,'messages'),orderBy('createdAt','desc'),limit(1)),snapshot=>{
+                const latest=snapshot.docs[0];
+                if(firstSnapshot){firstSnapshot=false;lastMessageId=latest?.id||null;return;}
+                if(!latest||latest.id===lastMessageId)return;
+                lastMessageId=latest.id;
+                const message={id:latest.id,...latest.data({serverTimestamps:'estimate'})};
+                if(message.senderId===currentUser.uid||activeChatId===chat.id&&stopMessages)return;
+                handleIncomingMessage(chat,message);
+            },error=>console.error('Chat notification listener failed:',error));
+            notificationStops.set(chat.id,stop);
+        }
+    }
+    function handleIncomingMessage(chat,message){
+        const notificationId=`${chat.id}:${message.id}`,chatState=chatRows.find(item=>item.id===chat.id)||chat;
+        if(notifiedMessageIds.has(notificationId)||(chatState.mutedBy||[]).includes(currentUser.uid))return;
+        notifiedMessageIds.add(notificationId);setTimeout(()=>notifiedMessageIds.delete(notificationId),60_000);
+        playMessageSound('incoming');
+        if(!notificationSettings.desktopNotifications||typeof Notification==='undefined'||Notification.permission!=='granted'||(!document.hidden&&document.hasFocus()))return;
+        const peerUid=chat.kind==='direct'?chat.participants?.find(uid=>uid!==currentUser.uid):null;
+        const name=chat.kind==='bot'?'Speen AI':contactProfiles.get(peerUid)?.displayName||contactProfiles.get(peerUid)?.username||'Новое сообщение';
+        const body=appearanceSettings.hidePreviews?'Новое сообщение':message.text||labelForType(message.type);
+        const notification=new Notification(name,{body,tag:`speen-${chat.id}`,renotify:true});
+        notification.onclick=()=>{window.focus();if(chat.kind==='bot')openBotChat();else if(peerUid)openDirect(peerUid);notification.close();};
     }
     function updateUnreadBadges(){
         const total=chatRows.reduce((count,chat)=>chat.kind==='direct'?count+Math.max(0,Number(chat.unreadCounts?.[currentUser.uid])||0):count,0);
@@ -606,7 +662,13 @@ const firebaseConfig = {
             updateDirectHeader(activeRecipientUid?contactProfiles.get(activeRecipientUid)||profile:profile);
             renderMessages(activeMessages);
         }, error => { console.error(error); toast('Не удалось синхронизировать статус прочтения.'); });
+        let firstMessagesSnapshot=true;
         stopMessages = onSnapshot(query(collection(db,'chats',chatId,'messages'),orderBy('createdAt','asc')), snapshot => {
+            if(firstMessagesSnapshot)firstMessagesSnapshot=false;
+            else snapshot.docChanges().filter(change=>change.type==='added').forEach(change=>{
+                const message={id:change.doc.id,...change.doc.data({serverTimestamps:'estimate'})};
+                if(message.senderId!==currentUser.uid)handleIncomingMessage({...activeChatDocument,id:chatId,kind,participants:activeChatDocument?.participants||[currentUser.uid,activeRecipientUid]},message);
+            });
             activeMessages = snapshot.docs.map(item => ({id:item.id,...item.data({serverTimestamps:'estimate'})}));
             renderMessages(activeMessages);
             markChatAsRead(activeMessages);
@@ -768,6 +830,7 @@ const firebaseConfig = {
         batch.set(messageRef,{...payload,senderId,createdAt:serverTimestamp()});
         batch.update(doc(db,'chats',activeChatId),chatUpdate);
         await batch.commit();
+        if(senderId===currentUser.uid)playMessageSound('outgoing');
         return messageRef;
     }
     async function sendBotMessage(text){
@@ -941,6 +1004,20 @@ const firebaseConfig = {
         }catch(error){console.error(error);userPrivacy={...userPrivacy,[key]:previous};toast('Не удалось сохранить настройку приватности.');}
         finally{if(currentView==='settings')renderSettingsPanel();}
     }
+    async function saveNotificationSetting(key,value){
+        if(!['incomingSound','outgoingSound','desktopNotifications'].includes(key))return;
+        if(key==='desktopNotifications'&&value){
+            if(typeof Notification==='undefined'){toast('Браузер не поддерживает системные уведомления.');return;}
+            try{if(Notification.permission==='default')await Notification.requestPermission();}
+            catch(error){console.error(error);toast('Не удалось запросить разрешение на уведомления.');return;}
+            if(Notification.permission!=='granted'){toast('Разрешите уведомления в настройках браузера.');return;}
+        }
+        if(key!=='desktopNotifications'&&value)primeMessageAudio();
+        const previous=notificationSettings[key];notificationSettings={...notificationSettings,[key]:value};
+        try{await updateDoc(doc(db,'users',currentUser.uid),{notificationSettings});toast('Настройки уведомлений сохранены.');}
+        catch(error){console.error(error);notificationSettings={...notificationSettings,[key]:previous};toast('Не удалось сохранить настройки уведомлений.');}
+        finally{if(currentView==='settings')renderSettingsPanel();}
+    }
     function renderSettingsPanel(){
         const themes=[['light','Светлая'],['mint','Мятная'],['night','Ночная'],['sunset','Закат'],['lagoon','Лагуна'],['orchid','Орхидея']];
         const wallpapers=[['dots','Точки'],['lines','Переплетение'],['glow','Мягкий свет'],['plain','Однотонные'],['waves','Волны'],['grid','Сетка'],['confetti','Искры'],['paper','Бумага']];
@@ -966,6 +1043,12 @@ const firebaseConfig = {
         privacyGroup.setAttribute('aria-labelledby','privacyHeading');
         privacyGroup.innerHTML=`<div class="settings-group-head"><div><h3 id="privacyHeading">Приватность</h3><p>Управляйте данными, которые видят другие пользователи.</p></div></div><div class="setting-row"><div><div class="setting-row-title">Скрыть мой номер телефона</div><div class="setting-row-copy">По умолчанию номер виден только вам. Если разрешить показ, он появится в профиле.</div></div><button class="setting-switch" type="button" role="switch" aria-label="Скрыть мой номер телефона" aria-checked="${userPrivacy.hidePhoneNumber}" data-privacy-setting="hidePhoneNumber"><span class="switch-knob"></span></button></div><div class="setting-row"><div><div class="setting-row-title">Скрыть сетевой статус и время визита</div><div class="setting-row-copy">Собеседники не увидят, в сети ли вы и когда были активны.</div></div><button class="setting-switch" type="button" role="switch" aria-label="Скрыть сетевой статус и время визита" aria-checked="${userPrivacy.hideLastSeen}" data-privacy-setting="hideLastSeen"><span class="switch-knob"></span></button></div>`;
         $('#panelView .settings-page').appendChild(privacyGroup);
+        const notificationsGroup=document.createElement('section');
+        notificationsGroup.className='settings-group privacy-group';
+        notificationsGroup.setAttribute('aria-labelledby','notificationsHeading');
+        const notificationRows=[['incomingSound','Звук входящего сообщения','Мягкий сигнал при новом сообщении.'],['outgoingSound','Звук отправки','Короткий сигнал после отправки сообщения.'],['desktopNotifications','Системные уведомления','Показывать уведомления браузера, когда приложение не активно.']];
+        notificationsGroup.innerHTML=`<div class="settings-group-head"><div><h3 id="notificationsHeading">Уведомления</h3><p>Настройте звуки и системные оповещения.</p></div></div>${notificationRows.map(([key,title,copy])=>`<div class="setting-row"><div><div class="setting-row-title">${title}</div><div class="setting-row-copy">${copy}</div></div><button class="setting-switch" type="button" role="switch" aria-label="${title}" aria-checked="${notificationSettings[key]}" data-notification-setting="${key}"><span class="switch-knob"></span></button></div>`).join('')}<button class="link-button notification-test" type="button" data-test-message-sound>Проверить звук</button>`;
+        $('#panelView .settings-page').appendChild(notificationsGroup);
     }
     $('#panelView').addEventListener('click',event=>{
         if(event.target.closest('[data-open-account-profile]')){navigate('profile');return;}
@@ -975,8 +1058,11 @@ const firebaseConfig = {
         const resetWallpaper=event.target.closest('[data-wallpaper-reset]');
         const toggle=event.target.closest('[data-setting-toggle]');
         const privacy=event.target.closest('[data-privacy-setting]');
+        const notification=event.target.closest('[data-notification-setting]');
+        if(event.target.closest('[data-test-message-sound]')){primeMessageAudio();playMessageSound('incoming',true);return;}
         if(presence){saveAvailabilityMode(presence.dataset.presenceMode);return;}
         if(privacy){const key=privacy.dataset.privacySetting;savePrivacySetting(key,!userPrivacy[key]);return;}
+        if(notification){const key=notification.dataset.notificationSetting;saveNotificationSetting(key,!notificationSettings[key]);return;}
         if(theme){saveAppearanceSettings({theme:theme.dataset.themeChoice});renderSettingsPanel();}
         else if(wallpaper){saveAppearanceSettings({wallpaper:wallpaper.dataset.wallpaperChoice});renderSettingsPanel();}
         else if(resetWallpaper){saveAppearanceSettings({wallpaperColor:null});renderSettingsPanel();}
