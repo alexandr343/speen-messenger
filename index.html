@@ -452,8 +452,21 @@ const firebaseConfig = {
         if(!(await getDoc(savedChatRef)).exists()) await setDoc(savedChatRef,{participants:[user.uid],kind:'saved',updatedAt:serverTimestamp(),lastMessage:''});
         const botChatRef=doc(db,'chats',`bot_${user.uid}`);
         if(!(await getDoc(botChatRef)).exists()) await setDoc(botChatRef,{participants:[user.uid],kind:'bot',updatedAt:serverTimestamp(),lastMessage:'Привет! Я Speen, твой ИИ-собеседник ✨'});
+        let initialChat={id:savedId,kind:'saved',profile:{displayName:'Избранное'}};
+        if(profileData.lastChatId&&profileData.lastChatId!==savedId){
+            try{
+                const previousChat=await getDoc(doc(db,'chats',profileData.lastChatId)),data=previousChat.data();
+                if(previousChat.exists()&&data.participants?.includes(user.uid)){
+                    if(data.kind==='bot')initialChat={id:previousChat.id,kind:'bot',profile:{uid:'speen_ai_bot',displayName:'Speen AI',username:'speen_ai_bot',isBot:true}};
+                    else if(data.kind==='direct'){
+                        const peerUid=data.participants.find(uid=>uid!==user.uid),peer=peerUid?await getDoc(doc(db,'users',peerUid)):null;
+                        if(peer?.exists()){const profile={uid:peer.id,...peer.data()};contactProfiles.set(peer.id,profile);initialChat={id:previousChat.id,kind:'direct',profile};}
+                    }
+                }
+            }catch(error){console.error('Could not restore last chat:',error);}
+        }
         $('#composer').classList.remove('hidden'); $('#chatHeader').classList.remove('hidden'); $('#panelView').classList.add('hidden'); $('#messages').classList.remove('hidden');
-        listenContacts(); listenChatList(); renderSideList(); openChat(savedId,'saved',{displayName:'Избранное'}); updateProfileBadge();
+        listenContacts(); listenChatList(); renderSideList(); openChat(initialChat.id,initialChat.kind,initialChat.profile); updateProfileBadge();
     }
 
     async function ensureUserProfile(user){
@@ -579,6 +592,7 @@ const firebaseConfig = {
     function openChat(chatId, kind, profile) {
         clearActiveChatListeners();
         activeChatId=chatId; activeChatKind=kind; activeRecipientUid=kind==='direct'?profile.uid:null; activeRecipientReadAt=null; activeChatBlockedBy=[]; activeChatDocument=null; lastMarkedReadAt=0; currentView=kind==='saved'?'saved':'chats';appView.classList.remove('mobile-chat-list');
+        if(currentUser)updateDoc(doc(db,'users',currentUser.uid),{lastChatId:chatId}).catch(error=>console.error('Last chat persistence failed:',error));
         $('#chatHeader').classList.remove('hidden'); $('#messages').classList.remove('hidden'); $('#composer').classList.remove('hidden'); $('#panelView').classList.add('hidden');
         $('#headerTitle').textContent = kind==='saved'?'Избранное':(profile.displayName||profile.username||'Контакт');
         updateDirectHeader(profile);
