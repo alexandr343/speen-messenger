@@ -123,6 +123,11 @@
         body[data-theme="night"] .typing-indicator{background:#293a3b;border-color:#405152;color:#dce7e1;box-shadow:0 5px 16px #08111130}.typing-indicator[aria-hidden="true"]{pointer-events:none}
         @keyframes typing-bounce{0%,60%,100%{opacity:.38;transform:translateY(0) scale(.82)}30%{opacity:1;transform:translateY(-4px) scale(1.08)}}
         @media(prefers-reduced-motion:reduce){.typing-indicator,.typing-indicator.is-visible{transition:none;transform:none}.typing-dots span{animation:none;opacity:.7}}
+        .public-profile{width:min(100%,720px);margin:0 auto;padding-bottom:30px;animation:panel-arrive .4s both}.public-profile-hero{position:relative;min-height:176px;padding:30px 28px 24px;display:flex;align-items:flex-end;gap:19px;overflow:hidden;border-radius:14px;background:linear-gradient(125deg,#dceee3,#edf4da 56%,#f9e7d9);isolation:isolate}.public-profile-hero::before{content:"";position:absolute;inset:-25%;z-index:-1;background:radial-gradient(ellipse at 12% 90%,#71ad8845,transparent 38%),radial-gradient(ellipse at 88% 10%,#f1a37a33,transparent 35%);animation:profile-glow 9s ease-in-out infinite alternate}.public-profile-avatar{width:100px;height:100px;flex:0 0 100px;border:4px solid #ffffffd9;border-radius:50%;background:#c9e3d2;box-shadow:0 12px 32px #294b3426;color:#345044;font:800 28px Manrope,sans-serif;overflow:hidden}.public-profile-avatar img{width:100%;height:100%;object-fit:cover}.public-profile-heading{min-width:0;padding-bottom:5px}.public-profile-heading h2{margin:0;font:800 25px/1.15 Manrope,sans-serif;overflow-wrap:anywhere}.public-profile-heading p{margin:7px 0 0;color:#526b5c;font-size:13px}.public-profile-status{display:inline-flex;align-items:center;gap:7px;margin-top:11px;color:#4e765b;font-size:11px;font-weight:700}.public-profile-status::before{content:"";width:7px;height:7px;border-radius:50%;background:#65ae7a;box-shadow:0 0 0 4px #65ae7a20}.public-profile-status.is-hidden{color:#89958f}.public-profile-status.is-hidden::before{background:#aab4ad;box-shadow:0 0 0 4px #aab4ad20}.public-profile-actions{display:flex;gap:9px;justify-content:flex-end;margin:17px 0 8px}.public-profile-details{margin-top:20px;border-top:1px solid var(--line)}.public-profile-detail{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;padding:15px 4px;border-bottom:1px solid var(--line)}.public-profile-detail dt{color:var(--muted);font-size:12px}.public-profile-detail dd{margin:0;font-size:13px;font-weight:600;overflow-wrap:anywhere}.privacy-group .setting-row{padding-block:16px}.privacy-group .setting-row-copy{max-width:440px;line-height:1.5}body[data-theme="night"] .public-profile-hero{background:linear-gradient(125deg,#294139,#34453b 56%,#4a3934)}body[data-theme="night"] .public-profile-heading p,body[data-theme="night"] .public-profile-status{color:#bbd4c2}
+        .contact-person{display:flex;align-items:center;gap:12px;flex:1;min-width:0;padding:0;border:0;border-radius:8px;background:transparent;color:inherit;text-align:left}.contact-person .chat-meta{display:flex;flex-direction:column;align-items:flex-start}.contact-person:hover .chat-name{color:var(--green-deep)}.contact-profile-action{flex:0 0 36px}.contact-row .contact-open{margin-left:0;flex:0 0 auto;height:38px;padding:0 13px}.contact-row{cursor:default}#headerAvatar[data-profile-enabled="true"],#headerTitle[data-profile-enabled="true"]{cursor:pointer}#headerTitle[data-profile-enabled="true"]:hover{color:var(--green-deep)}
+        @keyframes profile-glow{from{transform:translate3d(-1%,0,0) scale(1)}to{transform:translate3d(1%,2%,0) scale(1.05)}}
+        @media(max-width:600px){.public-profile-hero{min-height:142px;padding:20px 17px;gap:13px}.public-profile-avatar{width:76px;height:76px;flex-basis:76px}.public-profile-heading h2{font-size:20px}.public-profile-actions{justify-content:stretch}.public-profile-actions .primary{flex:1}.public-profile-detail{grid-template-columns:105px minmax(0,1fr);gap:9px;padding:13px 2px}}
+        @media(prefers-reduced-motion:reduce){.public-profile,.public-profile-hero::before{animation:none!important}}
     </style>
 </head>
 <body>
@@ -222,7 +227,7 @@ const firebaseConfig = {
     const appCheckSiteKey = 'PASTE_RECAPTCHA_ENTERPRISE_SITE_KEY';
     const configured = Object.values(firebaseConfig).every(value => value && !value.includes('PASTE_'));
     let auth, db, storage, aiModel, appCheckReady=false, confirmation, verifier, currentUser, activeChatId = null, activeChatKind = 'saved';
-    let stopMessages, stopContacts, stopChatDocs, stopChatList, profileStops = new Map(), contactUids = new Set(), chatPeerUids = new Set(), contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], activeRemoteTypingUntil = 0, localTypingChatId = null, localTypingActive = false, lastTypingWriteAt = 0, typingPauseTimer = null, typingExpiryTimer = null, lastMarkedReadAt = 0, availabilityMode = 'online', showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], lastSeenHeartbeat = null, presenceRefreshTimer = null, lastSeenWriteAt = 0;
+    let stopMessages, stopContacts, stopChatDocs, stopChatList, profileStops = new Map(), contactUids = new Set(), chatPeerUids = new Set(), contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], activeRemoteTypingUntil = 0, localTypingChatId = null, localTypingActive = false, lastTypingWriteAt = 0, typingPauseTimer = null, typingExpiryTimer = null, lastMarkedReadAt = 0, availabilityMode = 'online', userPrivacy = {hidePhoneNumber:true,hideLastSeen:false}, viewedProfileUid = null, showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], lastSeenHeartbeat = null, presenceRefreshTimer = null, lastSeenWriteAt = 0, appearanceSaveTimer = null;
     const $ = selector => document.querySelector(selector);
     const loginView = $('#loginView'), appView = $('#appView'), errorBox = $('#authError');
     const appearanceDefaults = {theme:'light', wallpaper:'dots', animations:true, hidePreviews:false, fontSize:14, bubbleRadius:16};
@@ -310,6 +315,7 @@ const firebaseConfig = {
     }
     function presenceLabel(profile, hiddenByBlock=false){
         if(hiddenByBlock)return 'Был(а) давно';
+        if(profile?.hideLastSeen)return 'Статус скрыт';
         const mode=profile?.availabilityMode||'recently';
         if(mode==='longAgo')return 'Был(а) давно';
         if(mode==='recently')return 'Был(а) недавно';
@@ -321,6 +327,12 @@ const firebaseConfig = {
     }
     function updateDirectHeader(profile={}){
         const blockedByViewer=Boolean(activeRecipientUid&&activeChatBlockedBy.includes(activeRecipientUid));
+        for(const target of [$('#headerAvatar'),$('#headerTitle')]){
+            target.dataset.profileEnabled=String(Boolean(activeRecipientUid));
+            target.tabIndex=activeRecipientUid?0:-1;
+            if(activeRecipientUid){target.setAttribute('role','button');target.setAttribute('aria-label',`Профиль: ${profile.displayName||profile.username||'Контакт'}`);}
+            else{target.removeAttribute('role');target.removeAttribute('aria-label');}
+        }
         $('#headerSubtitle').textContent=activeChatKind==='saved'?'Личное пространство':activeChatKind==='bot'?'ИИ-бот · @speen_ai_bot':presenceLabel(profile,blockedByViewer);
         renderAvatar($('#headerAvatar'),blockedByViewer?{...profile,avatarUrl:'',blockedByViewer:true}:profile,activeChatKind==='saved');
         $('#blockUserButton').classList.toggle('hidden',activeChatKind!=='direct'||activeChatBlockedBy.includes(currentUser.uid));
@@ -423,9 +435,13 @@ const firebaseConfig = {
     async function startWorkspace(user) {
         showApp();
         const userRef = doc(db, 'users', user.uid), snapshot = await getDoc(userRef);
-        availabilityMode=snapshot.data()?.availabilityMode||'online';
+        const profileData=snapshot.data()||{};
+        availabilityMode=profileData.availabilityMode||'online';
+        userPrivacy={hidePhoneNumber:profileData.hidePhoneNumber!==false,hideLastSeen:Boolean(profileData.hideLastSeen)};
+        if(profileData.appearance){appearanceSettings=normalizeAppearanceSettings({...appearanceSettings,...profileData.appearance});applyAppearanceSettings();try{localStorage.setItem('speen-appearance',JSON.stringify(appearanceSettings));}catch{}}
+        else persistAppearanceSettings();
         await Promise.all([syncPhoneLookup().catch(error=>console.error('Phone lookup index sync failed:',error)),syncUserDirectory(snapshot.data()||{}).catch(error=>console.error('User directory sync failed:',error))]);
-        await setDoc(userRef,{availabilityMode,lastActiveAt:serverTimestamp()},{merge:true});
+        await setDoc(userRef,{availabilityMode,lastActiveAt:serverTimestamp(),hidePhoneNumber:userPrivacy.hidePhoneNumber,hideLastSeen:userPrivacy.hideLastSeen},{merge:true});
         startLastSeenHeartbeat();
         const savedId = `saved_${user.uid}`;
         const savedChatRef=doc(db,'chats',savedId);
@@ -440,7 +456,7 @@ const firebaseConfig = {
         const userRef=doc(db,'users',user.uid);
         await runTransaction(db,async transaction=>{
             const snapshot=await transaction.get(userRef);
-            if(!snapshot.exists())transaction.set(userRef,{displayName:'',username:'',usernameLower:'',birthday:'',avatarUrl:'',availabilityMode:'online',createdAt:serverTimestamp()});
+            if(!snapshot.exists())transaction.set(userRef,{displayName:'',username:'',usernameLower:'',birthday:'',avatarUrl:'',availabilityMode:'online',hidePhoneNumber:true,hideLastSeen:false,createdAt:serverTimestamp()});
         });
     }
 
@@ -450,8 +466,8 @@ const firebaseConfig = {
         await setDoc(doc(db,'phoneLookup',phone),{uid:currentUser.uid});
     }
     function syncUserDirectory(profile){
-        if(!profile.displayName&&!profile.username)return Promise.resolve();
-        return setDoc(doc(db,'userDirectory',currentUser.uid),{uid:currentUser.uid,displayName:profile.displayName||'',displayNameLower:(profile.displayName||'').toLocaleLowerCase('ru'),username:profile.username||'',usernameLower:profile.usernameLower||'',avatarUrl:profile.avatarUrl||''});
+        if(!profile.displayName&&!profile.username&&profile.hidePhoneNumber!==false)return Promise.resolve();
+        return setDoc(doc(db,'userDirectory',currentUser.uid),{uid:currentUser.uid,displayName:profile.displayName||'',displayNameLower:(profile.displayName||'').toLocaleLowerCase('ru'),username:profile.username||'',usernameLower:profile.usernameLower||'',avatarUrl:profile.avatarUrl||'',phoneNumber:profile.hidePhoneNumber===false?(currentUser.phoneNumber||''):deleteField()},{merge:true});
     }
 
     function listenContacts() {
@@ -461,7 +477,7 @@ const firebaseConfig = {
         }, error => { console.error(error); toast('Не удалось загрузить контакты.'); });
     }
     function syncProfileListeners(){
-        const wanted=new Set([...contactUids,...chatPeerUids]);
+        const wanted=new Set([...contactUids,...chatPeerUids,...(viewedProfileUid?[viewedProfileUid]:[])]);
         for(const [uid,stop] of profileStops){
             if(wanted.has(uid))continue;
             stop();profileStops.delete(uid);contactProfiles.delete(uid);
@@ -472,6 +488,7 @@ const firebaseConfig = {
                 if(snapshot.exists())contactProfiles.set(uid,{uid,...snapshot.data()});
                 else contactProfiles.delete(uid);
                 if(activeRecipientUid===uid){updateDirectHeader(contactProfiles.get(uid)||{});renderTypingIndicator();}
+                if(viewedProfileUid===uid)renderPublicUserProfile(uid);
                 refreshContactRows();
             },error=>console.error(error));
             profileStops.set(uid,stop);
@@ -740,15 +757,18 @@ const firebaseConfig = {
     });
 
     function updateNav(){document.querySelectorAll('[data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===currentView));}
-    function navigate(view){currentView=view;$('#userMenu').classList.add('hidden');updateNav();
+    function navigate(view){
+        if(view!=='user-profile'&&viewedProfileUid){viewedProfileUid=null;syncProfileListeners();}
+        currentView=view;$('#userMenu').classList.add('hidden');updateNav();
         if(view==='saved'){openChat(`saved_${currentUser.uid}`,'saved',{displayName:'Избранное'});return;}
         if(view==='chats'&&window.matchMedia('(max-width: 760px)').matches){clearActiveChatListeners();$('#sideTitle').textContent='Сообщения';renderSideList();$('#chatHeader').classList.add('hidden');$('#messages').classList.add('hidden');$('#composer').classList.add('hidden');$('#panelView').classList.add('hidden');appView.classList.add('mobile-chat-list');return;}
         appView.classList.remove('mobile-chat-list');
-        clearActiveChatListeners();$('#sideTitle').textContent=view==='contacts'?'Контакты':view==='settings'?'Настройки':'Сообщения';renderSideList();
+        clearActiveChatListeners();$('#sideTitle').textContent=view==='contacts'?'Контакты':view==='settings'?'Настройки':view==='profile'||view==='user-profile'?'Профиль':'Сообщения';renderSideList();
         if(view==='chats'){const person=contactRows.find(item=>makeChatId(currentUser.uid,item.uid)===activeChatId);if(person){openChat(activeChatId,'direct',person);return;}openChat(`saved_${currentUser.uid}`,'saved',{displayName:'Избранное'});return;}
         $('#chatHeader').classList.add('hidden');$('#messages').classList.add('hidden');$('#composer').classList.add('hidden');$('#blockedNotice').classList.add('hidden');$('#panelView').classList.remove('hidden');
-        if(view==='contacts') renderContactsPanel(); else if(view==='profile') renderProfilePanel(); else if(view==='settings') renderSettingsPanel();
+        if(view==='contacts') renderContactsPanel(); else if(view==='profile') renderProfilePanel(); else if(view==='user-profile') renderPublicUserProfile(viewedProfileUid); else if(view==='settings') renderSettingsPanel();
     }
+    function openUserProfile(uid){if(!uid)return;if(uid===currentUser.uid){navigate('profile');return;}viewedProfileUid=uid;syncProfileListeners();navigate('user-profile');}
     document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>navigate(button.dataset.view)));
     document.addEventListener('keydown',event=>{
         const target=event.target instanceof Element?event.target:null;
@@ -807,19 +827,17 @@ const firebaseConfig = {
         container.addEventListener('click',event=>{if(suppressClick){event.preventDefault();event.stopImmediatePropagation();suppressClick=false;}},true);
     }
     document.querySelectorAll('.list,.messages').forEach(enableDragScroll);
-    function loadAppearanceSettings(){
-        try{
-            const saved=JSON.parse(localStorage.getItem('speen-appearance')||'{}');
-            return {...appearanceDefaults,...saved,
-                theme:['light','mint','night','sunset','lagoon','orchid'].includes(saved.theme)?saved.theme:appearanceDefaults.theme,
-                wallpaper:['dots','lines','glow','plain','waves','grid','confetti','paper'].includes(saved.wallpaper)?saved.wallpaper:appearanceDefaults.wallpaper,
-                wallpaperColor:typeof saved.wallpaperColor==='string'&&/^#[0-9a-f]{6}$/i.test(saved.wallpaperColor)?saved.wallpaperColor:null,
-                animations:typeof saved.animations==='boolean'?saved.animations:appearanceDefaults.animations,
-                hidePreviews:typeof saved.hidePreviews==='boolean'?saved.hidePreviews:appearanceDefaults.hidePreviews,
-                fontSize:Number.isFinite(saved.fontSize)&&saved.fontSize>=13&&saved.fontSize<=20?saved.fontSize:appearanceDefaults.fontSize,
-                bubbleRadius:Number.isFinite(saved.bubbleRadius)&&saved.bubbleRadius>=2&&saved.bubbleRadius<=28?saved.bubbleRadius:appearanceDefaults.bubbleRadius};
-        }catch{return {...appearanceDefaults};}
+    function normalizeAppearanceSettings(saved={}){
+        return {...appearanceDefaults,...saved,
+            theme:['light','mint','night','sunset','lagoon','orchid'].includes(saved.theme)?saved.theme:appearanceDefaults.theme,
+            wallpaper:['dots','lines','glow','plain','waves','grid','confetti','paper'].includes(saved.wallpaper)?saved.wallpaper:appearanceDefaults.wallpaper,
+            wallpaperColor:typeof saved.wallpaperColor==='string'&&/^#[0-9a-f]{6}$/i.test(saved.wallpaperColor)?saved.wallpaperColor:null,
+            animations:typeof saved.animations==='boolean'?saved.animations:appearanceDefaults.animations,
+            hidePreviews:typeof saved.hidePreviews==='boolean'?saved.hidePreviews:appearanceDefaults.hidePreviews,
+            fontSize:Number.isFinite(saved.fontSize)&&saved.fontSize>=13&&saved.fontSize<=20?saved.fontSize:appearanceDefaults.fontSize,
+            bubbleRadius:Number.isFinite(saved.bubbleRadius)&&saved.bubbleRadius>=2&&saved.bubbleRadius<=28?saved.bubbleRadius:appearanceDefaults.bubbleRadius};
     }
+    function loadAppearanceSettings(){try{return normalizeAppearanceSettings(JSON.parse(localStorage.getItem('speen-appearance')||'{}'));}catch{return {...appearanceDefaults};}}
     function applyAppearanceSettings(){
         document.body.dataset.theme=appearanceSettings.theme;
         document.body.dataset.wallpaper=appearanceSettings.wallpaper;
@@ -836,11 +854,32 @@ const firebaseConfig = {
         appearanceSettings={...appearanceSettings,...changes};
         applyAppearanceSettings();
         try{localStorage.setItem('speen-appearance',JSON.stringify(appearanceSettings));}catch{}
+        persistAppearanceSettings();
+    }
+    function persistAppearanceSettings(){
+        clearTimeout(appearanceSaveTimer);
+        if(!currentUser)return;
+        const uid=currentUser.uid,settings={...appearanceSettings};
+        appearanceSaveTimer=setTimeout(()=>updateDoc(doc(db,'users',uid),{appearance:settings}).catch(error=>console.error('Appearance sync failed:',error)),500);
     }
     async function saveAvailabilityMode(mode){
         if(!['online','recently','longAgo'].includes(mode))return;
         try{await updateDoc(doc(db,'users',currentUser.uid),{availabilityMode:mode,lastActiveAt:serverTimestamp()});availabilityMode=mode;contactProfiles.set(currentUser.uid,{...(contactProfiles.get(currentUser.uid)||{}),uid:currentUser.uid,availabilityMode:mode});renderSettingsPanel();toast('Статус присутствия сохранён.');}
         catch(error){console.error(error);toast('Не удалось сохранить статус. Проверьте правила Firebase.');}
+    }
+    async function savePrivacySetting(key,value){
+        if(!['hidePhoneNumber','hideLastSeen'].includes(key))return;
+        const previous=userPrivacy[key];userPrivacy={...userPrivacy,[key]:value};
+        try{
+            if(key==='hidePhoneNumber'){
+                const batch=writeBatch(db);
+                batch.update(doc(db,'users',currentUser.uid),{[key]:value});
+                batch.set(doc(db,'userDirectory',currentUser.uid),{uid:currentUser.uid,phoneNumber:value?deleteField():(currentUser.phoneNumber||'')},{merge:true});
+                await batch.commit();
+            }else await updateDoc(doc(db,'users',currentUser.uid),{[key]:value});
+            toast('Приватность обновлена.');
+        }catch(error){console.error(error);userPrivacy={...userPrivacy,[key]:previous};toast('Не удалось сохранить настройку приватности.');}
+        finally{if(currentView==='settings')renderSettingsPanel();}
     }
     function renderSettingsPanel(){
         const themes=[['light','Светлая'],['mint','Мятная'],['night','Ночная'],['sunset','Закат'],['lagoon','Лагуна'],['orchid','Орхидея']];
@@ -859,6 +898,11 @@ const firebaseConfig = {
         textStyleGroup.setAttribute('aria-labelledby','textStyleHeading');
         textStyleGroup.innerHTML=`<div class="settings-group-head"><div><h3 id="textStyleHeading">Оформление сообщений</h3><p>Размер шрифта и форма пузырей меняются сразу.</p></div></div><label class="settings-slider" for="fontSizeRange"><span class="settings-slider-label">Размер текста</span><output id="fontSizeOutput">${appearanceSettings.fontSize} px</output><input id="fontSizeRange" type="range" min="13" max="20" step="1" value="${appearanceSettings.fontSize}" data-setting-range="fontSize" aria-label="Размер текста сообщений"><span class="slider-ends"><span>Компактный</span><span>Крупный</span></span></label><label class="settings-slider" for="bubbleRadiusRange"><span class="settings-slider-label">Скругление пузырей</span><output id="bubbleRadiusOutput">${appearanceSettings.bubbleRadius} px</output><input id="bubbleRadiusRange" type="range" min="2" max="28" step="1" value="${appearanceSettings.bubbleRadius}" data-setting-range="bubbleRadius" aria-label="Скругление пузырей сообщений"><span class="slider-ends"><span>Квадратные</span><span>Мягкие</span></span></label><div class="text-preview"><span class="text-preview-label">Предпросмотр</span><div class="text-preview-bubble">Привет! Как тебе оформление?</div><div class="text-preview-bubble mine">Всё отлично, спасибо ✨</div></div>`;
         $('#behaviorHeading').closest('.settings-group').before(textStyleGroup);
+        const privacyGroup=document.createElement('section');
+        privacyGroup.className='settings-group privacy-group';
+        privacyGroup.setAttribute('aria-labelledby','privacyHeading');
+        privacyGroup.innerHTML=`<div class="settings-group-head"><div><h3 id="privacyHeading">Приватность</h3><p>Управляйте данными, которые видят другие пользователи.</p></div></div><div class="setting-row"><div><div class="setting-row-title">Скрыть мой номер телефона</div><div class="setting-row-copy">По умолчанию номер виден только вам. Если разрешить показ, он появится в профиле.</div></div><button class="setting-switch" type="button" role="switch" aria-label="Скрыть мой номер телефона" aria-checked="${userPrivacy.hidePhoneNumber}" data-privacy-setting="hidePhoneNumber"><span class="switch-knob"></span></button></div><div class="setting-row"><div><div class="setting-row-title">Скрыть сетевой статус и время визита</div><div class="setting-row-copy">Собеседники не увидят, в сети ли вы и когда были активны.</div></div><button class="setting-switch" type="button" role="switch" aria-label="Скрыть сетевой статус и время визита" aria-checked="${userPrivacy.hideLastSeen}" data-privacy-setting="hideLastSeen"><span class="switch-knob"></span></button></div>`;
+        $('#panelView .settings-page').appendChild(privacyGroup);
     }
     $('#panelView').addEventListener('click',event=>{
         const presence=event.target.closest('[data-presence-mode]');
@@ -866,7 +910,9 @@ const firebaseConfig = {
         const wallpaper=event.target.closest('[data-wallpaper-choice]');
         const resetWallpaper=event.target.closest('[data-wallpaper-reset]');
         const toggle=event.target.closest('[data-setting-toggle]');
+        const privacy=event.target.closest('[data-privacy-setting]');
         if(presence){saveAvailabilityMode(presence.dataset.presenceMode);return;}
+        if(privacy){const key=privacy.dataset.privacySetting;savePrivacySetting(key,!userPrivacy[key]);return;}
         if(theme){saveAppearanceSettings({theme:theme.dataset.themeChoice});renderSettingsPanel();}
         else if(wallpaper){saveAppearanceSettings({wallpaper:wallpaper.dataset.wallpaperChoice});renderSettingsPanel();}
         else if(resetWallpaper){saveAppearanceSettings({wallpaperColor:null});renderSettingsPanel();}
@@ -888,6 +934,9 @@ const firebaseConfig = {
     });
     $('#filterInput').addEventListener('input',renderSideList);
     $('#addContactTop').addEventListener('click',()=>navigate('contacts'));
+    $('#headerAvatar').addEventListener('click',()=>{if(activeRecipientUid)openUserProfile(activeRecipientUid);});
+    $('#headerTitle').addEventListener('click',()=>{if(activeRecipientUid)openUserProfile(activeRecipientUid);});
+    for(const target of [$('#headerAvatar'),$('#headerTitle')])target.addEventListener('keydown',event=>{if(activeRecipientUid&&(event.key==='Enter'||event.key===' ')){event.preventDefault();openUserProfile(activeRecipientUid);}});
     $('#headerMenuButton').addEventListener('click',()=>$('#userMenu').classList.toggle('hidden'));
     $('#userMenu').addEventListener('click',event=>{const view=event.target.dataset.view;if(view)navigate(view);});
     $('#pinChatButton').addEventListener('click',()=>setChatPreference('pin'));
@@ -904,10 +953,24 @@ const firebaseConfig = {
     function renderContactsPanel(){
         $('#panelView').innerHTML=`<h2 class="panel-heading">Контакты</h2><p class="panel-copy">Ищите по имени среди контактов, @имени пользователя или точному номеру телефона.</p><form id="findForm" class="contact-search"><input id="usernameSearch" class="text-field" type="search" placeholder="Имя, @username или +7 900 123-45-67" autocomplete="off"><button class="primary" type="submit">Найти</button></form><div id="contactResults" class="contact-results">${contactRows.length?contactRows.map(person=>contactCard(person)).join(''):'<div class="empty-list">Введите имя, username или номер телефона, чтобы начать разговор.</div>'}</div>`;
         $('#findForm').addEventListener('submit',findContact);
-        $('#contactResults').addEventListener('click',event=>{const row=event.target.closest('[data-open]');if(row)openDirect(row.dataset.open);});
+        $('#contactResults').addEventListener('click',event=>{const profile=event.target.closest('[data-profile]');if(profile){event.stopPropagation();openUserProfile(profile.dataset.profile);return;}const chat=event.target.closest('[data-chat]');if(chat){openDirect(chat.dataset.chat);return;}const row=event.target.closest('[data-open]');if(row)openDirect(row.dataset.open);});
         $('#contactResults').addEventListener('keydown',event=>{const row=event.target.closest('[data-open]');if(row&&(event.key==='Enter'||event.key===' ')){event.preventDefault();openDirect(row.dataset.open);}});
     }
-    function contactCard(person){const avatar=person.isBlockedByViewer?'':person.avatarUrl?`<img src="${escapeHtml(person.avatarUrl)}" alt="">`:escapeHtml(initials(person.displayName||person.username));return `<div class="contact-row" data-open="${escapeHtml(person.uid)}" tabindex="0" role="button" aria-label="Открыть чат с ${escapeHtml(person.displayName||person.username||'контактом')}"><div class="avatar ${person.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</div><div class="chat-meta"><div class="chat-name">${escapeHtml(person.displayName||'Без имени')}</div><div class="chat-preview">${person.username?'@'+escapeHtml(person.username):''}</div><span class="contact-status ${person.isBlockedByViewer?'is-long':person.availabilityMode==='online'?'is-online':''}">${presenceLabel(person,person.isBlockedByViewer)}</span></div><span class="contact-open">Открыть чат</span></div>`;}
+    function contactCard(person){const avatar=person.isBlockedByViewer?'':person.avatarUrl?`<img src="${escapeHtml(person.avatarUrl)}" alt="">`:escapeHtml(initials(person.displayName||person.username));return `<div class="contact-row"><button class="contact-person" data-open="${escapeHtml(person.uid)}" type="button" aria-label="Открыть чат с ${escapeHtml(person.displayName||person.username||'контактом')}"><span class="avatar ${person.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</span><span class="chat-meta"><span class="chat-name">${escapeHtml(person.displayName||'Без имени')}</span><span class="chat-preview">${person.username?'@'+escapeHtml(person.username):''}</span><span class="contact-status ${person.isBlockedByViewer?'is-long':person.availabilityMode==='online'?'is-online':''}">${presenceLabel(person,person.isBlockedByViewer)}</span></span></button><button class="icon-button contact-profile-action" data-profile="${escapeHtml(person.uid)}" type="button" aria-label="Профиль ${escapeHtml(person.displayName||person.username||'пользователя')}" title="Профиль"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4 20c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg></button><button class="primary contact-open" data-chat="${escapeHtml(person.uid)}" type="button">Написать</button></div>`;}
+    async function renderPublicUserProfile(uid){
+        if(!uid)return;
+        try{
+            const [userSnapshot,directorySnapshot]=await Promise.all([getDoc(doc(db,'users',uid)),getDoc(doc(db,'userDirectory',uid))]);
+            if(!userSnapshot.exists()){toast('Профиль пользователя не найден.');navigate('contacts');return;}
+            const profile={uid,...userSnapshot.data()},directory=directorySnapshot.data()||{};
+            contactProfiles.set(uid,profile);
+            const name=profile.displayName||profile.username||'Пользователь',username=profile.username?`@${profile.username}`:'',phone=profile.hidePhoneNumber===false?directory.phoneNumber||'':'',status=presenceLabel(profile);
+            const avatar=profile.avatarUrl?`<img src="${escapeHtml(profile.avatarUrl)}" alt="">`:escapeHtml(initials(name));
+            const details=[['Имя пользователя',username],['Телефон',phone],['День рождения',profile.birthday||'']].filter(([,value])=>value);
+            $('#panelView').innerHTML=`<div class="public-profile"><div class="public-profile-hero"><div class="public-profile-avatar">${avatar}</div><div class="public-profile-heading"><h2>${escapeHtml(name)}</h2>${username?`<p>${escapeHtml(username)}</p>`:''}<span class="public-profile-status ${status==='Статус скрыт'?'is-hidden':''}">${escapeHtml(status)}</span></div></div><div class="public-profile-actions"><button class="primary" type="button" data-profile-chat="${escapeHtml(uid)}">Написать</button></div><dl class="public-profile-details">${details.map(([label,value])=>`<div class="public-profile-detail"><dt>${label}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl></div>`;
+            $('#panelView').querySelector('[data-profile-chat]').addEventListener('click',()=>openDirect(uid,profile));
+        }catch(error){console.error(error);toast('Не удалось загрузить профиль.');}
+    }
     async function findContact(event){
         event.preventDefault();
         const term=$('#usernameSearch').value.trim();
