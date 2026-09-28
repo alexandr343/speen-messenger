@@ -534,7 +534,7 @@ const firebaseConfig = {
         const saved = `<div class="section-caption">Личное</div><div class="chat-item ${activeChatKind === 'saved' && currentView === 'saved' ? 'active':''}" data-saved="true"><div class="avatar saved"><svg viewBox="0 0 24 24"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.8L6 21V4.75Z"/></svg></div><div class="chat-meta"><div class="chat-line"><span class="chat-name">Избранное</span><span class="chat-time">${savedChat?.updatedAt?stamp(savedChat.updatedAt):'∞'}</span></div><div class="chat-preview">${escapeHtml(savedText)}</div></div></div>`;
         const botChat=chatRows.find(chat=>chat.kind==='bot'),botPreview=botChat?.lastMessage||'Твой ИИ-собеседник';
         const bot=`<div class="chat-item bot-chat-item ${activeChatKind==='bot'?'active':''}" data-bot="true"><div class="avatar bot-avatar">✦</div><div class="chat-meta"><div class="chat-line"><span class="chat-name">Speen AI</span><span class="bot-badge">БОТ</span></div><div class="chat-preview">${escapeHtml(botPreview)}</div></div></div>`;
-        const shownChats=chatRows.filter(chat=>chat.kind==='direct'&&Boolean(chat.lastMessage)&&((chat.archivedBy||[]).includes(currentUser.uid)===showingArchive));
+        const shownChats=chatRows.filter(chat=>chat.kind==='direct'&&((chat.archivedBy||[]).includes(currentUser.uid)===showingArchive));
         shownChats.sort((first,second)=>{
             const firstPinned=(first.pinnedBy||[]).includes(currentUser.uid),secondPinned=(second.pinnedBy||[]).includes(currentUser.uid);
             return Number(secondPinned)-Number(firstPinned)||(second.updatedAt?.toMillis?.()||0)-(first.updatedAt?.toMillis?.()||0);
