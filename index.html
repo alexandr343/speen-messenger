@@ -896,11 +896,19 @@ const firebaseConfig = {
     }
     async function persistMessage(payload,senderId){
         const messageRef=doc(collection(db,'chats',activeChatId,'messages'));
+        const chatRef=doc(db,'chats',activeChatId);
         const batch=writeBatch(db);
         const chatUpdate={lastMessage:payload.text||labelForType(payload.type),lastMessageType:payload.type,lastMessageSenderId:senderId,updatedAt:serverTimestamp()};
-        if(activeChatKind==='direct'&&senderId===currentUser.uid&&activeRecipientUid)chatUpdate[`unreadCounts.${activeRecipientUid}`]=increment(1);
+        if(activeChatKind==='direct'){
+            chatUpdate.kind='direct';
+            chatUpdate.participants=[currentUser.uid,activeRecipientUid].filter(Boolean).sort();
+            if(senderId===currentUser.uid&&activeRecipientUid)chatUpdate.unreadCounts={[activeRecipientUid]:increment(1)};
+        }else if(activeChatKind==='saved'){
+            chatUpdate.kind='saved';
+            chatUpdate.participants=[currentUser.uid];
+        }
         batch.set(messageRef,{...payload,senderId,createdAt:serverTimestamp()});
-        batch.update(doc(db,'chats',activeChatId),chatUpdate);
+        batch.set(chatRef,chatUpdate,{merge:true});
         await batch.commit();
         if(senderId===currentUser.uid)playMessageSound('outgoing');
         return messageRef;
