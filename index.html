@@ -471,7 +471,7 @@ const firebaseConfig = {
             const stop=onSnapshot(doc(db,'users',uid),snapshot=>{
                 if(snapshot.exists())contactProfiles.set(uid,{uid,...snapshot.data()});
                 else contactProfiles.delete(uid);
-                if(activeRecipientUid===uid)updateDirectHeader(contactProfiles.get(uid)||{});
+                if(activeRecipientUid===uid){updateDirectHeader(contactProfiles.get(uid)||{});renderTypingIndicator();}
                 refreshContactRows();
             },error=>console.error(error));
             profileStops.set(uid,stop);
@@ -558,7 +558,7 @@ const firebaseConfig = {
             activeRecipientReadAt=activeRecipientUid?chat.lastReadAt?.[activeRecipientUid]:null;
             lastMarkedReadAt=Math.max(lastMarkedReadAt,timestampMilliseconds(chat.lastReadAt?.[currentUser.uid]));
             updateRemoteTyping(chat);
-            updateDirectHeader(profile);
+            updateDirectHeader(activeRecipientUid?contactProfiles.get(activeRecipientUid)||profile:profile);
             renderMessages(activeMessages);
         }, error => { console.error(error); toast('Не удалось синхронизировать статус прочтения.'); });
         stopMessages = onSnapshot(query(collection(db,'chats',chatId,'messages'),orderBy('createdAt','asc')), snapshot => {
