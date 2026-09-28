@@ -364,7 +364,7 @@ const firebaseConfig = {
         onAuthStateChanged(auth, async user => {
             currentUser = user;
             if (!user) { clearListeners(); showLogin(); return; }
-            try { await startWorkspace(user); } catch (error) { console.error(error); toast('Не удалось загрузить аккаунт. Проверьте правила Firebase.'); showApp(); }
+            try { await ensureUserProfile(user); await startWorkspace(user); } catch (error) { console.error(error); toast('Не удалось загрузить аккаунт. Проверьте правила Firebase.'); showApp(); }
         });
     } else {
         $('#setupNotice').textContent = 'Чтобы получать настоящие SMS-коды и хранить данные онлайн, подключите проект Firebase: включите Phone в Authentication, создайте Firestore и Storage, затем вставьте конфигурацию в index.html.';
@@ -408,7 +408,6 @@ const firebaseConfig = {
     async function startWorkspace(user) {
         showApp();
         const userRef = doc(db, 'users', user.uid), snapshot = await getDoc(userRef);
-        if (!snapshot.exists()) await setDoc(userRef, {displayName:'', username:'', usernameLower:'', birthday:'', avatarUrl:'', availabilityMode:'online', createdAt:serverTimestamp()});
         availabilityMode=snapshot.data()?.availabilityMode||'online';
         await Promise.all([syncPhoneLookup().catch(error=>console.error('Phone lookup index sync failed:',error)),syncUserDirectory(snapshot.data()||{}).catch(error=>console.error('User directory sync failed:',error))]);
         await setDoc(userRef,{availabilityMode,lastActiveAt:serverTimestamp()},{merge:true});
@@ -419,6 +418,14 @@ const firebaseConfig = {
         if(!(await getDoc(botChatRef)).exists()) await setDoc(botChatRef,{participants:[user.uid],kind:'bot',updatedAt:serverTimestamp(),lastMessage:'Привет! Я Speen, твой ИИ-собеседник ✨'});
         $('#composer').classList.remove('hidden'); $('#chatHeader').classList.remove('hidden'); $('#panelView').classList.add('hidden'); $('#messages').classList.remove('hidden');
         listenContacts(); listenChatList(); renderSideList(); openChat(savedId,'saved',{displayName:'Избранное'}); updateProfileBadge();
+    }
+
+    async function ensureUserProfile(user){
+        const userRef=doc(db,'users',user.uid);
+        await runTransaction(db,async transaction=>{
+            const snapshot=await transaction.get(userRef);
+            if(!snapshot.exists())transaction.set(userRef,{displayName:'',username:'',usernameLower:'',birthday:'',avatarUrl:'',availabilityMode:'online',createdAt:serverTimestamp()});
+        });
     }
 
     async function syncPhoneLookup(){
