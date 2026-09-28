@@ -989,7 +989,13 @@ const firebaseConfig = {
                     getDocs(query(collection(db,'userDirectory'),orderBy('usernameLower'),where('usernameLower','>=',normalized),where('usernameLower','<=',prefixEnd),limit(10)))
                 ]);
                 const directoryMatches=new Map([...nameMatches.docs,...usernameMatches.docs].filter(item=>item.id!==currentUser.uid).map(item=>[item.id,{uid:item.id,...item.data()}]));
-                if(directoryMatches.size){$('#contactResults').innerHTML=[...directoryMatches.values()].map(contactCard).join('');return;}
+                if(directoryMatches.size){
+                    const people=await Promise.all([...directoryMatches.values()].map(async directoryProfile=>{
+                        const user=await getDoc(doc(db,'users',directoryProfile.uid));
+                        return user.exists()?{uid:user.id,...user.data()}:directoryProfile;
+                    }));
+                    $('#contactResults').innerHTML=people.map(contactCard).join('');return;
+                }
             }
             if(!person){
                 const ownNumber=parsePhoneNumberFromString(currentUser.phoneNumber||'');
