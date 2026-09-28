@@ -116,6 +116,14 @@
         html.app-active,body.app-active{height:100%;overflow:hidden}body.app-active{position:fixed;inset:0;width:100%;height:100dvh;min-height:0}.app{position:relative;min-height:0;height:100dvh}body.app-active .app{height:100%;max-height:100%}.side,.content,.rail{min-height:0}.side{overflow:hidden}.list,.messages,.panel-view{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable}.composer{flex:0 0 auto}.user-menu{max-height:min(70vh,540px);overflow-y:auto;overscroll-behavior:contain}.archive-row{display:flex;align-items:center;gap:12px;padding:12px;border-radius:9px;background:#f2f5f1;color:var(--ink);cursor:pointer;font-size:13px;font-weight:700;transition:background .18s,transform .18s}.archive-row:hover{background:#e8efe8;transform:translateX(2px)}.archive-icon{width:24px;height:24px;display:grid;place-items:center;border-radius:7px;background:#e3ebe2;color:#527360}.archive-count{margin-left:auto;color:var(--muted);font-size:11px}.chat-item.is-pinned .chat-name::before{content:'⌖';display:inline-block;margin-right:5px;color:var(--green-deep);transform:rotate(-35deg)}.chat-item.is-muted .chat-time::after{content:' · ◌';color:var(--muted)}.chat-item.is-archived{opacity:.88}body[data-theme="night"] .archive-row{background:#253637;color:#e5eeea}body[data-theme="night"] .archive-row:hover{background:#2d4542}.archive-row.active{background:#e4eee5;color:var(--green-deep)}.profile-phone-field{max-width:430px;margin-top:20px}.profile-phone-field .text-field{color:var(--muted);background:#f5f7f4}body[data-theme="night"] .profile-phone-field .text-field{background:#243436;color:#b5c4bd}
         @media(max-width:760px){.archive-row{padding:11px 10px}.user-menu{right:10px;max-width:calc(100vw - 20px)}}
     </style>
+    <style>
+        .typing-indicator{align-self:flex-start;display:flex;align-items:center;gap:10px;max-width:min(84%,360px);max-height:0;margin:0;padding:0 14px;overflow:hidden;opacity:0;transform:translateY(8px) scale(.97);transform-origin:bottom left;border:1px solid transparent;border-radius:4px 15px 15px 15px;background:var(--white);color:var(--muted);box-shadow:0 5px 16px #34443c0b;transition:max-height .28s cubic-bezier(.2,.8,.2,1),margin .28s,padding .28s,opacity .22s,transform .28s,border-color .22s}
+        .typing-indicator.is-visible{max-height:48px;margin:0 0 3px;padding:10px 14px;border-color:var(--line);opacity:1;transform:translateY(0) scale(1)}
+        .typing-copy{font-size:12px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.typing-dots{height:14px;display:flex;align-items:center;gap:3px;flex:0 0 auto}.typing-dots span{width:5px;height:5px;border-radius:50%;background:#62a47f;animation:typing-bounce 1s ease-in-out infinite}.typing-dots span:nth-child(2){animation-delay:.14s}.typing-dots span:nth-child(3){animation-delay:.28s}
+        body[data-theme="night"] .typing-indicator{background:#293a3b;border-color:#405152;color:#dce7e1;box-shadow:0 5px 16px #08111130}.typing-indicator[aria-hidden="true"]{pointer-events:none}
+        @keyframes typing-bounce{0%,60%,100%{opacity:.38;transform:translateY(0) scale(.82)}30%{opacity:1;transform:translateY(-4px) scale(1.08)}}
+        @media(prefers-reduced-motion:reduce){.typing-indicator,.typing-indicator.is-visible{transition:none;transform:none}.typing-dots span{animation:none;opacity:.7}}
+    </style>
 </head>
 <body>
 <main id="loginView" class="login-wrap">
@@ -214,7 +222,7 @@ const firebaseConfig = {
     const appCheckSiteKey = 'PASTE_RECAPTCHA_ENTERPRISE_SITE_KEY';
     const configured = Object.values(firebaseConfig).every(value => value && !value.includes('PASTE_'));
     let auth, db, storage, aiModel, appCheckReady=false, confirmation, verifier, currentUser, activeChatId = null, activeChatKind = 'saved';
-    let stopMessages, stopContacts, stopChatDocs, stopChatList, contactProfileStops = [], contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], lastMarkedReadAt = 0, availabilityMode = 'online', showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], chatProfileLoads = new Set(), lastSeenHeartbeat = null, lastSeenWriteAt = 0;
+    let stopMessages, stopContacts, stopChatDocs, stopChatList, profileStops = new Map(), contactUids = new Set(), chatPeerUids = new Set(), contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], activeRemoteTypingUntil = 0, localTypingChatId = null, localTypingActive = false, lastTypingWriteAt = 0, typingPauseTimer = null, typingExpiryTimer = null, lastMarkedReadAt = 0, availabilityMode = 'online', showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], lastSeenHeartbeat = null, presenceRefreshTimer = null, lastSeenWriteAt = 0;
     const $ = selector => document.querySelector(selector);
     const loginView = $('#loginView'), appView = $('#appView'), errorBox = $('#authError');
     const appearanceDefaults = {theme:'light', wallpaper:'dots', animations:true, hidePreviews:false, fontSize:14, bubbleRadius:16};
@@ -302,7 +310,14 @@ const firebaseConfig = {
     }
     function presenceLabel(profile, hiddenByBlock=false){
         if(hiddenByBlock)return 'Был(а) давно';
-        return ({online:'В сети',recently:'Был(а) недавно',longAgo:'Был(а) давно'})[profile?.availabilityMode]||'Был(а) недавно';
+        const mode=profile?.availabilityMode||'recently';
+        if(mode==='longAgo')return 'Был(а) давно';
+        if(mode==='recently')return 'Был(а) недавно';
+        const lastActive=timestampMilliseconds(profile?.lastActiveAt);
+        if(!lastActive||Date.now()-lastActive<90_000)return 'В сети';
+        const date=new Date(lastActive),today=new Date();
+        const time=date.toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+        return date.toDateString()===today.toDateString()?`Был(а) сегодня, в ${time}`:`Был(а) ${date.toLocaleDateString('ru-RU')} в ${time}`;
     }
     function updateDirectHeader(profile={}){
         const blockedByViewer=Boolean(activeRecipientUid&&activeChatBlockedBy.includes(activeRecipientUid));
@@ -354,8 +369,8 @@ const firebaseConfig = {
     }
     function showLogin() { document.body.classList.remove('app-active');document.documentElement.classList.remove('app-active');loginView.classList.remove('hidden'); appView.classList.add('hidden'); }
     function showApp() { document.body.classList.add('app-active');document.documentElement.classList.add('app-active');loginView.classList.add('hidden'); appView.classList.remove('hidden'); }
-    function clearActiveChatListeners() { stopMessages?.(); stopChatDocs?.(); stopMessages = stopChatDocs = null; activeMessages = []; }
-    function clearListeners() { clearActiveChatListeners(); stopContacts?.(); stopChatList?.(); contactProfileStops.forEach(stop=>stop()); contactProfileStops=[]; contactProfiles.clear(); chatProfileLoads.clear(); clearInterval(lastSeenHeartbeat); lastSeenHeartbeat=null; lastSeenWriteAt=0; stopContacts = stopChatList = null; chatRows = []; contactRows = []; }
+    function clearActiveChatListeners() { stopLocalTyping();clearTimeout(typingExpiryTimer);activeRemoteTypingUntil=0;stopMessages?.();stopChatDocs?.();stopMessages=stopChatDocs=null;activeMessages=[]; }
+    function clearListeners() { clearActiveChatListeners(); stopContacts?.(); stopChatList?.(); profileStops.forEach(stop=>stop()); profileStops.clear(); contactUids.clear(); chatPeerUids.clear(); contactProfiles.clear(); clearInterval(lastSeenHeartbeat);clearInterval(presenceRefreshTimer);lastSeenHeartbeat=presenceRefreshTimer=null;lastSeenWriteAt=0;stopContacts=stopChatList=null;chatRows=[];contactRows=[]; }
     function makeChatId(first, second) { return [first, second].sort().join('__'); }
 
     if (configured) {
@@ -441,17 +456,27 @@ const firebaseConfig = {
 
     function listenContacts() {
         stopContacts?.(); stopContacts = onSnapshot(collection(db,'users',currentUser.uid,'contacts'), snapshot => {
-            contactProfileStops.forEach(stop=>stop());contactProfileStops=[];contactProfiles.clear();
-            snapshot.docs.forEach(item=>{
-                const stop=onSnapshot(doc(db,'users',item.id),userSnap=>{
-                    if(userSnap.exists())contactProfiles.set(item.id,{uid:item.id,...userSnap.data()});
-                    else contactProfiles.delete(item.id);
-                    refreshContactRows();loadChatProfiles();
-                },error=>console.error(error));
-                contactProfileStops.push(stop);
-            });
-            refreshContactRows();loadChatProfiles();
+            contactUids=new Set(snapshot.docs.map(item=>item.id));
+            syncProfileListeners();
         }, error => { console.error(error); toast('Не удалось загрузить контакты.'); });
+    }
+    function syncProfileListeners(){
+        const wanted=new Set([...contactUids,...chatPeerUids]);
+        for(const [uid,stop] of profileStops){
+            if(wanted.has(uid))continue;
+            stop();profileStops.delete(uid);contactProfiles.delete(uid);
+        }
+        for(const uid of wanted){
+            if(profileStops.has(uid))continue;
+            const stop=onSnapshot(doc(db,'users',uid),snapshot=>{
+                if(snapshot.exists())contactProfiles.set(uid,{uid,...snapshot.data()});
+                else contactProfiles.delete(uid);
+                if(activeRecipientUid===uid)updateDirectHeader(contactProfiles.get(uid)||{});
+                refreshContactRows();
+            },error=>console.error(error));
+            profileStops.set(uid,stop);
+        }
+        refreshContactRows();
     }
     function refreshContactRows(){
         contactRows=[...contactProfiles.values()].map(person=>{
@@ -466,14 +491,9 @@ const firebaseConfig = {
         stopChatList?.();
         stopChatList = onSnapshot(query(collection(db,'chats'),where('participants','array-contains',currentUser.uid)), snapshot => {
             chatRows = snapshot.docs.map(item => ({id:item.id,...item.data()}));
-            refreshContactRows();
-            loadChatProfiles();
+            chatPeerUids=new Set(chatRows.filter(chat=>chat.kind==='direct').flatMap(chat=>chat.participants||[]).filter(uid=>uid!==currentUser.uid));
+            syncProfileListeners();
         }, error => { console.error(error); toast('Не удалось обновить список чатов.'); });
-    }
-    async function loadChatProfiles(){
-        const peerUids=[...new Set(chatRows.filter(chat=>chat.kind==='direct').flatMap(chat=>chat.participants||[]).filter(uid=>uid!==currentUser.uid&&!contactProfiles.has(uid)&&!chatProfileLoads.has(uid)))];
-        await Promise.all(peerUids.map(async uid=>{chatProfileLoads.add(uid);try{const snapshot=await getDoc(doc(db,'users',uid));if(snapshot.exists())contactProfiles.set(uid,{uid,...snapshot.data()});}catch(error){console.error(error);}finally{chatProfileLoads.delete(uid);}}));
-        refreshContactRows();
     }
     function renderSideList() {
         if (currentView === 'contacts' || currentView === 'chats' || currentView === 'settings') $('#sideTitle').textContent = showingArchive?'Архив':currentView === 'contacts' ? 'Контакты' : currentView === 'settings' ? 'Настройки' : 'Сообщения';
@@ -532,11 +552,12 @@ const firebaseConfig = {
         $('#headerTitle').textContent = kind==='saved'?'Избранное':(profile.displayName||profile.username||'Контакт');
         updateDirectHeader(profile);
         stopChatDocs = onSnapshot(doc(db,'chats',chatId), snapshot => {
-            const chat=snapshot.data()||{};
+            const chat=snapshot.data({serverTimestamps:'estimate'})||{};
             activeChatDocument={id:snapshot.id,...chat};
             activeChatBlockedBy=Array.isArray(chat.blockedBy)?chat.blockedBy:[];
             activeRecipientReadAt=activeRecipientUid?chat.lastReadAt?.[activeRecipientUid]:null;
             lastMarkedReadAt=Math.max(lastMarkedReadAt,timestampMilliseconds(chat.lastReadAt?.[currentUser.uid]));
+            updateRemoteTyping(chat);
             updateDirectHeader(profile);
             renderMessages(activeMessages);
         }, error => { console.error(error); toast('Не удалось синхронизировать статус прочтения.'); });
@@ -565,6 +586,45 @@ const firebaseConfig = {
         updateDoc(doc(db,'chats',activeChatId),{[`lastReadAt.${currentUser.uid}`]:serverTimestamp()})
             .catch(error=>{lastMarkedReadAt=0;console.error(error);});
     }
+    function updateRemoteTyping(chat){
+        clearTimeout(typingExpiryTimer);
+        const typingAt=timestampMilliseconds(activeRecipientUid?chat.typing?.[activeRecipientUid]:null);
+        activeRemoteTypingUntil=activeChatKind==='direct'&&typingAt?typingAt+5000:0;
+        renderTypingIndicator();
+        const remaining=activeRemoteTypingUntil-Date.now();
+        if(remaining>0)typingExpiryTimer=setTimeout(()=>{activeRemoteTypingUntil=0;renderTypingIndicator();},remaining+20);
+    }
+    function stopLocalTyping(){
+        clearTimeout(typingPauseTimer);typingPauseTimer=null;
+        if(localTypingActive&&localTypingChatId&&currentUser){
+            updateDoc(doc(db,'chats',localTypingChatId),{[`typing.${currentUser.uid}`]:deleteField()}).catch(error=>console.error('Typing state cleanup failed:',error));
+        }
+        localTypingChatId=null;localTypingActive=false;lastTypingWriteAt=0;
+    }
+    function trackLocalTyping(value){
+        if(activeChatKind!=='direct'||!activeChatId||!currentUser)return;
+        if(!value.trim()){stopLocalTyping();return;}
+        if(localTypingChatId&&localTypingChatId!==activeChatId)stopLocalTyping();
+        const now=Date.now(),chatId=activeChatId;
+        localTypingChatId=chatId;
+        if(!localTypingActive||now-lastTypingWriteAt>=1000){
+            localTypingActive=true;lastTypingWriteAt=now;
+            updateDoc(doc(db,'chats',chatId),{[`typing.${currentUser.uid}`]:serverTimestamp()}).catch(error=>console.error('Typing state update failed:',error));
+        }
+        clearTimeout(typingPauseTimer);
+        typingPauseTimer=setTimeout(stopLocalTyping,1800);
+    }
+    function renderTypingIndicator(){
+        const messages=$('#messages');if(!messages)return;
+        let indicator=$('#typingIndicator');
+        if(!indicator){indicator=document.createElement('div');indicator.id='typingIndicator';indicator.className='typing-indicator';indicator.setAttribute('role','status');messages.appendChild(indicator);}
+        const visible=activeRemoteTypingUntil>Date.now();
+        indicator.classList.toggle('is-visible',visible);
+        indicator.setAttribute('aria-hidden',String(!visible));
+        const profile=activeRecipientUid?contactProfiles.get(activeRecipientUid):null;
+        indicator.innerHTML=visible?`<span class="typing-dots" aria-hidden="true"><span></span><span></span><span></span></span><span class="typing-copy">${escapeHtml(profile?.displayName||profile?.username||'Собеседник')} печатает</span>`:'';
+        if(visible)messages.scrollTop=messages.scrollHeight;
+    }
     function updateLastSeen(force=false){
         if(!currentUser)return;
         const now=Date.now();
@@ -576,6 +636,8 @@ const firebaseConfig = {
         clearInterval(lastSeenHeartbeat);lastSeenWriteAt=0;
         updateLastSeen();
         lastSeenHeartbeat=setInterval(()=>{if(document.visibilityState==='visible')updateLastSeen();},60_000);
+        clearInterval(presenceRefreshTimer);
+        presenceRefreshTimer=setInterval(()=>{renderSideList();if(activeRecipientUid)updateDirectHeader(contactProfiles.get(activeRecipientUid)||{});},30_000);
     }
     document.addEventListener('visibilitychange',()=>{
         if(document.visibilityState==='visible')markChatAsRead(activeMessages);
@@ -585,7 +647,7 @@ const firebaseConfig = {
     window.addEventListener('pagehide',()=>updateLastSeen(true));
     function renderMessages(messages) {
         const target=$('#messages');
-        if (!messages.length) { target.innerHTML='<div class="blank-state"><div class="blank-icon">✦</div><strong>Это ваше место.</strong>Записывайте мысли и сохраняйте то, что важно.</div>'; return; }
+        if (!messages.length) { target.innerHTML='<div class="blank-state"><div class="blank-icon">✦</div><strong>Это ваше место.</strong>Записывайте мысли и сохраняйте то, что важно.</div>';renderTypingIndicator();return; }
         target.innerHTML='<div class="day-label">Сообщения синхронизируются онлайн</div>'+messages.map(message=>{
             const mine=message.senderId===currentUser.uid; let body='';
             const messageTime=timestampMilliseconds(message.createdAt), recipientReadTime=timestampMilliseconds(activeRecipientReadAt);
@@ -600,7 +662,7 @@ const firebaseConfig = {
             const reactionPills=Object.entries(reactionCounts).map(([emoji,count])=>`<button class="reaction-pill ${message.reactions?.[currentUser.uid]===emoji?'selected':''}" type="button" data-message-id="${escapeHtml(message.id)}" data-react-emoji="${escapeHtml(emoji)}" aria-pressed="${message.reactions?.[currentUser.uid]===emoji}">${emoji}<span>${count}</span></button>`).join('');
             const reactionPicker=`<div class="emoji-picker hidden" role="group" aria-label="Выбрать реакцию">${['❤️','😂','👍','🔥','✨','🎉'].map(emoji=>`<button class="emoji-choice" type="button" data-message-id="${escapeHtml(message.id)}" data-react-emoji="${emoji}" aria-label="Реакция ${emoji}">${emoji}</button>`).join('')}</div>`;
             return `<article class="bubble ${mine?'mine':''} ${message.senderId==='speen_ai_bot'?'bot-message':''}" data-message-id="${escapeHtml(message.id)}">${body}${message.caption?`<div>${escapeHtml(message.caption)}</div>`:''}<div class="bubble-footer"><time>${stamp(message.createdAt)}</time>${receipt}</div><div class="reaction-tray">${reactionPills}<button class="reaction-trigger" type="button" data-reaction-toggle="${escapeHtml(message.id)}" aria-label="Добавить реакцию" title="Добавить реакцию">☺<span>+</span></button>${reactionPicker}</div></article>`;
-        }).join(''); target.scrollTop=target.scrollHeight;
+        }).join('');renderTypingIndicator();target.scrollTop=target.scrollHeight;
     }
     async function toggleMessageReaction(messageId,emoji){
         if(!activeChatId||!currentUser)return;
@@ -649,8 +711,8 @@ const firebaseConfig = {
         finally{typing.remove();}
     }
     function labelForType(type) { return ({image:'Фото',video:'Видеосообщение',audio:'Голосовое сообщение',file:'Файл'})[type]||'Сообщение'; }
-    $('#composer').addEventListener('submit', async event => { event.preventDefault(); const input=$('#messageInput'), text=input.value.trim(); if(!text)return; input.value=''; input.style.height='auto'; if(activeChatKind==='bot') await sendBotMessage(text); else await sendMessage({type:'text',text}); });
-    $('#messageInput').addEventListener('input', event => { event.target.style.height='auto'; event.target.style.height=`${Math.min(event.target.scrollHeight,130)}px`; });
+    $('#composer').addEventListener('submit', async event => { event.preventDefault(); const input=$('#messageInput'), text=input.value.trim(); if(!text)return; stopLocalTyping();input.value='';input.style.height='auto';if(activeChatKind==='bot')await sendBotMessage(text);else await sendMessage({type:'text',text}); });
+    $('#messageInput').addEventListener('input', event => { event.target.style.height='auto';event.target.style.height=`${Math.min(event.target.scrollHeight,130)}px`;trackLocalTyping(event.target.value); });
     $('#attachButton').addEventListener('click',()=>$('#photoInput').click());
     $('#photoInput').addEventListener('change', async event => { for(const file of event.target.files||[]) await uploadAndSend(file); event.target.value=''; });
     async function uploadAndSend(file, typeOverride, videoNote=false) {
