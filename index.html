@@ -132,24 +132,32 @@
         @media(prefers-reduced-motion:reduce){.public-profile,.public-profile-hero::before{animation:none!important}}
     </style>
     <style>
-        .settings-group-head{align-items:center}.settings-heading-line{display:flex;align-items:center;gap:11px}.settings-heading-icon,.setting-icon,.settings-choice-icon,.settings-slider-icon{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--green-deep) 16%,var(--line));border-radius:11px;background:color-mix(in srgb,var(--green) 20%,var(--white));color:var(--green-deep)}
-        .settings-heading-icon svg,.setting-icon svg,.settings-choice-icon svg,.settings-slider-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.setting-row{justify-content:flex-start}.setting-row>div:not(.setting-icon){min-width:0;flex:1}.setting-row .setting-icon{width:34px;height:34px;flex-basis:34px;border-radius:10px;background:var(--paper)}
-        .settings-choice-icon{width:24px;height:24px;flex-basis:24px;border:0;background:transparent}.settings-choice-icon svg{width:17px;height:17px}.theme-choice-label,.wallpaper-choice-label,.presence-choice{display:flex;align-items:center;gap:6px}.settings-slider{position:relative;padding-left:47px}.settings-slider-icon{position:absolute;left:0;top:7px;width:34px;height:34px;flex-basis:34px}.settings-slider-label{align-self:center}.settings-slider input[type="range"]{margin-top:6px}
-        .theme-choice-label,.wallpaper-choice-label{font-size:11px;font-weight:700}.presence-choice{justify-content:center}.settings-group{position:relative}.settings-group-head{margin-bottom:17px}.settings-page>.settings-group:first-of-type{border-top:0;padding-top:0}
-        body[data-theme="night"] .settings-heading-icon,body[data-theme="night"] .setting-icon,body[data-theme="night"] .settings-slider-icon{background:#293e39;border-color:#405a4d;color:#b5e0c6}body[data-theme="night"] .settings-choice-icon{color:#b5e0c6}body[data-theme="night"] .setting-row .setting-icon{background:#293a3b;border-color:#405152}
-        @media(max-width:760px){.settings-heading-icon{width:34px;height:34px;flex-basis:34px}.setting-row{gap:11px}.setting-row .setting-icon{width:31px;height:31px;flex-basis:31px}.settings-slider{padding-left:42px}}
+        .settings-group-head{display:flex;align-items:center;justify-content:flex-start;gap:12px}
+        .settings-section-icon,.settings-item-icon,.settings-slider-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 34px;width:34px;height:34px;border:1px solid color-mix(in srgb,var(--green-deep) 16%,var(--line));border-radius:10px;background:color-mix(in srgb,var(--green) 20%,var(--white));color:var(--green-deep)}
+        .settings-section-icon{width:38px;height:38px;flex-basis:38px;border-radius:12px}.settings-item-icon{background:var(--paper)}.settings-section-icon svg,.settings-item-icon svg,.settings-slider-icon svg,.settings-choice-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+        .setting-row{justify-content:flex-start;gap:12px}.setting-row>div{flex:1;min-width:0}.settings-choice-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 23px;width:23px;height:23px;color:var(--green-deep)}
+        .theme-choice-label,.wallpaper-choice-label,.presence-choice{display:flex;align-items:center;gap:7px}.theme-choice-label>span:last-child,.wallpaper-choice-label>span:last-child,.presence-choice>span:last-child{min-width:0}
+        .settings-slider{position:relative;padding-left:43px}.settings-slider-icon{position:absolute;left:0;top:6px}.settings-slider input[type="range"]{margin-top:5px}
+        .custom-color-reset .settings-choice-icon,.notification-test .settings-choice-icon{margin-right:6px;vertical-align:-5px}.notification-test{display:inline-flex;align-items:center;margin-top:8px}
+        body[data-theme="night"] .settings-section-icon,body[data-theme="night"] .settings-item-icon,body[data-theme="night"] .settings-slider-icon{background:#293e39;border-color:#405a4d;color:#b5e0c6}body[data-theme="night"] .settings-choice-icon{color:#b5e0c6}
+        @media(max-width:760px){.settings-group-head{gap:10px}.settings-section-icon{width:34px;height:34px;flex-basis:34px}.setting-row{gap:10px}.settings-item-icon,.settings-slider-icon{width:31px;height:31px;flex-basis:31px}.settings-slider{padding-left:40px}}
     </style>
     <style>
-        .read-receipt{position:relative;width:25px;height:17px;display:inline-flex;align-items:center;justify-content:center;overflow:visible;color:#3c9b78;line-height:0}
-        .read-receipt svg{position:relative;z-index:1;width:23px;height:18px;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-        .read-receipt path{stroke-dasharray:32;stroke-dashoffset:32}.read-receipt::before{content:"";position:absolute;inset:2px 1px;border:1px solid currentColor;border-radius:50%;opacity:0;pointer-events:none}
-        .read-receipt.is-read path:first-child,.read-receipt.is-saved path:first-child{animation:receipt-trace .34s cubic-bezier(.2,.75,.25,1) both}
-        .read-receipt.is-read path:nth-child(2),.read-receipt.is-saved path:nth-child(2){animation:receipt-trace .38s .13s cubic-bezier(.2,.75,.25,1) both}
-        .read-receipt.is-read::before,.read-receipt.is-saved::before{animation:receipt-halo .62s .05s cubic-bezier(.16,.8,.25,1) both}
+        .read-receipt{position:relative;width:29px;height:20px;display:inline-grid;place-items:center;overflow:visible;color:#3c9b78;font-size:0;line-height:0}
+        .read-receipt svg{position:relative;z-index:1;width:25px;height:20px;overflow:visible;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+        .read-receipt .receipt-check{stroke-dasharray:30;stroke-dashoffset:30}
+        .read-receipt::before{content:"";position:absolute;inset:2px 3px;border:1px solid currentColor;border-radius:50%;opacity:0;pointer-events:none}
+        .read-receipt::after{content:"";position:absolute;right:1px;top:0;width:6px;height:6px;background:#a0c96b;clip-path:polygon(50% 0,62% 35%,100% 50%,62% 65%,50% 100%,38% 65%,0 50%,38% 35%);opacity:0;transform:scale(.3) rotate(-25deg)}
+        .read-receipt.is-read .receipt-check:first-child,.read-receipt.is-saved .receipt-check:first-child{animation:receipt-draw .36s cubic-bezier(.2,.75,.25,1) both}
+        .read-receipt.is-read .receipt-check:nth-child(2),.read-receipt.is-saved .receipt-check:nth-child(2){animation:receipt-draw .4s .12s cubic-bezier(.2,.75,.25,1) both}
+        .read-receipt.is-read::before,.read-receipt.is-saved::before{animation:receipt-pulse .64s .04s cubic-bezier(.16,.8,.25,1) both}
+        .read-receipt.is-read::after,.read-receipt.is-saved::after{animation:receipt-spark .46s .2s cubic-bezier(.2,.8,.25,1) both}
         body[data-theme="night"] .read-receipt.is-read,body[data-theme="night"] .read-receipt.is-saved{color:#9ce1bc}
-        @keyframes receipt-trace{0%{stroke-dashoffset:32;opacity:.45}75%{stroke-dashoffset:-2;opacity:1}100%{stroke-dashoffset:0;opacity:1}}
-        @keyframes receipt-halo{0%{opacity:0;transform:scale(.55)}28%{opacity:.42}100%{opacity:0;transform:scale(1.7)}}
-        @media(prefers-reduced-motion:reduce){.read-receipt path{stroke-dashoffset:0}.read-receipt.is-read path,.read-receipt.is-saved path,.read-receipt.is-read::before,.read-receipt.is-saved::before{animation:none!important}}
+        body[data-motion="off"] .read-receipt .receipt-check{stroke-dashoffset:0}
+        @keyframes receipt-draw{0%{stroke-dashoffset:30;opacity:.35}72%{stroke-dashoffset:-1;opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+        @keyframes receipt-pulse{0%{opacity:0;transform:scale(.5)}28%{opacity:.35}100%{opacity:0;transform:scale(1.6)}}
+        @keyframes receipt-spark{0%{opacity:0;transform:scale(.25) rotate(-25deg)}55%{opacity:1;transform:scale(1.15) rotate(18deg)}100%{opacity:0;transform:scale(.65) rotate(45deg)}}
+        @media(prefers-reduced-motion:reduce){.read-receipt .receipt-check{stroke-dashoffset:0}.read-receipt.is-read .receipt-check,.read-receipt.is-saved .receipt-check,.read-receipt.is-read::before,.read-receipt.is-saved::before,.read-receipt.is-read::after,.read-receipt.is-saved::after{animation:none!important}}
     </style>
 </head>
 <body>
@@ -252,6 +260,8 @@
     import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js';
     import { getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, collection, query, where, onSnapshot, orderBy, serverTimestamp, runTransaction, arrayUnion, arrayRemove, deleteField, getDocs, writeBatch, limit, increment } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
     import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js';
+    import { getAI, GoogleAIBackend, getGenerativeModel } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-ai.js';
+    import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js';
     import { parsePhoneNumberFromString, getCountries, getCountryCallingCode } from 'https://esm.sh/libphonenumber-js@1.11.20/min';
 
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -264,9 +274,10 @@ const firebaseConfig = {
   appId: "1:286550077806:web:e9df2bd0dacb98573c517f",
   measurementId: "G-JVF9378N4L"
 };
+    const appCheckSiteKey = 'PASTE_RECAPTCHA_ENTERPRISE_SITE_KEY';
     const configured = Object.values(firebaseConfig).every(value => value && !value.includes('PASTE_'));
-    let auth, db, storage, confirmation, verifier, currentUser, activeChatId = null, activeChatKind = 'saved';
-    let stopMessages, stopContacts, stopChatDocs, stopChatList, profileStops = new Map(), notificationStops = new Map(), notifiedMessageIds = new Set(), contactUids = new Set(), chatPeerUids = new Set(), contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], messageElements = new Map(), renderedChatId = null, activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], activeRemoteTypingUntil = 0, activeReplyTarget = null, localTypingChatId = null, localTypingActive = false, lastTypingWriteAt = 0, typingPauseTimer = null, typingExpiryTimer = null, lastMarkedReadAt = 0, availabilityMode = 'online', currentProfile = {}, userPrivacy = {hidePhoneNumber:true,hideLastSeen:false}, notificationSettings = {incomingSound:true,outgoingSound:true,typingSound:true,interfaceSounds:true,desktopNotifications:false}, notificationAudioContext = null, lastInterfaceSoundAt = 0, viewedProfileUid = null, showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], lastSeenHeartbeat = null, presenceRefreshTimer = null, lastSeenWriteAt = 0, appearanceSaveTimer = null;
+    let auth, db, storage, aiModel, appCheckReady=false, confirmation, verifier, currentUser, activeChatId = null, activeChatKind = 'saved';
+    let stopMessages, stopContacts, stopChatDocs, stopChatList, profileStops = new Map(), notificationStops = new Map(), notifiedMessageIds = new Set(), contactUids = new Set(), contactLabels = new Map(), chatPeerUids = new Set(), contactProfiles = new Map(), contactRows = [], chatRows = [], activeChatDocument = null, activeMessages = [], messageElements = new Map(), renderedChatId = null, activeRecipientUid = null, activeRecipientReadAt = null, activeChatBlockedBy = [], activeRemoteTypingUntil = 0, activeReplyTarget = null, localTypingChatId = null, localTypingActive = false, lastTypingWriteAt = 0, typingPauseTimer = null, typingExpiryTimer = null, lastMarkedReadAt = 0, availabilityMode = 'online', currentProfile = {}, userPrivacy = {hidePhoneNumber:true,hideLastSeen:false}, notificationSettings = {incomingSound:true,outgoingSound:true,typingSound:true,interfaceSounds:true,desktopNotifications:false}, notificationAudioContext = null, lastInterfaceSoundAt = 0, viewedProfileUid = null, showingArchive = false, currentView = 'saved', mediaRecorder, mediaStream, audioChunks = [], videoChunks = [], lastSeenHeartbeat = null, presenceRefreshTimer = null, lastSeenWriteAt = 0, appearanceSaveTimer = null;
     const $ = selector => document.querySelector(selector);
     const loginView = $('#loginView'), appView = $('#appView'), errorBox = $('#authError');
     const appearanceDefaults = {theme:'light', wallpaper:'dots', animations:true, hidePreviews:false, fontSize:14, bubbleRadius:16};
@@ -347,6 +358,7 @@ const firebaseConfig = {
     }
     function escapeHtml(value = '') { return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])); }
     function initials(name = '?') { return name.trim().slice(0, 1).toLocaleUpperCase('ru') || '?'; }
+    function contactDisplayName(profile,uid=profile?.uid){return contactLabels.get(uid)||profile?.contactLabel||profile?.displayName||profile?.username||'Контакт';}
     function stamp(value) { if (!value) return ''; const date = value.toDate ? value.toDate() : new Date(value); return date.toLocaleTimeString('ru-RU', {hour:'2-digit',minute:'2-digit'}); }
     function renderAvatar(target, profile = {}, saved = false) {
         target.classList.toggle('saved', saved);target.classList.toggle('blocked-profile-avatar',Boolean(profile.blockedByViewer));target.classList.toggle('bot-avatar',Boolean(profile.isBot));
@@ -372,7 +384,8 @@ const firebaseConfig = {
             if(activeRecipientUid){target.setAttribute('role','button');target.setAttribute('aria-label',`Профиль: ${profile.displayName||profile.username||'Контакт'}`);}
             else{target.removeAttribute('role');target.removeAttribute('aria-label');}
         }
-        $('#headerSubtitle').textContent=activeChatKind==='saved'?'Личное пространство':presenceLabel(profile,blockedByViewer);
+        if(activeRecipientUid)$('#headerTitle').textContent=contactDisplayName(profile,activeRecipientUid);
+        $('#headerSubtitle').textContent=activeChatKind==='saved'?'Личное пространство':activeChatKind==='bot'?'ИИ-бот · @speen_ai_bot':presenceLabel(profile,blockedByViewer);
         renderAvatar($('#headerAvatar'),blockedByViewer?{...profile,avatarUrl:'',blockedByViewer:true}:profile,activeChatKind==='saved');
         $('#blockUserButton').classList.toggle('hidden',activeChatKind!=='direct'||activeChatBlockedBy.includes(currentUser.uid));
         $('#unblockUserButton').classList.toggle('hidden',activeChatKind!=='direct'||!activeChatBlockedBy.includes(currentUser.uid));
@@ -385,7 +398,7 @@ const firebaseConfig = {
     async function setChatBlocked(blocked){
         if(!activeChatId||activeChatKind!=='direct')return;
         try{await updateDoc(doc(db,'chats',activeChatId),{blockedBy:blocked?arrayUnion(currentUser.uid):arrayRemove(currentUser.uid)});$('#userMenu').classList.add('hidden');toast(blocked?'Пользователь заблокирован.':'Блокировка снята.');}
-        catch(error){console.error(error);toast('Не удалось изменить блокировку. Попробуйте ещё раз.');}
+        catch(error){console.error(error);toast('Не удалось изменить блокировку. Проверьте правила Firebase.');}
     }
     function updateChatMenuState(){
         const chat=chatRows.find(item=>item.id===activeChatId)||activeChatDocument,available=Boolean(chat&&activeChatKind!=='saved');
@@ -396,6 +409,7 @@ const firebaseConfig = {
         $('#unmuteChatButton').classList.toggle('hidden',!available||!(chat.mutedBy||[]).includes(currentUser.uid));
         $('#archiveChatButton').classList.toggle('hidden',!archiveAllowed||(chat.archivedBy||[]).includes(currentUser.uid));
         $('#restoreChatButton').classList.toggle('hidden',!archiveAllowed||!(chat.archivedBy||[]).includes(currentUser.uid));
+        $('#renameContactButton').classList.toggle('hidden',activeChatKind!=='direct');
         $('#clearChatButton').classList.toggle('hidden',!activeChatId);
     }
     async function setChatPreference(action){
@@ -403,7 +417,23 @@ const firebaseConfig = {
         const [field,enabled]=actions[action]||[];
         if(!field||!activeChatId||activeChatKind==='saved')return;
         try{await updateDoc(doc(db,'chats',activeChatId),{[field]:enabled?arrayUnion(currentUser.uid):arrayRemove(currentUser.uid)});$('#userMenu').classList.add('hidden');toast(({pin:'Чат закреплён.',unpin:'Чат откреплён.',mute:'Чат без звука.',unmute:'Звук чата включён.',archive:'Чат перемещён в архив.',restore:'Чат возвращён из архива.'})[action]);}
-        catch(error){console.error(error);toast('Не удалось изменить настройки чата. Попробуйте ещё раз.');}
+        catch(error){console.error(error);toast('Не удалось изменить чат. Проверьте правила Firebase.');}
+    }
+    async function renameActiveContact(){
+        const uid=activeRecipientUid;
+        if(!currentUser||!uid||activeChatKind!=='direct')return;
+        const profile=contactProfiles.get(uid)||{},previous=contactLabels.get(uid)||'';
+        const entered=window.prompt('Имя для этого собеседника. Оставьте поле пустым, чтобы удалить подпись.',previous||profile.displayName||profile.username||'');
+        if(entered===null)return;
+        const label=entered.trim().slice(0,50),contactRef=doc(db,'users',currentUser.uid,'contacts',uid);
+        try{
+            if(label)await setDoc(contactRef,{label},{merge:true});
+            else if(previous||(await getDoc(contactRef)).data()?.label)await updateDoc(contactRef,{label:deleteField()});
+            if(label)contactLabels.set(uid,label);else contactLabels.delete(uid);
+            refreshContactRows();updateDirectHeader(profile);
+            $('#userMenu').classList.add('hidden');
+            toast(label?'Имя контакта сохранено.':'Персональное имя удалено.');
+        }catch(error){console.error(error);toast('Не удалось сохранить имя контакта. Попробуйте ещё раз.');}
     }
     async function clearChatHistory(){
         if(!activeChatId||!window.confirm('Удалить все сообщения в этом чате для всех участников? Это действие нельзя отменить.'))return;
@@ -418,23 +448,24 @@ const firebaseConfig = {
             const unreadReset=Object.fromEntries((chat?.participants||[currentUser.uid]).map(uid=>[`unreadCounts.${uid}`,0]));
             await updateDoc(doc(db,'chats',activeChatId),{lastMessage:'',lastMessageType:'',lastMessageSenderId:'',updatedAt:serverTimestamp(),...unreadReset});
             $('#userMenu').classList.add('hidden');toast('История чата очищена.');
-        }catch(error){console.error(error);toast('Не удалось очистить историю. Попробуйте ещё раз.');}
+        }catch(error){console.error(error);toast('Не удалось очистить историю. Проверьте правила Firebase.');}
     }
     function showLogin() { document.body.classList.remove('app-active');document.documentElement.classList.remove('app-active');loginView.classList.remove('hidden'); appView.classList.add('hidden'); }
     function showApp() { document.body.classList.add('app-active');document.documentElement.classList.add('app-active');loginView.classList.add('hidden'); appView.classList.remove('hidden'); }
     function clearActiveChatListeners() { stopLocalTyping();clearTimeout(typingExpiryTimer);activeRemoteTypingUntil=0;stopMessages?.();stopChatDocs?.();stopMessages=stopChatDocs=null;activeMessages=[];messageElements.clear();renderedChatId=null; }
-    function clearListeners() { clearActiveChatListeners(); stopContacts?.(); stopChatList?.(); profileStops.forEach(stop=>stop());profileStops.clear();notificationStops.forEach(stop=>stop());notificationStops.clear();notifiedMessageIds.clear();contactUids.clear();chatPeerUids.clear();contactProfiles.clear();clearInterval(lastSeenHeartbeat);clearInterval(presenceRefreshTimer);lastSeenHeartbeat=presenceRefreshTimer=null;lastSeenWriteAt=0;stopContacts=stopChatList=null;chatRows=[];contactRows=[]; }
+    function clearListeners() { clearActiveChatListeners(); stopContacts?.(); stopChatList?.(); profileStops.forEach(stop=>stop());profileStops.clear();notificationStops.forEach(stop=>stop());notificationStops.clear();notifiedMessageIds.clear();contactUids.clear();contactLabels.clear();chatPeerUids.clear();contactProfiles.clear();clearInterval(lastSeenHeartbeat);clearInterval(presenceRefreshTimer);lastSeenHeartbeat=presenceRefreshTimer=null;lastSeenWriteAt=0;stopContacts=stopChatList=null;chatRows=[];contactRows=[]; }
     function makeChatId(first, second) { return [first, second].sort().join('__'); }
 
     if (configured) {
         const firebaseApp = initializeApp(firebaseConfig); auth = getAuth(firebaseApp); auth.languageCode = 'it'; db = getFirestore(firebaseApp); storage = getStorage(firebaseApp);
+        try{if(appCheckSiteKey&&!appCheckSiteKey.startsWith('PASTE_')){initializeAppCheck(firebaseApp,{provider:new ReCaptchaEnterpriseProvider(appCheckSiteKey),isTokenAutoRefreshEnabled:true});appCheckReady=true;}const ai=getAI(firebaseApp,{backend:new GoogleAIBackend()});aiModel=getGenerativeModel(ai,{model:'gemini-3.8-flash',systemInstruction:'Ты — Speen, дружелюбный и внимательный ИИ-бот внутри мессенджера Speen Messenger. Общайся тепло и естественно, помогай поддержать разговор и прямо говори, что ты ИИ. Не выдавай себя за человека.'});}catch(error){console.error('Firebase AI Logic не настроен',error);}
         onAuthStateChanged(auth, async user => {
             currentUser = user;
             if (!user) { clearListeners(); showLogin(); return; }
-            try { await ensureUserProfile(user); await startWorkspace(user); } catch (error) { console.error(error); toast('Не удалось загрузить аккаунт. Попробуйте позже.'); showApp(); }
+            try { await ensureUserProfile(user); await startWorkspace(user); } catch (error) { console.error(error); toast('Не удалось загрузить аккаунт. Проверьте правила Firebase.'); showApp(); }
         });
     } else {
-        $('#setupNotice').textContent = 'Вход и синхронизация сейчас недоступны. Попробуйте позже.';
+        $('#setupNotice').textContent = 'Чтобы получать настоящие SMS-коды и хранить данные онлайн, подключите проект Firebase: включите Phone в Authentication, создайте Firestore и Storage, затем вставьте конфигурацию в index.html.';
         $('#setupNotice').classList.remove('hidden');
     }
 
@@ -449,7 +480,7 @@ const firebaseConfig = {
 
     $('#sendCode').addEventListener('click', async () => {
         setError('');
-        if (!configured) { setError('Вход по номеру телефона сейчас недоступен. Попробуйте позже.'); return; }
+        if (!configured) { setError('Firebase пока не настроен. Подключите проект, чтобы отправлять настоящие SMS.'); return; }
         const phone = $('#phoneInput').value.trim();
         if (!/^\+[1-9]\d{7,14}$/.test(phone)) { setError('Введите номер в международном формате, например +79001234567.'); return; }
         const sendButton = $('#sendCode');
@@ -468,35 +499,35 @@ const firebaseConfig = {
     $('#backToPhone').addEventListener('click', () => { $('#codeStep').classList.add('hidden'); $('#phoneStep').classList.remove('hidden'); $('#loginTitle').innerHTML='Ваши люди<br>на связи.'; $('#loginCopy').textContent='Войдите по номеру телефона. Мы отправим одноразовый код для подтверждения.'; setError(''); });
     $('#codeInput').addEventListener('keydown', event => { if (event.key === 'Enter') $('#verifyCode').click(); });
     function authErrorMessage(error) {
-        const messages = {'auth/invalid-phone-number':'Проверьте номер телефона.','auth/invalid-verification-code':'Код неверный. Попробуйте ещё раз.','auth/code-expired':'Код истёк. Запросите новый.','auth/too-many-requests':'Слишком много попыток. Попробуйте позже.','auth/operation-not-allowed':'Вход по номеру телефона сейчас недоступен.'};
-        return messages[error.code] || 'Не удалось подтвердить номер. Проверьте код и попробуйте ещё раз.';
+        const messages = {'auth/invalid-phone-number':'Проверьте номер телефона.','auth/invalid-verification-code':'Код неверный. Попробуйте ещё раз.','auth/code-expired':'Код истёк. Запросите новый.','auth/too-many-requests':'Слишком много попыток. Попробуйте позже.','auth/operation-not-allowed':'Включите вход по телефону в Firebase Authentication.'};
+        return messages[error.code] || 'Не удалось подтвердить номер. Проверьте настройки Firebase и попробуйте снова.';
     }
 
     async function startWorkspace(user) {
         showApp();
         const userRef = doc(db, 'users', user.uid), snapshot = await getDoc(userRef);
-        const profileData=snapshot.data()||{}, localSettings=loadUserSettings(user.uid);
+        const profileData=snapshot.data()||{};
         currentProfile=profileData;
-        availabilityMode=localSettings.pending?.availabilityMode?localSettings.availabilityMode:(profileData.availabilityMode||localSettings.availabilityMode||'online');
-        userPrivacy=Object.fromEntries(['hidePhoneNumber','hideLastSeen'].map(key=>[key,localSettings.pending?.[`privacy.${key}`]?localSettings.privacy?.[key]??(key==='hidePhoneNumber'):typeof profileData[key]==='boolean'?profileData[key]:localSettings.privacy?.[key]??(key==='hidePhoneNumber')]));
-        notificationSettings={incomingSound:true,outgoingSound:true,typingSound:true,interfaceSounds:true,desktopNotifications:false,...(localSettings.pending?.notifications?profileData.notificationSettings:{}),...localSettings.notifications,...(localSettings.pending?.notifications?{}:profileData.notificationSettings)};
-        const preferredAppearance=localSettings.pending?.appearance?localSettings.appearance:(profileData.appearance||localSettings.appearance);
-        appearanceSettings=normalizeAppearanceSettings(preferredAppearance||appearanceDefaults);applyAppearanceSettings();
-        try{localStorage.setItem('speen-appearance',JSON.stringify(appearanceSettings));}catch{}
-        persistLocalUserSettings(user.uid);
+        availabilityMode=profileData.availabilityMode||'online';
+        userPrivacy={hidePhoneNumber:profileData.hidePhoneNumber!==false,hideLastSeen:Boolean(profileData.hideLastSeen)};
+        notificationSettings={incomingSound:true,outgoingSound:true,typingSound:true,interfaceSounds:true,desktopNotifications:false,...profileData.notificationSettings};
+        if(profileData.appearance){appearanceSettings=normalizeAppearanceSettings({...appearanceSettings,...profileData.appearance});applyAppearanceSettings();try{localStorage.setItem('speen-appearance',JSON.stringify(appearanceSettings));}catch{}}
+        else persistAppearanceSettings();
         await Promise.all([syncPhoneLookup().catch(error=>console.error('Phone lookup index sync failed:',error)),syncUserDirectory(snapshot.data()||{}).catch(error=>console.error('User directory sync failed:',error))]);
-        await setDoc(userRef,{availabilityMode,lastActiveAt:serverTimestamp(),hidePhoneNumber:userPrivacy.hidePhoneNumber,hideLastSeen:userPrivacy.hideLastSeen,notificationSettings,appearance:appearanceSettings},{merge:true});
-        clearLocalUserSettingsPending(user.uid);
+        await setDoc(userRef,{availabilityMode,lastActiveAt:serverTimestamp(),hidePhoneNumber:userPrivacy.hidePhoneNumber,hideLastSeen:userPrivacy.hideLastSeen,notificationSettings},{merge:true});
         startLastSeenHeartbeat();
         const savedId = `saved_${user.uid}`;
         const savedChatRef=doc(db,'chats',savedId);
         if(!(await getDoc(savedChatRef)).exists()) await setDoc(savedChatRef,{participants:[user.uid],kind:'saved',updatedAt:serverTimestamp(),lastMessage:''});
+        const botChatRef=doc(db,'chats',`bot_${user.uid}`);
+        if(!(await getDoc(botChatRef)).exists()) await setDoc(botChatRef,{participants:[user.uid],kind:'bot',updatedAt:serverTimestamp(),lastMessage:'Привет! Я Speen, твой ИИ-собеседник ✨'});
         let initialChat={id:savedId,kind:'saved',profile:{displayName:'Избранное'}};
         if(profileData.lastChatId&&profileData.lastChatId!==savedId){
             try{
                 const previousChat=await getDoc(doc(db,'chats',profileData.lastChatId)),data=previousChat.data();
                 if(previousChat.exists()&&data.participants?.includes(user.uid)){
-                    if(data.kind==='direct'){
+                    if(data.kind==='bot')initialChat={id:previousChat.id,kind:'bot',profile:{uid:'speen_ai_bot',displayName:'Speen AI',username:'speen_ai_bot',isBot:true}};
+                    else if(data.kind==='direct'){
                         const peerUid=data.participants.find(uid=>uid!==user.uid),peer=peerUid?await getDoc(doc(db,'users',peerUid)):null;
                         if(peer?.exists()){const profile={uid:peer.id,...peer.data()};contactProfiles.set(peer.id,profile);initialChat={id:previousChat.id,kind:'direct',profile};}
                     }
@@ -528,7 +559,9 @@ const firebaseConfig = {
     function listenContacts() {
         stopContacts?.(); stopContacts = onSnapshot(collection(db,'users',currentUser.uid,'contacts'), snapshot => {
             contactUids=new Set(snapshot.docs.map(item=>item.id));
+            contactLabels=new Map(snapshot.docs.flatMap(item=>{const label=item.data().label;return typeof label==='string'&&label.trim()?[[item.id,label.trim()]]:[]}));
             syncProfileListeners();
+            if(activeRecipientUid)updateDirectHeader(contactProfiles.get(activeRecipientUid)||{});
         }, error => { console.error(error); toast('Не удалось загрузить контакты.'); });
     }
     function syncProfileListeners(){
@@ -554,7 +587,7 @@ const firebaseConfig = {
         contactRows=[...contactProfiles.values()].map(person=>{
             const chat=chatRows.find(item=>item.kind==='direct'&&item.participants?.includes(person.uid)&&item.participants?.includes(currentUser.uid));
             const blockedBy=chat?.blockedBy||[];
-            return {...person,isBlockedByViewer:blockedBy.includes(person.uid),iBlocked:blockedBy.includes(currentUser.uid)};
+            return {...person,contactLabel:contactLabels.get(person.uid)||'',isBlockedByViewer:blockedBy.includes(person.uid),iBlocked:blockedBy.includes(currentUser.uid)};
         });
         renderSideList();
         updateChatMenuState();
@@ -629,7 +662,7 @@ const firebaseConfig = {
         const button=event.target.closest('button');if(button&&event.detail===0)playInterfaceButtonSound('press',button);
     });
     function syncNotificationListeners(){
-        const chats=chatRows.filter(chat=>chat.kind==='direct'),wanted=new Set(chats.map(chat=>chat.id));
+        const chats=chatRows.filter(chat=>chat.kind==='direct'||chat.kind==='bot'),wanted=new Set(chats.map(chat=>chat.id));
         for(const [chatId,stop] of notificationStops){if(wanted.has(chatId))continue;stop();notificationStops.delete(chatId);}
         for(const chat of chats){
             if(notificationStops.has(chat.id))continue;
@@ -653,10 +686,10 @@ const firebaseConfig = {
         playMessageSound('incoming');
         if(!notificationSettings.desktopNotifications||typeof Notification==='undefined'||Notification.permission!=='granted'||(!document.hidden&&document.hasFocus()))return;
         const peerUid=chat.kind==='direct'?chat.participants?.find(uid=>uid!==currentUser.uid):null;
-        const name=contactProfiles.get(peerUid)?.displayName||contactProfiles.get(peerUid)?.username||'Новое сообщение';
+        const name=chat.kind==='bot'?'Speen AI':contactDisplayName(contactProfiles.get(peerUid),peerUid);
         const body=appearanceSettings.hidePreviews?'Новое сообщение':message.text||labelForType(message.type);
         const notification=new Notification(name,{body,tag:`speen-${chat.id}`,renotify:true});
-        notification.onclick=()=>{window.focus();if(peerUid)openDirect(peerUid);notification.close();};
+        notification.onclick=()=>{window.focus();if(chat.kind==='bot')openBotChat();else if(peerUid)openDirect(peerUid);notification.close();};
     }
     function updateUnreadBadges(){
         const total=chatRows.reduce((count,chat)=>chat.kind==='direct'?count+Math.max(0,Number(chat.unreadCounts?.[currentUser.uid])||0):count,0);
@@ -674,6 +707,8 @@ const firebaseConfig = {
         const archiveRow=archivedChats.length||showingArchive?`<div class="archive-row ${showingArchive?'active':''}" data-archive-toggle="true" tabindex="0" role="button"><span class="archive-icon">▤</span><span>${showingArchive?'Назад к чатам':'Архив'}</span><span class="archive-count">${archivedChats.length}</span></div>`:'';
         const savedChat = chatRows.find(chat => chat.kind === 'saved'), savedText = savedChat?.lastMessage || 'Ваши заметки и файлы';
         const saved = `<div class="section-caption">Личное</div><div class="chat-item ${activeChatKind === 'saved' && currentView === 'saved' ? 'active':''}" data-saved="true"><div class="avatar saved"><svg viewBox="0 0 24 24"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.8L6 21V4.75Z"/></svg></div><div class="chat-meta"><div class="chat-line"><span class="chat-name">Избранное</span><span class="chat-time">${savedChat?.updatedAt?stamp(savedChat.updatedAt):'∞'}</span></div><div class="chat-preview">${escapeHtml(savedText)}</div></div></div>`;
+        const botChat=chatRows.find(chat=>chat.kind==='bot'),botPreview=botChat?.lastMessage||'Твой ИИ-собеседник';
+        const bot=`<div class="chat-item bot-chat-item ${activeChatKind==='bot'?'active':''}" data-bot="true"><div class="avatar bot-avatar">✦</div><div class="chat-meta"><div class="chat-line"><span class="chat-name">Speen AI</span><span class="bot-badge">БОТ</span></div><div class="chat-preview">${escapeHtml(botPreview)}</div></div></div>`;
         const shownChats=chatRows.filter(chat=>chat.kind==='direct'&&((chat.archivedBy||[]).includes(currentUser.uid)===showingArchive));
         shownChats.sort((first,second)=>{
             const firstPinned=(first.pinnedBy||[]).includes(currentUser.uid),secondPinned=(second.pinnedBy||[]).includes(currentUser.uid);
@@ -683,21 +718,22 @@ const firebaseConfig = {
             const person=contactRows.find(contact=>chat.participants?.includes(contact.uid)&&contact.uid!==currentUser.uid);
             const peerUid=chat.participants?.find(uid=>uid!==currentUser.uid);
             if(!person&&!peerUid)return '';
-            const name=person?.displayName||person?.username||'Контакт';
+            const name=contactDisplayName(person,peerUid);
             const preview=chat.lastMessage?(chat.lastMessageSenderId===currentUser.uid?`Вы: ${chat.lastMessage}`:chat.lastMessage):'Нет сообщений';
             const blockedByViewer=Boolean(person?.isBlockedByViewer),avatar=blockedByViewer?'':person?.avatarUrl?`<img src="${escapeHtml(person.avatarUrl)}" alt="">`:escapeHtml(initials(name));
             const pinned=(chat.pinnedBy||[]).includes(currentUser.uid),muted=(chat.mutedBy||[]).includes(currentUser.uid);
             const unread=Number(chat.unreadCounts?.[currentUser.uid])||0;
             return `<div class="chat-item ${activeChatId===chat.id?'active':''} ${pinned?'is-pinned':''} ${muted?'is-muted':''} ${showingArchive?'is-archived':''}" data-uid="${escapeHtml(peerUid)}"><div class="avatar ${blockedByViewer?'blocked-profile-avatar':''}">${avatar}</div><div class="chat-meta"><div class="chat-line"><span class="chat-name-wrap"><span class="chat-name">${escapeHtml(name)}</span>${unread?`<span class="chat-unread-badge" aria-label="${unread} непрочитанных сообщений">${unread>99?'99+':unread}</span>`:''}</span><span class="chat-time">${chat.updatedAt?stamp(chat.updatedAt):''}</span></div><div class="chat-preview">${escapeHtml(preview)}</div>${person?`<span class="contact-status ${blockedByViewer?'is-long':person.availabilityMode==='online'?'is-online':''}">${presenceLabel(person,blockedByViewer)}</span>`:''}</div></div>`;
         }).join('');
-        const rows = contactRows.filter(contact => `${contact.displayName} ${contact.username}`.toLocaleLowerCase('ru').includes(filter));
-        const contacts = rows.map(contact => {const name=contact.displayName||'Без имени';const avatar=contact.isBlockedByViewer?'':contact.avatarUrl?`<img src="${escapeHtml(contact.avatarUrl)}" alt="">`:escapeHtml(initials(name));return `<div class="chat-item ${activeChatId === makeChatId(currentUser.uid,contact.uid) ? 'active':''}" data-uid="${escapeHtml(contact.uid)}"><div class="avatar ${contact.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</div><div class="chat-meta"><div class="chat-line"><span class="chat-name">${escapeHtml(name)}</span><span class="chat-time"></span></div><div class="chat-preview">${contact.username?'@'+escapeHtml(contact.username):'Новый контакт'}</div><span class="contact-status ${contact.isBlockedByViewer?'is-long':contact.availabilityMode==='online'?'is-online':''}">${presenceLabel(contact,contact.isBlockedByViewer)}</span></div></div>`;}).join('');
-        list.innerHTML = showingArchive?archiveRow+`<div class="section-caption">В архиве</div>`+(directChats||'<div class="empty-list">В архиве пока пусто.</div>'):archiveRow+saved+(directChats?`<div class="section-caption">Чаты</div>${directChats}`:'')+`<div class="section-caption">Люди</div>`+(contacts||'<div class="empty-list">Контактов пока нет. Найдите человека по его имени пользователя.</div>');
+        const rows = contactRows.filter(contact => `${contact.contactLabel} ${contact.displayName} ${contact.username}`.toLocaleLowerCase('ru').includes(filter));
+        const contacts = rows.map(contact => {const name=contactDisplayName(contact,contact.uid);const avatar=contact.isBlockedByViewer?'':contact.avatarUrl?`<img src="${escapeHtml(contact.avatarUrl)}" alt="">`:escapeHtml(initials(name));return `<div class="chat-item ${activeChatId === makeChatId(currentUser.uid,contact.uid) ? 'active':''}" data-uid="${escapeHtml(contact.uid)}"><div class="avatar ${contact.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</div><div class="chat-meta"><div class="chat-line"><span class="chat-name">${escapeHtml(name)}</span><span class="chat-time"></span></div><div class="chat-preview">${contact.username?'@'+escapeHtml(contact.username):'Новый контакт'}</div><span class="contact-status ${contact.isBlockedByViewer?'is-long':contact.availabilityMode==='online'?'is-online':''}">${presenceLabel(contact,contact.isBlockedByViewer)}</span></div></div>`;}).join('');
+        list.innerHTML = showingArchive?archiveRow+`<div class="section-caption">В архиве</div>`+(directChats||'<div class="empty-list">В архиве пока пусто.</div>'):archiveRow+saved+bot+(directChats?`<div class="section-caption">Чаты</div>${directChats}`:'')+`<div class="section-caption">Люди</div>`+(contacts||'<div class="empty-list">Контактов пока нет. Найдите человека по его имени пользователя.</div>');
         updateUnreadBadges();
         list.querySelector('[data-archive-toggle]')?.addEventListener('click',()=>{showingArchive=!showingArchive;renderSideList();});
         list.querySelectorAll('.chat-item').forEach(item=>{item.tabIndex=0;item.setAttribute('role','button');});
         list.querySelector('[data-archive-toggle]')?.addEventListener('click',()=>{showingArchive=!showingArchive;renderSideList();});
         list.querySelector('[data-saved]')?.addEventListener('click', () => { navigate('saved'); });
+        list.querySelector('[data-bot]')?.addEventListener('click',openBotChat);
         list.querySelectorAll('[data-uid]').forEach(item => item.addEventListener('click', () => openDirect(item.dataset.uid)));
     }
     async function openDirect(uid, profile) {
@@ -709,8 +745,11 @@ const firebaseConfig = {
             await setDoc(chatRef,{participants:[currentUser.uid,uid].sort(),kind:'direct'},{merge:true});
             openChat(id,'direct',person);
         } catch(error) {
-            console.error(error);toast('Не удалось открыть чат. Попробуйте ещё раз.');
+            console.error(error);toast('Не удалось открыть чат. Проверьте правила Firebase.');
         }
+    }
+    function openBotChat(){
+        openChat(`bot_${currentUser.uid}`,'bot',{uid:'speen_ai_bot',displayName:'Speen AI',username:'speen_ai_bot',isBot:true});
     }
     function openChat(chatId, kind, profile) {
         clearActiveChatListeners();
@@ -718,7 +757,7 @@ const firebaseConfig = {
         activeChatId=chatId; activeChatKind=kind; activeRecipientUid=kind==='direct'?profile.uid:null; activeRecipientReadAt=null; activeChatBlockedBy=[]; activeChatDocument=null; lastMarkedReadAt=0; currentView=kind==='saved'?'saved':'chats';appView.classList.remove('mobile-chat-list');
         if(currentUser)updateDoc(doc(db,'users',currentUser.uid),{lastChatId:chatId}).catch(error=>console.error('Last chat persistence failed:',error));
         $('#chatHeader').classList.remove('hidden'); $('#messages').classList.remove('hidden'); $('#composer').classList.remove('hidden'); $('#panelView').classList.add('hidden');
-        $('#headerTitle').textContent = kind==='saved'?'Избранное':(profile.displayName||profile.username||'Контакт');
+        $('#headerTitle').textContent = kind==='saved'?'Избранное':contactDisplayName(profile,activeRecipientUid);
         updateDirectHeader(profile);
         stopChatDocs = onSnapshot(doc(db,'chats',chatId), snapshot => {
             const chat=snapshot.data({serverTimestamps:'estimate'})||{};
@@ -800,7 +839,7 @@ const firebaseConfig = {
         indicator.classList.toggle('is-visible',visible);
         indicator.setAttribute('aria-hidden',String(!visible));
         const profile=activeRecipientUid?contactProfiles.get(activeRecipientUid):null;
-        indicator.innerHTML=visible?`<span class="typing-dots" aria-hidden="true"><span></span><span></span><span></span></span><span class="typing-copy">${escapeHtml(profile?.displayName||profile?.username||'Собеседник')} печатает</span>`:'';
+        indicator.innerHTML=visible?`<span class="typing-dots" aria-hidden="true"><span></span><span></span><span></span></span><span class="typing-copy">${escapeHtml(contactDisplayName(profile,activeRecipientUid))} печатает</span>`:'';
         if(visible&&nearBottom)requestAnimationFrame(()=>{messages.scrollTop=messages.scrollHeight;});
     }
     function updateLastSeen(force=false){
@@ -832,10 +871,10 @@ const firebaseConfig = {
         else if(message.type==='audio')body=`<audio src="${escapeHtml(message.url)}" controls></audio>`;
         else if(message.type==='file')body=`<a href="${escapeHtml(message.url)}" target="_blank" rel="noopener">${escapeHtml(message.fileName||'Открыть файл')}</a>`;
         else body=escapeHtml(message.text||'');
-        const receipt=isRead?`<span class="read-receipt ${activeChatKind==='saved'?'is-saved':'is-read'}" aria-label="${activeChatKind==='saved'?'Сохранено в избранном':'Прочитано'}"><svg viewBox="0 0 24 18" aria-hidden="true"><path d="m1.5 9.5 4.2 4.2L16 3.5"/><path d="m7.5 9.5 4.2 4.2L22 3.5"/></svg></span>`:'';
-        const reply=message.replyTo?`<button class="reply-quote" type="button" data-reply-jump="${escapeHtml(message.replyTo.id)}"><strong>${message.replyTo.senderId===currentUser.uid?'Вы':escapeHtml(activeRecipientUid?contactProfiles.get(activeRecipientUid)?.displayName||'Собеседник':'Собеседник')}</strong><span>${escapeHtml(message.replyTo.text||'Сообщение')}</span></button>`:'';
+        const receipt=isRead?`<span class="read-receipt ${activeChatKind==='saved'?'is-saved':'is-read'}" aria-label="${activeChatKind==='saved'?'Сохранено в избранном':'Прочитано'}"><svg viewBox="0 0 24 18" aria-hidden="true"><path class="receipt-check" d="m1.5 9.5 4.2 4.2L16 3.5"/><path class="receipt-check" d="m7.5 9.5 4.2 4.2L22 3.5"/></svg></span>`:'';
+        const reply=message.replyTo?`<button class="reply-quote" type="button" data-reply-jump="${escapeHtml(message.replyTo.id)}"><strong>${message.replyTo.senderId===currentUser.uid?'Вы':escapeHtml(contactDisplayName(contactProfiles.get(activeRecipientUid),activeRecipientUid))}</strong><span>${escapeHtml(message.replyTo.text||'Сообщение')}</span></button>`:'';
         const template=document.createElement('template');
-        template.innerHTML=`<article class="bubble ${mine?'mine':''}" data-message-id="${escapeHtml(message.id)}">${reply}${body}${message.caption?`<div>${escapeHtml(message.caption)}</div>`:''}<div class="bubble-footer"><time>${stamp(message.createdAt)}</time>${receipt}</div><button class="reply-trigger" type="button" data-reply-message="${escapeHtml(message.id)}" aria-label="Ответить на сообщение" title="Ответить"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h8a8 8 0 0 1 8 8v2"/></svg></button></article>`;
+        template.innerHTML=`<article class="bubble ${mine?'mine':''} ${message.senderId==='speen_ai_bot'?'bot-message':''}" data-message-id="${escapeHtml(message.id)}">${reply}${body}${message.caption?`<div>${escapeHtml(message.caption)}</div>`:''}<div class="bubble-footer"><time>${stamp(message.createdAt)}</time>${receipt}</div><button class="reply-trigger" type="button" data-reply-message="${escapeHtml(message.id)}" aria-label="Ответить на сообщение" title="Ответить"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h8a8 8 0 0 1 8 8v2"/></svg></button></article>`;
         return template.content.firstElementChild;
     }
     function messageRenderSignature(message){
@@ -870,7 +909,7 @@ const firebaseConfig = {
         if(nearBottom)target.scrollTop=target.scrollHeight;
     }
     function setReplyTarget(message){
-        const senderId=message.senderId===currentUser.uid?'Вы':activeRecipientUid?contactProfiles.get(activeRecipientUid)?.displayName||'Собеседник':'Собеседник';
+        const senderId=message.senderId===currentUser.uid?'Вы':contactDisplayName(contactProfiles.get(activeRecipientUid),activeRecipientUid);
         activeReplyTarget={id:message.id,senderId:message.senderId,text:message.text||message.caption||labelForType(message.type)};
         $('#replyPreviewTitle').textContent=`Ответ: ${senderId}`;
         $('#replyPreviewText').textContent=activeReplyTarget.text;
@@ -892,29 +931,39 @@ const firebaseConfig = {
             updateLastSeen();
             await persistMessage(activeReplyTarget?{...payload,replyTo:{...activeReplyTarget}}:payload,currentUser.uid);
             clearReplyTarget();
-        } catch(error) { console.error(error); toast('Не удалось отправить сообщение. Проверьте соединение и попробуйте ещё раз.'); }
+        } catch(error) { console.error(error); toast('Не удалось отправить. Проверьте интернет и правила Firebase.'); }
     }
     async function persistMessage(payload,senderId){
         const messageRef=doc(collection(db,'chats',activeChatId,'messages'));
-        const chatRef=doc(db,'chats',activeChatId);
         const batch=writeBatch(db);
         const chatUpdate={lastMessage:payload.text||labelForType(payload.type),lastMessageType:payload.type,lastMessageSenderId:senderId,updatedAt:serverTimestamp()};
-        if(activeChatKind==='direct'){
-            chatUpdate.kind='direct';
-            chatUpdate.participants=[currentUser.uid,activeRecipientUid].filter(Boolean).sort();
-            if(senderId===currentUser.uid&&activeRecipientUid)chatUpdate.unreadCounts={[activeRecipientUid]:increment(1)};
-        }else if(activeChatKind==='saved'){
-            chatUpdate.kind='saved';
-            chatUpdate.participants=[currentUser.uid];
-        }
+        if(activeChatKind==='direct'&&senderId===currentUser.uid&&activeRecipientUid)chatUpdate[`unreadCounts.${activeRecipientUid}`]=increment(1);
         batch.set(messageRef,{...payload,senderId,createdAt:serverTimestamp()});
-        batch.set(chatRef,chatUpdate,{merge:true});
+        batch.update(doc(db,'chats',activeChatId),chatUpdate);
         await batch.commit();
         if(senderId===currentUser.uid)playMessageSound('outgoing');
         return messageRef;
     }
+    async function sendBotMessage(text){
+        if(!aiModel){toast('ИИ-помощник ещё не включён в Firebase Console → AI Logic.');return;}
+        if(!appCheckReady){toast('Добавьте публичный ключ reCAPTCHA Enterprise в appCheckSiteKey для защиты AI-запросов.');return;}
+        const history=activeMessages.filter(message=>message.type==='text'&&(message.senderId===currentUser.uid||message.senderId==='speen_ai_bot')).slice(-20).map(message=>({role:message.senderId===currentUser.uid?'user':'model',parts:[{text:message.text||''}]}));
+        updateLastSeen();
+        const userMessageRef=await persistMessage(activeReplyTarget?{type:'text',text,replyTo:{...activeReplyTarget}}:{type:'text',text},currentUser.uid);
+        clearReplyTarget();
+        const typing=document.createElement('div');typing.className='bot-typing';typing.setAttribute('aria-label','Speen AI печатает');typing.innerHTML='<span></span><span></span><span></span>';$('#messages').appendChild(typing);$('#messages').scrollTop=$('#messages').scrollHeight;
+        try{
+            const chat=aiModel.startChat({history});
+            const result=await chat.sendMessage(text);
+            const response=result.response||result;
+            const reply=typeof response.text==='function'?response.text():response.text;
+            if(!reply)throw new Error('AI returned an empty response');
+            await persistMessage({type:'text',text:reply},'speen_ai_bot');
+        }catch(error){console.error(error);await updateDoc(userMessageRef,{aiReplyError:true}).catch(()=>{});toast('Не удалось получить ответ ИИ. Проверьте AI Logic и App Check в Firebase Console.');}
+        finally{typing.remove();}
+    }
     function labelForType(type) { return ({image:'Фото',video:'Видеосообщение',audio:'Голосовое сообщение',file:'Файл'})[type]||'Сообщение'; }
-    $('#composer').addEventListener('submit', async event => { event.preventDefault(); const input=$('#messageInput'), text=input.value.trim(); if(!text)return; stopLocalTyping();input.value='';input.style.height='auto';await sendMessage({type:'text',text}); });
+    $('#composer').addEventListener('submit', async event => { event.preventDefault(); const input=$('#messageInput'), text=input.value.trim(); if(!text)return; stopLocalTyping();input.value='';input.style.height='auto';if(activeChatKind==='bot')await sendBotMessage(text);else await sendMessage({type:'text',text}); });
     $('#messageInput').addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();$('#composer').requestSubmit();}});
     $('#messageInput').addEventListener('input', event => { event.target.style.height='auto';event.target.style.height=`${Math.min(event.target.scrollHeight,130)}px`;trackLocalTyping(event.target.value); });
     $('#attachButton').addEventListener('click',()=>$('#photoInput').click());
@@ -980,7 +1029,7 @@ const firebaseConfig = {
                 event.preventDefault();const offset=event.key==='ArrowDown'?1:-1;items[(items.indexOf(chatItem)+offset+items.length)%items.length]?.focus();return;
             }
             if(event.key==='Enter'||event.key===' '){
-                event.preventDefault();if(chatItem.dataset.saved)navigate('saved');else if(chatItem.dataset.uid)openDirect(chatItem.dataset.uid);return;
+                event.preventDefault();if(chatItem.dataset.saved)navigate('saved');else if(chatItem.dataset.bot)openBotChat();else if(chatItem.dataset.uid)openDirect(chatItem.dataset.uid);return;
             }
         }
         const scrollArea=target.closest('#messages,#panelView,#sideList');
@@ -1025,15 +1074,6 @@ const firebaseConfig = {
             bubbleRadius:Number.isFinite(saved.bubbleRadius)&&saved.bubbleRadius>=2&&saved.bubbleRadius<=28?saved.bubbleRadius:appearanceDefaults.bubbleRadius};
     }
     function loadAppearanceSettings(){try{return normalizeAppearanceSettings(JSON.parse(localStorage.getItem('speen-appearance')||'{}'));}catch{return {...appearanceDefaults};}}
-    function loadUserSettings(uid){try{const saved=JSON.parse(localStorage.getItem(`speen-settings:${uid}`)||'{}');return saved&&typeof saved==='object'?saved:{};}catch{return {};}}
-    function persistLocalUserSettings(uid=currentUser?.uid,pending={}){
-        if(!uid)return;
-        try{const saved=loadUserSettings(uid);localStorage.setItem(`speen-settings:${uid}`,JSON.stringify({...saved,appearance:appearanceSettings,availabilityMode,privacy:userPrivacy,notifications:notificationSettings,pending:{...saved.pending,...pending}}));}catch{}
-    }
-    function clearLocalUserSettingsPending(uid=currentUser?.uid,key){
-        if(!uid)return;
-        try{const saved=loadUserSettings(uid);if(key)delete saved.pending?.[key];else saved.pending={};localStorage.setItem(`speen-settings:${uid}`,JSON.stringify(saved));}catch{}
-    }
     function applyAppearanceSettings(){
         document.body.dataset.theme=appearanceSettings.theme;
         document.body.dataset.wallpaper=appearanceSettings.wallpaper;
@@ -1050,24 +1090,22 @@ const firebaseConfig = {
         appearanceSettings={...appearanceSettings,...changes};
         applyAppearanceSettings();
         try{localStorage.setItem('speen-appearance',JSON.stringify(appearanceSettings));}catch{}
-        persistLocalUserSettings(currentUser?.uid,{appearance:true});
         persistAppearanceSettings();
     }
     function persistAppearanceSettings(){
         clearTimeout(appearanceSaveTimer);
         if(!currentUser)return;
         const uid=currentUser.uid,settings={...appearanceSettings};
-        appearanceSaveTimer=setTimeout(()=>updateDoc(doc(db,'users',uid),{appearance:settings}).then(()=>clearLocalUserSettingsPending(uid,'appearance')).catch(error=>{console.error('Appearance sync failed:',error);toast('Сохранено на устройстве; синхронизация оформления не удалась.');}),500);
+        appearanceSaveTimer=setTimeout(()=>updateDoc(doc(db,'users',uid),{appearance:settings}).catch(error=>console.error('Appearance sync failed:',error)),500);
     }
     async function saveAvailabilityMode(mode){
         if(!['online','recently','longAgo'].includes(mode))return;
-        availabilityMode=mode;persistLocalUserSettings(currentUser.uid,{availabilityMode:true});renderSettingsPanel();
-        try{await updateDoc(doc(db,'users',currentUser.uid),{availabilityMode:mode,lastActiveAt:serverTimestamp()});clearLocalUserSettingsPending(currentUser.uid,'availabilityMode');contactProfiles.set(currentUser.uid,{...(contactProfiles.get(currentUser.uid)||{}),uid:currentUser.uid,availabilityMode:mode});toast('Статус сохранён и синхронизирован.');}
-        catch(error){console.error(error);toast('Сохранено на устройстве; синхронизация статуса не удалась.');}
+        try{await updateDoc(doc(db,'users',currentUser.uid),{availabilityMode:mode,lastActiveAt:serverTimestamp()});availabilityMode=mode;contactProfiles.set(currentUser.uid,{...(contactProfiles.get(currentUser.uid)||{}),uid:currentUser.uid,availabilityMode:mode});renderSettingsPanel();toast('Статус присутствия сохранён.');}
+        catch(error){console.error(error);toast('Не удалось сохранить статус. Проверьте правила Firebase.');}
     }
     async function savePrivacySetting(key,value){
         if(!['hidePhoneNumber','hideLastSeen'].includes(key))return;
-        userPrivacy={...userPrivacy,[key]:value};persistLocalUserSettings(currentUser.uid,{[`privacy.${key}`]:true});
+        const previous=userPrivacy[key];userPrivacy={...userPrivacy,[key]:value};
         try{
             if(key==='hidePhoneNumber'){
                 const batch=writeBatch(db);
@@ -1075,13 +1113,12 @@ const firebaseConfig = {
                 batch.set(doc(db,'userDirectory',currentUser.uid),{uid:currentUser.uid,phoneNumber:value?deleteField():(currentUser.phoneNumber||'')},{merge:true});
                 await batch.commit();
             }else await updateDoc(doc(db,'users',currentUser.uid),{[key]:value});
-            clearLocalUserSettingsPending(currentUser.uid,`privacy.${key}`);
             toast('Приватность обновлена.');
-        }catch(error){console.error(error);toast('Сохранено на устройстве; синхронизация приватности не удалась.');}
+        }catch(error){console.error(error);userPrivacy={...userPrivacy,[key]:previous};toast('Не удалось сохранить настройку приватности.');}
         finally{if(currentView==='settings')renderSettingsPanel();}
     }
     async function saveNotificationSetting(key,value){
-        if(!['incomingSound','outgoingSound','desktopNotifications'].includes(key))return;
+        if(!['incomingSound','outgoingSound','typingSound','interfaceSounds','desktopNotifications'].includes(key))return;
         if(key==='desktopNotifications'&&value){
             if(typeof Notification==='undefined'){toast('Браузер не поддерживает системные уведомления.');return;}
             try{if(Notification.permission==='default')await Notification.requestPermission();}
@@ -1089,53 +1126,78 @@ const firebaseConfig = {
             if(Notification.permission!=='granted'){toast('Разрешите уведомления в настройках браузера.');return;}
         }
         if(key!=='desktopNotifications'&&value)primeMessageAudio();
-        notificationSettings={...notificationSettings,[key]:value};persistLocalUserSettings(currentUser.uid,{notifications:true});
-        try{await updateDoc(doc(db,'users',currentUser.uid),{notificationSettings});clearLocalUserSettingsPending(currentUser.uid,'notifications');toast('Настройки уведомлений сохранены.');}
-        catch(error){console.error(error);toast('Сохранено на устройстве; синхронизация уведомлений не удалась.');}
+        const previous=notificationSettings[key];notificationSettings={...notificationSettings,[key]:value};
+        try{await updateDoc(doc(db,'users',currentUser.uid),{notificationSettings});toast('Настройки уведомлений сохранены.');}
+        catch(error){console.error(error);notificationSettings={...notificationSettings,[key]:previous};toast('Не удалось сохранить настройки уведомлений.');}
         finally{if(currentView==='settings')renderSettingsPanel();}
     }
     const settingsIconPaths={
-        theme:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"',
-        wallpaper:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"',
-        presence:'<path d="M2 12h3m14 0h3M5 8a10 10 0 0 1 14 0M5 16a10 10 0 0 0 14 0"/><circle cx="12" cy="12" r="2"/>',
-        style:'<path d="M4 7h16M4 12h10M4 17h13"/><circle cx="18" cy="12" r="2"/>',
+        theme:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2"/>',
+        wallpaper:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/>',
         behavior:'<path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="11" cy="18" r="2"/>',
-        privacy:'<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"',
-        notifications:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"',
-        animations:'<path d="m12 3 1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3Z"/><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z"',
+        privacy:'<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/>',
+        notifications:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>',
+        presence:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+        textStyle:'<path d="M4 19 10 5l6 14M6 15h8m1-2 4-9 4 9m-7-2h6"/>',
+        animations:'<path d="m12 3 1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3Z"/><path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z"/>',
         hidePreviews:'<path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5 0 8.5 4.5 9 7-.2 1.1-1 2.5-2.2 3.7M6.2 6.2C4 7.5 2.5 9.7 2 12c.5 2.5 4 7 10 7 1 0 2-.2 2.9-.5"/>',
         hidePhoneNumber:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.5 2.8a2 2 0 0 1-.6 1.7L7.7 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 1.7-.6l2.8.5a2 2 0 0 1 1.5 1.8Z"/>',
         hideLastSeen:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
         incomingSound:'<path d="M11 5 6 9H3v6h3l5 4V5Zm4 4a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12"/>',
-        outgoingSound:'<path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7Z"/>',
+        outgoingSound:'<path d="m22 2-7 20-4-9-9-4 20-7Z"/>',
         typingSound:'<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/><path d="M8 12h.01M12 12h.01M16 12h.01"/>',
-        interfaceSounds:'<path d="M12 2v4m0 12v4M2 12h4m12 0h4M4.9 4.9l2.8 2.8m8.6 8.6 2.8 2.8m0-14.2-2.8 2.8m-8.6 8.6-2.8 2.8"/><circle cx="12" cy="12" r="3"/>',
+        interfaceSounds:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9 7 7m10 10 2.1 2.1m0-14.2L17 7M7 17l-2.1 2.1"/>',
         desktopNotifications:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/><path d="M19 3v3m-1.5-1.5h3"/>',
         fontSize:'<path d="M4 19 10 5l6 14M6 15h8m1-2 4-9 4 9m-7-2h6"/>',
         bubbleRadius:'<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/>',
-        online:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>',recently:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',longAgo:'<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/>',
-        light:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2"/>',mint:'<path d="M20 4c-9 0-15 4-15 11a5 5 0 0 0 5 5c7 0 11-6 10-16Z"/><path d="M5 19c3-4 6-6 11-9"/>',night:'<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/>',sunset:'<path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 3v3m-7 0 2 2m12-2-2 2"/>',lagoon:'<path d="M2 8c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 14c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 20c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/>',orchid:'<path d="M12 12c-4-8-9-5-7-1s5 3 7 1Zm0 0c4-8 9-5 7-1s-5 3-7 1Zm0 0c-8 4-5 9-1 7s3-5 1-7Zm0 0c8 4 5 9 1 7s-3-5-1-7Z"/><circle cx="12" cy="12" r="1.5"/>',
-        dots:'<circle cx="5" cy="5" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="19" cy="5" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="19" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="19" cy="19" r="1"/>',lines:'<path d="m4 4 16 16M4 12l8 8m0-16 8 8"/>',glow:'<circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2"/>',plain:'<rect x="4" y="4" width="16" height="16" rx="3"/>',waves:'<path d="M2 8c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/>',grid:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18m6-18v18"/>',confetti:'<path d="m5 4 2 2-2 2-2-2 2-2Zm12 8 3 3-3 3-3-3 3-3Zm-8-2 2-7 2 7-2 2-2-2Zm5 11 1-3 1 3 3 1-3 1-1 3-1-3-3-1 3-1Z"/>',paper:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8m-8 4h8"/>'
+        online:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/>',
+        recently:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+        longAgo:'<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/>',
+        light:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2"/>',
+        mint:'<path d="M20 4c-9 0-15 4-15 11a5 5 0 0 0 5 5c7 0 11-6 10-16Z"/><path d="M5 19c3-4 6-6 11-9"/>',
+        night:'<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/>',
+        sunset:'<path d="M3 18h18M5 18a7 7 0 0 1 14 0M12 3v3m-7 0 2 2m12-2-2 2"/>',
+        lagoon:'<path d="M2 8c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/>',
+        orchid:'<path d="M12 12c-4-8-9-5-7-1s5 3 7 1Zm0 0c4-8 9-5 7-1s-5 3-7 1Zm0 0c-8 4-5 9-1 7s3-5 1-7Zm0 0c8 4 5 9 1 7s-3-5-1-7Z"/><circle cx="12" cy="12" r="1.5"/>',
+        dots:'<circle cx="5" cy="5" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="19" cy="5" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="19" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="19" cy="19" r="1"/>',
+        lines:'<path d="m4 4 16 16M4 12l8 8m0-16 8 8"/>',
+        glow:'<circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2"/>',
+        plain:'<rect x="4" y="4" width="16" height="16" rx="3"/>',
+        waves:'<path d="M2 8c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2M2 16c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/>',
+        grid:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18m6-18v18"/>',
+        confetti:'<path d="m5 4 2 2-2 2-2-2 2-2Zm12 8 3 3-3 3-3-3 3-3Zm-8-2 2-7 2 7-2 2-2-2Z"/>',
+        paper:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8m-8 4h8"/>',
+        reset:'<path d="M3 11a9 9 0 1 1 2.6 6.4M3 4v7h7"/>'
     };
-    function settingsIconMarkup(key,className='settings-choice-icon'){
+    function settingIcon(key,className='settings-choice-icon'){
         return `<span class="${className}" aria-hidden="true"><svg viewBox="0 0 24 24">${settingsIconPaths[key]||settingsIconPaths.behavior}</svg></span>`;
     }
-    function decorateSettingsIcons(){
-        const headingIcons={themeHeading:'theme',wallpaperHeading:'wallpaper',presenceHeading:'presence',textStyleHeading:'style',behaviorHeading:'behavior',privacyHeading:'privacy',notificationsHeading:'notifications'};
+    function decorateSettingsPanel(){
+        const headingIcons={themeHeading:'theme',wallpaperHeading:'wallpaper',behaviorHeading:'behavior',presenceHeading:'presence',textStyleHeading:'textStyle',privacyHeading:'privacy',notificationsHeading:'notifications'};
         document.querySelectorAll('#panelView .settings-group-head').forEach(head=>{
-            const heading=head.querySelector('h3'),key=headingIcons[heading?.id];
-            if(key){const line=document.createElement('div');line.className='settings-heading-line';line.innerHTML=`${settingsIconMarkup(key,'settings-heading-icon')}<span></span>`;line.lastElementChild.append(...head.firstElementChild.childNodes);head.firstElementChild.append(line);}
+            const heading=head.querySelector('h3'),icon=headingIcons[heading?.id];
+            if(icon)head.insertAdjacentHTML('afterbegin',settingIcon(icon,'settings-section-icon'));
         });
         document.querySelectorAll('#panelView .setting-row').forEach(row=>{
             const control=row.querySelector('[data-setting-toggle],[data-privacy-setting],[data-notification-setting]');
             const key=control?.dataset.settingToggle||control?.dataset.privacySetting||control?.dataset.notificationSetting;
-            if(key&&row.firstElementChild)row.insertBefore(document.createRange().createContextualFragment(settingsIconMarkup(key,'setting-icon')),row.firstElementChild);
+            if(key)row.insertAdjacentHTML('afterbegin',settingIcon(key,'settings-item-icon'));
         });
-        document.querySelectorAll('#panelView [data-presence-mode]').forEach(button=>{const label=button.textContent;button.innerHTML=`${settingsIconMarkup(button.dataset.presenceMode)}<span>${label}</span>`;});
-        document.querySelectorAll('#panelView [data-theme-choice]').forEach(button=>{const label=button.querySelector('.theme-choice-label');label.innerHTML=`${settingsIconMarkup(button.dataset.themeChoice)}<span>${label.textContent}</span>`;});
-        document.querySelectorAll('#panelView [data-wallpaper-choice]').forEach(button=>{const label=button.querySelector('.wallpaper-choice-label');label.innerHTML=`${settingsIconMarkup(button.dataset.wallpaperChoice)}<span>${label.textContent}</span>`;});
-        document.querySelectorAll('#panelView [data-setting-range]').forEach(range=>range.closest('.settings-slider').insertAdjacentHTML('afterbegin',settingsIconMarkup(range.dataset.settingRange,'settings-slider-icon')));
-        const testButton=document.querySelector('#panelView [data-test-message-sound]');if(testButton)testButton.insertAdjacentHTML('afterbegin',settingsIconMarkup('incomingSound'));
+        document.querySelectorAll('#panelView [data-theme-choice]').forEach(button=>{
+            const label=button.querySelector('.theme-choice-label');
+            label.innerHTML=`${settingIcon(button.dataset.themeChoice)}<span>${label.textContent}</span>`;
+        });
+        document.querySelectorAll('#panelView [data-wallpaper-choice]').forEach(button=>{
+            const label=button.querySelector('.wallpaper-choice-label');
+            label.innerHTML=`${settingIcon(button.dataset.wallpaperChoice)}<span>${label.textContent}</span>`;
+        });
+        document.querySelectorAll('#panelView [data-presence-mode]').forEach(button=>{
+            const label=button.textContent;
+            button.innerHTML=`${settingIcon(button.dataset.presenceMode)}<span>${label}</span>`;
+        });
+        document.querySelectorAll('#panelView [data-setting-range]').forEach(range=>range.closest('.settings-slider').insertAdjacentHTML('afterbegin',settingIcon(range.dataset.settingRange,'settings-slider-icon')));
+        $('#panelView [data-wallpaper-reset]')?.insertAdjacentHTML('afterbegin',settingIcon('reset'));
+        $('#panelView [data-test-message-sound]')?.insertAdjacentHTML('afterbegin',settingIcon('incomingSound'));
     }
     function renderSettingsPanel(){
         const themes=[['light','Светлая'],['mint','Мятная'],['night','Ночная'],['sunset','Закат'],['lagoon','Лагуна'],['orchid','Орхидея']];
@@ -1168,7 +1230,7 @@ const firebaseConfig = {
         const notificationRows=[['incomingSound','Звук входящего сообщения','Мягкий сигнал при новом сообщении.'],['outgoingSound','Звук отправки','Короткий сигнал после отправки сообщения.'],['typingSound','Звук индикатора набора','Мягкий сигнал, когда собеседник начинает печатать.'],['interfaceSounds','Звуки кнопок','Разные тихие сигналы при наведении и нажатии.'],['desktopNotifications','Системные уведомления','Показывать уведомления браузера, когда приложение не активно.']];
         notificationsGroup.innerHTML=`<div class="settings-group-head"><div><h3 id="notificationsHeading">Уведомления</h3><p>Настройте звуки и системные оповещения.</p></div></div>${notificationRows.map(([key,title,copy])=>`<div class="setting-row"><div><div class="setting-row-title">${title}</div><div class="setting-row-copy">${copy}</div></div><button class="setting-switch" type="button" role="switch" aria-label="${title}" aria-checked="${notificationSettings[key]}" data-notification-setting="${key}"><span class="switch-knob"></span></button></div>`).join('')}<button class="link-button notification-test" type="button" data-test-message-sound>Проверить звук</button>`;
         $('#panelView .settings-page').appendChild(notificationsGroup);
-        decorateSettingsIcons();
+        decorateSettingsPanel();
     }
     $('#panelView').addEventListener('click',event=>{
         if(event.target.closest('[data-open-account-profile]')){navigate('profile');return;}
@@ -1208,7 +1270,9 @@ const firebaseConfig = {
     $('#headerTitle').addEventListener('click',()=>{if(activeRecipientUid)openUserProfile(activeRecipientUid);});
     for(const target of [$('#headerAvatar'),$('#headerTitle')])target.addEventListener('keydown',event=>{if(activeRecipientUid&&(event.key==='Enter'||event.key===' ')){event.preventDefault();openUserProfile(activeRecipientUid);}});
     $('#headerMenuButton').addEventListener('click',()=>$('#userMenu').classList.toggle('hidden'));
+    const renameContactButton=document.createElement('button');renameContactButton.id='renameContactButton';renameContactButton.type='button';renameContactButton.className='hidden';renameContactButton.textContent='Переименовать контакт';$('#userMenu').insertBefore(renameContactButton,$('#blockUserButton'));
     $('#userMenu').addEventListener('click',event=>{const view=event.target.dataset.view;if(view)navigate(view);});
+    renameContactButton.addEventListener('click',renameActiveContact);
     $('#pinChatButton').addEventListener('click',()=>setChatPreference('pin'));
     $('#unpinChatButton').addEventListener('click',()=>setChatPreference('unpin'));
     $('#muteChatButton').addEventListener('click',()=>setChatPreference('mute'));
@@ -1226,7 +1290,7 @@ const firebaseConfig = {
         $('#contactResults').addEventListener('click',event=>{const profile=event.target.closest('[data-profile]');if(profile){event.stopPropagation();openUserProfile(profile.dataset.profile);return;}const chat=event.target.closest('[data-chat]');if(chat){openDirect(chat.dataset.chat);return;}const row=event.target.closest('[data-open]');if(row)openDirect(row.dataset.open);});
         $('#contactResults').addEventListener('keydown',event=>{const row=event.target.closest('[data-open]');if(row&&(event.key==='Enter'||event.key===' ')){event.preventDefault();openDirect(row.dataset.open);}});
     }
-    function contactCard(person){const avatar=person.isBlockedByViewer?'':person.avatarUrl?`<img src="${escapeHtml(person.avatarUrl)}" alt="">`:escapeHtml(initials(person.displayName||person.username));return `<div class="contact-row"><button class="contact-person" data-open="${escapeHtml(person.uid)}" type="button" aria-label="Открыть чат с ${escapeHtml(person.displayName||person.username||'контактом')}"><span class="avatar ${person.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</span><span class="chat-meta"><span class="chat-name">${escapeHtml(person.displayName||'Без имени')}</span><span class="chat-preview">${person.username?'@'+escapeHtml(person.username):''}</span><span class="contact-status ${person.isBlockedByViewer?'is-long':person.availabilityMode==='online'?'is-online':''}">${presenceLabel(person,person.isBlockedByViewer)}</span></span></button><button class="icon-button contact-profile-action" data-profile="${escapeHtml(person.uid)}" type="button" aria-label="Профиль ${escapeHtml(person.displayName||person.username||'пользователя')}" title="Профиль"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4 20c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg></button><button class="primary contact-open" data-chat="${escapeHtml(person.uid)}" type="button">Написать</button></div>`;}
+    function contactCard(person){const name=contactDisplayName(person,person.uid),avatar=person.isBlockedByViewer?'':person.avatarUrl?`<img src="${escapeHtml(person.avatarUrl)}" alt="">`:escapeHtml(initials(name));return `<div class="contact-row"><button class="contact-person" data-open="${escapeHtml(person.uid)}" type="button" aria-label="Открыть чат с ${escapeHtml(name)}"><span class="avatar ${person.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</span><span class="chat-meta"><span class="chat-name">${escapeHtml(name)}</span><span class="chat-preview">${person.username?'@'+escapeHtml(person.username):''}</span><span class="contact-status ${person.isBlockedByViewer?'is-long':person.availabilityMode==='online'?'is-online':''}">${presenceLabel(person,person.isBlockedByViewer)}</span></span></button><button class="icon-button contact-profile-action" data-profile="${escapeHtml(person.uid)}" type="button" aria-label="Профиль ${escapeHtml(name)}" title="Профиль"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4 20c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg></button><button class="primary contact-open" data-chat="${escapeHtml(person.uid)}" type="button">Написать</button></div>`;}
     async function renderPublicUserProfile(uid){
         if(!uid)return;
         try{
@@ -1286,7 +1350,7 @@ const firebaseConfig = {
             $('#contactResults').innerHTML=contactCard(person);
         }catch(error){console.error(error);toast('Не удалось найти пользователя.');}
     }
-    async function addContact(uid){try{await setDoc(doc(db,'users',currentUser.uid,'contacts',uid),{createdAt:serverTimestamp()});toast('Контакт добавлен.');}catch(error){console.error(error);toast('Не удалось добавить контакт.');}}
+    async function addContact(uid){try{await setDoc(doc(db,'users',currentUser.uid,'contacts',uid),{createdAt:serverTimestamp()},{merge:true});toast('Контакт добавлен.');}catch(error){console.error(error);toast('Не удалось добавить контакт.');}}
 
     async function updateProfileBadge(){try{const snapshot=await getDoc(doc(db,'users',currentUser.uid));if(!snapshot.exists())return;const profile=snapshot.data();currentProfile=profile;renderAvatar($('#railAvatar'),profile);if(currentView==='profile')renderProfilePanel();}catch(error){console.error(error);}}
     async function renderProfilePanel(){const snapshot=await getDoc(doc(db,'users',currentUser.uid));const profile=snapshot.data()||{};currentProfile=profile;
@@ -1302,7 +1366,7 @@ const firebaseConfig = {
     async function saveProfile(event){event.preventDefault();const displayName=$('#displayName').value.trim(),raw=$('#username').value.trim().replace(/^@/,''),username=raw.toLocaleLowerCase('en'),birthday=$('#birthday').value;
         if(displayName.length<2){toast('Введите имя длиной хотя бы 2 символа.');return;}if(!/^[a-z0-9_]{4,24}$/.test(username)){toast('Имя пользователя: 4–24 символа, латиница, цифры или _.');return;}
         try{await runTransaction(db,async transaction=>{const profileRef=doc(db,'users',currentUser.uid),profileSnap=await transaction.get(profileRef),oldName=profileSnap.data()?.usernameLower;const usernameRef=doc(db,'usernames',username),nameSnap=await transaction.get(usernameRef);if(nameSnap.exists()&&nameSnap.data().uid!==currentUser.uid)throw new Error('Имя уже занято.');if(oldName&&oldName!==username)transaction.delete(doc(db,'usernames',oldName));transaction.set(usernameRef,{uid:currentUser.uid});transaction.set(profileRef,{displayName,username,usernameLower:username,birthday},{merge:true});});await syncUserDirectory((await getDoc(doc(db,'users',currentUser.uid))).data()||{}).catch(error=>console.error('User directory sync failed:',error));toast('Профиль сохранён.');await updateProfileBadge();}
-        catch(error){console.error(error);toast(error.message==='Имя уже занято.'?error.message:'Не удалось сохранить профиль. Попробуйте ещё раз.');}}
+        catch(error){console.error(error);toast(error.message==='Имя уже занято.'?error.message:'Не удалось сохранить профиль. Проверьте правила Firebase.');}}
     $('#cameraInput').addEventListener('change',event=>{const file=event.target.files?.[0];if(file)uploadAndSend(file);event.target.value='';});
     $('#filterInput').addEventListener('keydown',event=>{if(event.key==='Escape')event.target.value='';});
 </script>
