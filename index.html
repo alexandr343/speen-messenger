@@ -208,6 +208,25 @@
 </main>
 <div id="toast" class="toast" role="status"></div>
 
+<style>
+    .bubble{font-weight:400;line-height:1.32;letter-spacing:0;transform-origin:left bottom}
+    .bubble.mine{transform-origin:right bottom}
+    .bubble:not(.is-updating){animation:message-arrive .5s cubic-bezier(.18,.8,.25,1) both}
+    .reply-quote{position:relative;gap:4px;margin:0 0 8px;padding:8px 11px;border:1px solid #dfeae1;border-left:3px solid #5b9a72;border-radius:5px 10px 10px 5px;background:linear-gradient(105deg,#edf6ee,#f8fbf7 78%);box-shadow:inset 0 1px #ffffffb8;text-align:left;transition:background .2s,border-color .2s,transform .2s,box-shadow .2s}
+    .reply-quote:hover{transform:translateX(2px);border-color:#bcd8c3;box-shadow:0 4px 12px #315a3810,inset 0 1px #ffffffb8}
+    .reply-quote strong{font-size:10px;font-weight:700;line-height:1.25;color:#397451}
+    .reply-quote span{font-size:12px;line-height:1.3;color:#718078}
+    .reply-preview{border-color:#dce9df;box-shadow:0 -8px 22px #28362d10}
+    .reply-preview-mark{width:4px;flex-basis:4px;background:linear-gradient(180deg,#7db991,#46795a)}
+    .reply-preview-copy strong{font-size:11px;font-weight:700}
+    .bubble-footer{margin-top:4px}
+    body[data-theme="night"] .reply-quote{background:linear-gradient(105deg,#2d4540,#293a3b 78%);border-color:#405a4d;border-left-color:#83bf99;box-shadow:inset 0 1px #ffffff08}
+    body[data-theme="night"] .reply-quote strong{color:#a8d8b6}
+    body[data-theme="night"] .reply-quote span{color:#aabbb2}
+    @keyframes message-arrive{0%{opacity:0;transform:translate3d(0,12px,0) scale(.96);filter:blur(3px)}68%{opacity:1;transform:translate3d(0,-2px,0) scale(1.008);filter:blur(0)}100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+    @media(prefers-reduced-motion:reduce){.bubble:not(.is-updating){animation:none!important}.reply-quote{transition:none}}
+</style>
+
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
     import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js';
@@ -550,30 +569,37 @@ const firebaseConfig = {
         if(notificationAudioContext.state==='suspended'){notificationAudioContext.resume().then(()=>playMessageSound(kind,force)).catch(()=>{});return;}
         if(notificationAudioContext.state!=='running')return;
         const context=notificationAudioContext,now=context.currentTime;
-        const notes=kind==='incoming'?[740,988]:kind==='typing'?[659,880]:[587,784];
+        const notes=kind==='incoming'?[659,880]:kind==='typing'?[587,740]:[523,659];
         notes.forEach((frequency,index)=>{
-            const start=now+index*.105,oscillator=context.createOscillator(),gain=context.createGain();
-            oscillator.type='sine';oscillator.frequency.setValueAtTime(frequency,start);
-            gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.12,start+.018);gain.gain.exponentialRampToValueAtTime(.0001,start+.22);
-            oscillator.connect(gain);gain.connect(context.destination);oscillator.start(start);oscillator.stop(start+.23);
+            const start=now+index*.12;
+            [{partial:1,level:.075},{partial:2.01,level:.012}].forEach(({partial,level})=>{
+                const oscillator=context.createOscillator(),gain=context.createGain(),toneStart=start+(partial>1?.018:0),duration=partial>1?.28:.36;
+                oscillator.type='sine';oscillator.frequency.setValueAtTime(frequency*partial,toneStart);
+                oscillator.frequency.exponentialRampToValueAtTime(frequency*partial*.985,toneStart+duration);
+                gain.gain.setValueAtTime(.0001,toneStart);gain.gain.exponentialRampToValueAtTime(level,toneStart+.045);gain.gain.exponentialRampToValueAtTime(.0001,toneStart+duration);
+                oscillator.connect(gain);gain.connect(context.destination);oscillator.start(toneStart);oscillator.stop(toneStart+duration+.01);
+            });
         });
     }
     function playInterfaceButtonSound(kind,button){
-        if(!notificationSettings.interfaceSounds||!button||button.disabled)return;
+        if(!notificationSettings.interfaceSounds||!button||button.disabled||button.closest('.composer')||button.matches('input,textarea,[contenteditable="true"]'))return;
         const now=performance.now();
         if(kind==='hover'&&now-lastInterfaceSoundAt<95)return;
         lastInterfaceSoundAt=now;
         if(!notificationAudioContext)return;
         if(notificationAudioContext.state==='suspended'){notificationAudioContext.resume().then(()=>playInterfaceButtonSound(kind,button)).catch(()=>{});return;}
         if(notificationAudioContext.state!=='running')return;
-        const label=button.getAttribute('aria-label')||button.title||button.innerText||button.dataset.view||'button';
-        let hash=0;for(const character of label)hash=(hash*31+character.charCodeAt(0))>>>0;
-        const context=notificationAudioContext,oscillator=context.createOscillator(),gain=context.createGain(),start=context.currentTime;
-        oscillator.type=kind==='hover'?'sine':'triangle';
-        oscillator.frequency.setValueAtTime((kind==='hover'?440:520)+(hash%260),start);
-        oscillator.frequency.exponentialRampToValueAtTime((kind==='hover'?390:450)+(hash%210),start+(kind==='hover'?.07:.11));
-        gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(kind==='hover'?.018:.035,start+.012);gain.gain.exponentialRampToValueAtTime(.0001,start+(kind==='hover'?.08:.13));
-        oscillator.connect(gain);gain.connect(context.destination);oscillator.start(start);oscillator.stop(start+(kind==='hover'?.085:.14));
+        const context=notificationAudioContext,start=context.currentTime;
+        const tones=kind==='hover'?[{frequency:587,level:.004,duration:.11}]:[{frequency:392,level:.009,duration:.24},{frequency:587,level:.005,duration:.2}];
+        tones.forEach(({frequency,level,duration},index)=>{
+            [{partial:1,level},{partial:2.01,level:level*.16}].forEach(({partial,level:partialLevel})=>{
+                const oscillator=context.createOscillator(),gain=context.createGain(),toneStart=start+index*.035+(partial>1?.012:0);
+                oscillator.type='sine';oscillator.frequency.setValueAtTime(frequency*partial,toneStart);
+                oscillator.frequency.exponentialRampToValueAtTime(frequency*partial*.96,toneStart+duration);
+                gain.gain.setValueAtTime(.0001,toneStart);gain.gain.exponentialRampToValueAtTime(partialLevel,toneStart+.035);gain.gain.exponentialRampToValueAtTime(.0001,toneStart+duration);
+                oscillator.connect(gain);gain.connect(context.destination);oscillator.start(toneStart);oscillator.stop(toneStart+duration+.01);
+            });
+        });
     }
     document.addEventListener('pointerover',event=>{
         const button=event.target.closest('button');
@@ -727,8 +753,10 @@ const firebaseConfig = {
     }
     function updateRemoteTyping(chat){
         clearTimeout(typingExpiryTimer);
+        const wasTyping=activeRemoteTypingUntil>Date.now();
         const typingAt=timestampMilliseconds(activeRecipientUid?chat.typing?.[activeRecipientUid]:null);
         activeRemoteTypingUntil=activeChatKind==='direct'&&typingAt?typingAt+5000:0;
+        if(!wasTyping&&activeRemoteTypingUntil>Date.now())playMessageSound('typing');
         renderTypingIndicator();
         const remaining=activeRemoteTypingUntil-Date.now();
         if(remaining>0)typingExpiryTimer=setTimeout(()=>{activeRemoteTypingUntil=0;renderTypingIndicator();},remaining+20);
@@ -746,7 +774,6 @@ const firebaseConfig = {
         if(localTypingChatId&&localTypingChatId!==activeChatId)stopLocalTyping();
         const now=Date.now(),chatId=activeChatId;
         localTypingChatId=chatId;
-        if(!localTypingActive)playMessageSound('typing');
         if(!localTypingActive||now-lastTypingWriteAt>=1000){
             localTypingActive=true;lastTypingWriteAt=now;
             updateDoc(doc(db,'chats',chatId),{[`typing.${currentUser.uid}`]:serverTimestamp()}).catch(error=>console.error('Typing state update failed:',error));
@@ -1083,7 +1110,7 @@ const firebaseConfig = {
         const notificationsGroup=document.createElement('section');
         notificationsGroup.className='settings-group privacy-group';
         notificationsGroup.setAttribute('aria-labelledby','notificationsHeading');
-        const notificationRows=[['incomingSound','Звук входящего сообщения','Мягкий сигнал при новом сообщении.'],['outgoingSound','Звук отправки','Короткий сигнал после отправки сообщения.'],['typingSound','Звук начала набора','Короткий сигнал, когда вы начинаете писать.'],['interfaceSounds','Звуки кнопок','Разные тихие сигналы при наведении и нажатии.'],['desktopNotifications','Системные уведомления','Показывать уведомления браузера, когда приложение не активно.']];
+        const notificationRows=[['incomingSound','Звук входящего сообщения','Мягкий сигнал при новом сообщении.'],['outgoingSound','Звук отправки','Короткий сигнал после отправки сообщения.'],['typingSound','Звук индикатора набора','Мягкий сигнал, когда собеседник начинает печатать.'],['interfaceSounds','Звуки кнопок','Разные тихие сигналы при наведении и нажатии.'],['desktopNotifications','Системные уведомления','Показывать уведомления браузера, когда приложение не активно.']];
         notificationsGroup.innerHTML=`<div class="settings-group-head"><div><h3 id="notificationsHeading">Уведомления</h3><p>Настройте звуки и системные оповещения.</p></div></div>${notificationRows.map(([key,title,copy])=>`<div class="setting-row"><div><div class="setting-row-title">${title}</div><div class="setting-row-copy">${copy}</div></div><button class="setting-switch" type="button" role="switch" aria-label="${title}" aria-checked="${notificationSettings[key]}" data-notification-setting="${key}"><span class="switch-knob"></span></button></div>`).join('')}<button class="link-button notification-test" type="button" data-test-message-sound>Проверить звук</button>`;
         $('#panelView .settings-page').appendChild(notificationsGroup);
     }
