@@ -331,7 +331,7 @@
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js';
     import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js';
-    import { getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, collection, query, where, onSnapshot, orderBy, serverTimestamp, runTransaction, arrayUnion, arrayRemove, deleteField, getDocs, writeBatch, limit, increment } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
+    import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, doc, getDoc, setDoc, updateDoc, addDoc, collection, query, where, onSnapshot, orderBy, serverTimestamp, runTransaction, arrayUnion, arrayRemove, deleteField, getDocs, writeBatch, limit, increment } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js';
     import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js';
     import { getAI, GoogleAIBackend, getGenerativeModel } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-ai.js';
     import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js';
@@ -682,7 +682,10 @@ const firebaseConfig = {
     function makeChatId(first, second) { return [first, second].sort().join('__'); }
 
     if (configured) {
-        const firebaseApp = initializeApp(firebaseConfig); auth = getAuth(firebaseApp); auth.languageCode = interfaceLanguage; db = getFirestore(firebaseApp); storage = getStorage(firebaseApp);
+        const firebaseApp = initializeApp(firebaseConfig); auth = getAuth(firebaseApp); auth.languageCode = interfaceLanguage;
+        try{db=initializeFirestore(firebaseApp,{localCache:persistentLocalCache({tabManager:persistentMultipleTabManager()})});}
+        catch(error){console.warn('Persistent Firestore cache is unavailable; using the default cache.',error);db=getFirestore(firebaseApp);}
+        storage = getStorage(firebaseApp);
         try{if(appCheckSiteKey&&!appCheckSiteKey.startsWith('PASTE_')){initializeAppCheck(firebaseApp,{provider:new ReCaptchaEnterpriseProvider(appCheckSiteKey),isTokenAutoRefreshEnabled:true});appCheckReady=true;}const ai=getAI(firebaseApp,{backend:new GoogleAIBackend()});aiModel=getGenerativeModel(ai,{model:'gemini-3.8-flash',systemInstruction:'You are Speen, a warm and helpful AI conversation partner. Reply in the language the user is writing in. Support English, Russian, Ukrainian, and Polish; use English if their preferred language is unclear. Be transparent that you are an AI; never pretend to be human.'});}catch(error){console.error('Firebase AI Logic is unavailable',error);}
         onAuthStateChanged(auth, async user => {
             currentUser = user;
