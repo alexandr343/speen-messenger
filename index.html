@@ -1653,3 +1653,6 @@ const firebaseConfig = {
         try{await runTransaction(db,async transaction=>{const profileRef=doc(db,'users',currentUser.uid),profileSnap=await transaction.get(profileRef),oldName=profileSnap.data()?.usernameLower;const usernameRef=doc(db,'usernames',username),nameSnap=await transaction.get(usernameRef);if(nameSnap.exists()&&nameSnap.data().uid!==currentUser.uid)throw new Error('Имя уже занято.');if(oldName&&oldName!==username)transaction.delete(doc(db,'usernames',oldName));transaction.set(usernameRef,{uid:currentUser.uid});transaction.set(profileRef,{displayName,username,usernameLower:username,birthday},{merge:true});});try{localStorage.setItem(`speen-birthday:${currentUser.uid}`,birthday);localStorage.removeItem(`speen-birthday-pending:${currentUser.uid}`);}catch{}await syncUserDirectory((await getDoc(doc(db,'users',currentUser.uid))).data()||{}).catch(error=>console.error('User directory sync failed:',error));toast('Профиль сохранён.');await updateProfileBadge();}
         catch(error){console.error(error);toast(error.message==='Имя уже занято.'?error.message:'Не удалось сохранить профиль. Проверьте правила Firebase.');}}
     $('#filterInput').addEventListener('keydown',event=>{if(event.key==='Escape')event.target.value='';});
+</script>
+</body>
+</html>
