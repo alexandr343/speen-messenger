@@ -318,9 +318,14 @@
     .send-button:hover svg{transform:translate(2px,-2px)}
     .bubble:not(.is-updating){animation:message-receive .52s cubic-bezier(.18,.8,.25,1) both}
     .bubble.mine:not(.is-updating){animation-name:message-send}
+    .user-menu button[data-menu-action="contact-add"]{--menu-accent:#47845f}
+    .user-menu button[data-menu-action="contact-remove"]{--menu-accent:#b65346}
+    .user-menu button[data-menu-action="contact-add"]:is(:active,.is-activating) .menu-action-icon{animation:contact-added .46s cubic-bezier(.2,.8,.2,1)}
+    .user-menu button[data-menu-action="contact-remove"]:is(:active,.is-activating) .menu-action-icon{animation:menu-alert .42s ease}
     @keyframes message-receive{0%{opacity:0;transform:translate3d(-13px,9px,0) scale(.94);filter:blur(3px)}68%{opacity:1;transform:translate3d(1px,-2px,0) scale(1.012);filter:blur(0)}100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
     @keyframes message-send{0%{opacity:0;transform:translate3d(15px,11px,0) scale(.92);filter:blur(3px)}64%{opacity:1;transform:translate3d(-1px,-2px,0) scale(1.018);filter:blur(0)}100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
-    @media(prefers-reduced-motion:reduce){.bubble:not(.is-updating){animation:none!important}.reply-quote{transition:none}.send-button,.send-button svg,.compose-box{transition:none!important}}
+    @keyframes contact-added{35%{transform:scale(.82) rotate(-8deg)}72%{transform:scale(1.16) rotate(5deg)}}
+    @media(prefers-reduced-motion:reduce){.bubble:not(.is-updating){animation:none!important}.reply-quote{transition:none}.send-button,.send-button svg,.compose-box{transition:none!important}.user-menu button[data-menu-action^="contact-"] .menu-action-icon{animation:none!important}}
 </style>
 
 <script type="module">
@@ -394,6 +399,13 @@ const firebaseConfig = {
         ['Уведомления не поддерживаются этим браузером.','Notifications are not supported by this browser.','Цей браузер не підтримує сповіщення.','Ta przeglądarka nie obsługuje powiadomień.'],
         ['Войдите по номеру телефона. Мы отправим одноразовый код для подтверждения.','Sign in with your phone number. We will send a one-time verification code.','Увійдіть за номером телефону. Ми надішлемо одноразовий код підтвердження.','Zaloguj się numerem telefonu. Wyślemy jednorazowy kod weryfikacyjny.'],
         ['непрочитанных сообщений','unread messages','непрочитаних повідомлень','nieprzeczytanych wiadomości']
+    );
+    languageRows.push(
+        ['Добавить в контакты','Add to contacts','Додати до контактів','Dodaj do kontaktów'],
+        ['Удалить контакт','Remove contact','Видалити контакт','Usuń kontakt'],
+        ['Контакт добавлен. Чат сохранён в списке.','Contact added. Chat saved to your list.','Контакт додано. Чат збережено у списку.','Dodano kontakt. Czat zapisano na liście.'],
+        ['Контакт удалён. Чат перемещён в архив.','Contact removed. Chat moved to archive.','Контакт видалено. Чат переміщено до архіву.','Usunięto kontakt. Czat przeniesiono do archiwum.'],
+        ['Не удалось изменить контакт. Проверьте соединение и правила Firebase.','Could not update the contact. Check your connection and Firebase rules.','Не вдалося змінити контакт. Перевірте з’єднання й правила Firebase.','Nie udało się zmienić kontaktu. Sprawdź połączenie i reguły Firebase.']
     );
     const availableLanguages=['en','ru','uk','pl'],languageLocales={en:'en-US',ru:'ru-RU',uk:'uk-UA',pl:'pl-PL'},translationPairs=languageRows.map(([source,en,uk,pl])=>[source,{en,ru:source,uk,pl}]).sort((first,second)=>second[0].length-first[0].length);
     const translatedTextNodes=new WeakMap(),translatedAttributes=new WeakMap();
@@ -597,6 +609,9 @@ const firebaseConfig = {
         $('#archiveChatButton').classList.toggle('hidden',!archiveAllowed||(chat.archivedBy||[]).includes(currentUser.uid));
         $('#restoreChatButton').classList.toggle('hidden',!archiveAllowed||!(chat.archivedBy||[]).includes(currentUser.uid));
         $('#renameContactButton').classList.toggle('hidden',activeChatKind!=='direct');
+        const isDirect=activeChatKind==='direct'&&Boolean(activeRecipientUid),isSavedContact=contactUids.has(activeRecipientUid);
+        $('#addContactButton').classList.toggle('hidden',!isDirect||isSavedContact);
+        $('#removeContactButton').classList.toggle('hidden',!isDirect||!isSavedContact);
         $('#clearChatButton').classList.toggle('hidden',!activeChatId);
     }
     async function setChatPreference(action){
@@ -965,7 +980,7 @@ const firebaseConfig = {
             const unread=Number(chat.unreadCounts?.[currentUser.uid])||0;
             return `<div class="chat-item ${activeChatId===chat.id?'active':''} ${pinned?'is-pinned':''} ${muted?'is-muted':''} ${showingArchive?'is-archived':''}" data-uid="${escapeHtml(peerUid)}"><div class="avatar ${blockedByViewer?'blocked-profile-avatar':''}">${avatar}</div><div class="chat-meta"><div class="chat-line"><span class="chat-name-wrap"><span class="chat-name">${escapeHtml(name)}</span>${unread?`<span class="chat-unread-badge" aria-label="${unread} непрочитанных сообщений">${unread>99?'99+':unread}</span>`:''}</span><span class="chat-time">${chat.updatedAt?stamp(chat.updatedAt):''}</span></div><div class="chat-preview">${escapeHtml(preview)}</div>${person?`<span class="contact-status ${blockedByViewer?'is-long':person.availabilityMode==='online'?'is-online':''}">${presenceLabel(person,blockedByViewer)}</span>`:''}</div></div>`;
         }).join('');
-        const rows = contactRows.filter(contact => `${contact.contactLabel} ${contact.displayName} ${contact.username}`.toLocaleLowerCase('ru').includes(filter));
+        const rows = contactRows.filter(contact => contactUids.has(contact.uid)&&`${contact.contactLabel} ${contact.displayName} ${contact.username}`.toLocaleLowerCase('ru').includes(filter));
         const contacts = rows.map(contact => {const name=contactDisplayName(contact,contact.uid);const avatar=contact.isBlockedByViewer?'':contact.avatarUrl?`<img src="${escapeHtml(contact.avatarUrl)}" alt="">`:escapeHtml(initials(name));return `<div class="chat-item ${activeChatId === makeChatId(currentUser.uid,contact.uid) ? 'active':''}" data-uid="${escapeHtml(contact.uid)}"><div class="avatar ${contact.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</div><div class="chat-meta"><div class="chat-line"><span class="chat-name">${escapeHtml(name)}</span><span class="chat-time"></span></div><div class="chat-preview">${contact.username?'@'+escapeHtml(contact.username):translatedText('Новый контакт')}</div><span class="contact-status ${contact.isBlockedByViewer?'is-long':contact.availabilityMode==='online'?'is-online':''}">${presenceLabel(contact,contact.isBlockedByViewer)}</span></div></div>`;}).join('');
         list.innerHTML = showingArchive?archiveRow+`<div class="section-caption">В архиве</div>`+(directChats||'<div class="empty-list">В архиве пока пусто.</div>'):archiveRow+saved+(directChats?`<div class="section-caption">Чаты</div>${directChats}`:'')+`<div class="section-caption">Люди</div>`+(contacts||'<div class="empty-list">Контактов пока нет. Найдите человека по его имени пользователя.</div>');
         updateUnreadBadges();
@@ -1473,8 +1488,13 @@ const firebaseConfig = {
     document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!$('#userMenu').classList.contains('hidden'))setChatMenuOpen(false,true);});
     $('#userMenu').addEventListener('pointerdown',event=>{const action=event.target.closest('[data-menu-action]');if(!action)return;action.classList.remove('is-activating');void action.offsetWidth;action.classList.add('is-activating');setTimeout(()=>action.classList.remove('is-activating'),480);});
     const renameContactButton=document.createElement('button');renameContactButton.id='renameContactButton';renameContactButton.type='button';renameContactButton.className='hidden';renameContactButton.dataset.menuAction='edit';renameContactButton.setAttribute('role','menuitem');renameContactButton.innerHTML='<span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg></span><span>Переименовать контакт</span>';$('#userMenu').insertBefore(renameContactButton,$('#blockUserButton'));
+    const addContactButton=document.createElement('button');addContactButton.id='addContactButton';addContactButton.type='button';addContactButton.className='hidden';addContactButton.dataset.menuAction='contact-add';addContactButton.setAttribute('role','menuitem');addContactButton.innerHTML='<span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m6-11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm10-3v6m-3-3h6"/></svg></span><span>Добавить в контакты</span>';
+    const removeContactButton=document.createElement('button');removeContactButton.id='removeContactButton';removeContactButton.type='button';removeContactButton.className='hidden';removeContactButton.dataset.menuAction='contact-remove';removeContactButton.setAttribute('role','menuitem');removeContactButton.innerHTML='<span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m6-11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7-1 5 5m0-5-5 5"/></svg></span><span>Удалить контакт</span>';
+    $('#userMenu').insertBefore(addContactButton,$('#blockUserButton'));$('#userMenu').insertBefore(removeContactButton,$('#blockUserButton'));
     $('#userMenu').addEventListener('click',event=>{const view=event.target.closest('[data-view]')?.dataset.view;if(view){setChatMenuOpen(false);navigate(view);}});
     renameContactButton.addEventListener('click',renameActiveContact);
+    addContactButton.addEventListener('click',()=>setActiveContact(false));
+    removeContactButton.addEventListener('click',()=>setActiveContact(true));
     $('#pinChatButton').addEventListener('click',()=>setChatPreference('pin'));
     $('#unpinChatButton').addEventListener('click',()=>setChatPreference('unpin'));
     $('#muteChatButton').addEventListener('click',()=>setChatPreference('mute'));
@@ -1487,7 +1507,8 @@ const firebaseConfig = {
     async function logout(){try{await signOut(auth);toast('Вы вышли. Аккаунт и сообщения сохранены.');}catch(error){console.error(error);toast('Не удалось выйти из аккаунта.');}}
     $('#signOutButton').addEventListener('click',logout);
     function renderContactsPanel(){
-        $('#panelView').innerHTML=`<h2 class="panel-heading">Контакты</h2><p class="panel-copy">Ищите по имени среди контактов, @имени пользователя или точному номеру телефона.</p><form id="findForm" class="contact-search"><input id="usernameSearch" class="text-field" type="search" placeholder="Имя, @username или +7 900 123-45-67" autocomplete="off"><button class="primary" type="submit">Найти</button></form><div id="contactResults" class="contact-results">${contactRows.length?contactRows.map(person=>contactCard(person)).join(''):'<div class="empty-list">Введите имя, username или номер телефона, чтобы начать разговор.</div>'}</div>`;
+        const savedContacts=contactRows.filter(person=>contactUids.has(person.uid));
+        $('#panelView').innerHTML=`<h2 class="panel-heading">Контакты</h2><p class="panel-copy">Ищите по имени среди контактов, @имени пользователя или точному номеру телефона.</p><form id="findForm" class="contact-search"><input id="usernameSearch" class="text-field" type="search" placeholder="Имя, @username или +7 900 123-45-67" autocomplete="off"><button class="primary" type="submit">Найти</button></form><div id="contactResults" class="contact-results">${savedContacts.length?savedContacts.map(person=>contactCard(person)).join(''):'<div class="empty-list">Введите имя, username или номер телефона, чтобы начать разговор.</div>'}</div>`;
         $('#findForm').addEventListener('submit',findContact);
         $('#contactResults').addEventListener('click',event=>{const profile=event.target.closest('[data-profile]');if(profile){event.stopPropagation();openUserProfile(profile.dataset.profile);return;}const chat=event.target.closest('[data-chat]');if(chat){openDirect(chat.dataset.chat);return;}const row=event.target.closest('[data-open]');if(row)openDirect(row.dataset.open);});
         $('#contactResults').addEventListener('keydown',event=>{const row=event.target.closest('[data-open]');if(row&&(event.key==='Enter'||event.key===' ')){event.preventDefault();openDirect(row.dataset.open);}});
@@ -1542,7 +1563,19 @@ const firebaseConfig = {
             $('#contactResults').innerHTML=contactCard(person);
         }catch(error){console.error(error);toast('Не удалось найти пользователя.');}
     }
-    async function addContact(uid){try{await setDoc(doc(db,'users',currentUser.uid,'contacts',uid),{createdAt:serverTimestamp()},{merge:true});toast('Контакт добавлен.');}catch(error){console.error(error);toast('Не удалось добавить контакт.');}}
+    async function setActiveContact(saved){
+        const uid=activeRecipientUid;
+        if(!currentUser||!uid||activeChatKind!=='direct'||!activeChatId)return;
+        try{
+            const batch=writeBatch(db),contactRef=doc(db,'users',currentUser.uid,'contacts',uid),chatRef=doc(db,'chats',activeChatId);
+            if(saved){batch.delete(contactRef);batch.update(chatRef,{archivedBy:arrayUnion(currentUser.uid)});}
+            else{batch.set(contactRef,{createdAt:serverTimestamp()},{merge:true});batch.update(chatRef,{archivedBy:arrayRemove(currentUser.uid)});}
+            await batch.commit();
+            if(saved){contactUids.delete(uid);contactLabels.delete(uid);}else contactUids.add(uid);
+            refreshContactRows();setChatMenuOpen(false);
+            toast(saved?'Контакт удалён. Чат перемещён в архив.':'Контакт добавлен. Чат сохранён в списке.');
+        }catch(error){console.error(error);toast('Не удалось изменить контакт. Проверьте соединение и правила Firebase.');}
+    }
 
     async function updateProfileBadge(){try{const snapshot=await getDoc(doc(db,'users',currentUser.uid));if(!snapshot.exists())return;const profile=snapshot.data();currentProfile=profile;renderAvatar($('#railAvatar'),profile);if(currentView==='profile')renderProfilePanel();}catch(error){console.error(error);}}
     function initializeBirthdayPicker(initialValue='',isPending=false){
