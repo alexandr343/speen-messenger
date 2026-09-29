@@ -18,7 +18,7 @@
         :root{color-scheme:light;--ink:#202b30;--muted:#788589;--paper:#f3f6f2;--white:#fff;--line:#e7e9e5;--green:#a9d6c1;--green-deep:#356b58;--lime:#d8f47a;--coral:#f5a68d;--blue:#b8d6ea;--shadow:0 20px 70px #27332b12}
         *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh}button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #83bda5;outline-offset:2px}.hidden{display:none!important}
         .login-wrap{min-height:100vh;display:grid;place-items:center;padding:28px;overflow:hidden;background:radial-gradient(ellipse at 8% 95%,#d8e7d7 0,transparent 33%),radial-gradient(ellipse at 92% 8%,#f7d7c8 0,transparent 30%),radial-gradient(ellipse at 90% 95%,#d9e8ee 0,transparent 27%),var(--paper)}
-        .login{width:min(100%,460px);padding:44px 42px;background:#ffffffdf;border:1px solid #ffffff;border-radius:18px;box-shadow:0 30px 90px #27332b18;animation:rise .75s cubic-bezier(.2,.75,.25,1) both}.brand{display:flex;align-items:center;gap:12px;font-family:Manrope,sans-serif;font-weight:800;font-size:20px}.brand-mark{display:grid;place-items:center;width:46px;height:46px;background:linear-gradient(145deg,#bde4ca,#9bd5c1);border-radius:15px;color:#345044;box-shadow:0 7px 20px #72a98b36;animation:mark-in .8s cubic-bezier(.16,1,.3,1) both}.brand-mark svg{width:29px;height:29px;overflow:visible}.brand-mark path,.brand-mark circle{fill:none;stroke:#285344;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.brand-mark path{stroke-dasharray:48;stroke-dashoffset:48;animation:draw-mark 1.2s .2s cubic-bezier(.5,0,.2,1) forwards}.brand-mark circle{fill:#d8f47a;stroke:none;transform-origin:center;animation:dot-pop .45s .85s both}.brand-copy{display:flex;flex-direction:column;gap:1px}.brand-name{font:800 20px/1 Manrope,sans-serif;letter-spacing:.2px}.brand-tag{font-size:9px;line-height:1.5;font-weight:700;letter-spacing:1.7px;color:#72827a}.login h1{font:700 34px/1.14 Manrope,sans-serif;margin:42px 0 10px;letter-spacing:0}.login-sub{color:var(--muted);line-height:1.6;margin:0 0 30px}.field-label{display:block;font-weight:600;font-size:13px;margin:18px 0 8px}.text-field{width:100%;height:48px;border:1px solid var(--line);border-radius:8px;padding:0 14px;background:white;color:var(--ink)}.primary{border:0;background:var(--ink);color:white;height:48px;padding:0 18px;border-radius:8px;font-weight:700;transition:transform .2s cubic-bezier(.2,.8,.2,1),background .2s,box-shadow .2s}.primary:hover{background:#38534a;box-shadow:0 7px 18px #356b5830;transform:translateY(-2px)}.wide{width:100%;margin-top:16px}.phone-entry{height:52px;display:flex;align-items:center;gap:11px;padding:0 13px;background:#fff;border:1px solid var(--line);border-radius:9px;transition:border-color .2s,box-shadow .2s,transform .2s}.phone-entry:focus-within{border-color:#8cbda4;box-shadow:0 0 0 4px #a9d6c128;transform:translateY(-1px)}.phone-country{width:95px;flex:0 0 95px;display:flex;align-items:center;gap:8px;padding-right:11px;border-right:1px solid var(--line);font-size:22px;line-height:1}.phone-country-copy{display:flex;flex-direction:column;min-width:0}.phone-country-code{font-size:12px;font-weight:700;color:var(--ink);white-space:nowrap}.phone-country-name{font-size:9px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:61px}.phone-entry input.text-field{height:46px;border:0;border-radius:0;padding:0;outline:0;box-shadow:none;min-width:0}.hint{font-size:12px;color:var(--muted);line-height:1.55;margin-top:18px}.notice{background:#fff4dc;color:#785d2a;border:1px solid #f0dfb8;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.55;margin:20px 0}.error{color:#a74936;font-size:13px;margin-top:12px;min-height:18px}.recaptcha{margin-top:12px;overflow:hidden}.otp-row{display:flex;gap:8px}.otp-row .text-field{flex:1}.link-button{border:0;background:transparent;color:var(--green-deep);font-weight:700;padding:8px}
+        .login{position:relative;width:min(100%,460px);padding:44px 42px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(255,255,255,.86));border:1px solid rgba(255,255,255,.8);border-radius:26px;box-shadow:0 24px 80px rgba(20,38,30,.14),0 0 0 1px rgba(113,136,120,.12) inset;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);animation:rise .75s cubic-bezier(.2,.75,.25,1) both}.login::before{content:"";position:absolute;inset:1px;border-radius:25px;background:linear-gradient(135deg,rgba(255,255,255,.28),rgba(255,255,255,0));pointer-events:none}.login::after{content:"";position:absolute;right:-12%;top:-15%;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(120,200,165,.25),transparent 68%);filter:blur(4px);pointer-events:none}.brand{display:flex;align-items:center;gap:12px;font-family:Manrope,sans-serif;font-weight:800;font-size:20px}.brand-mark{display:grid;place-items:center;width:46px;height:46px;background:linear-gradient(145deg,#bde4ca,#9bd5c1);border-radius:15px;color:#345044;box-shadow:0 7px 20px #72a98b36;animation:mark-in .8s cubic-bezier(.16,1,.3,1) both}.brand-mark svg{width:29px;height:29px;overflow:visible}.brand-mark path,.brand-mark circle{fill:none;stroke:#285344;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.brand-mark path{stroke-dasharray:48;stroke-dashoffset:48;animation:draw-mark 1.2s .2s cubic-bezier(.5,0,.2,1) forwards}.brand-mark circle{fill:#d8f47a;stroke:none;transform-origin:center;animation:dot-pop .45s .85s both}.brand-copy{display:flex;flex-direction:column;gap:1px}.brand-name{font:800 20px/1 Manrope,sans-serif;letter-spacing:.2px}.brand-tag{font-size:9px;line-height:1.5;font-weight:700;letter-spacing:1.7px;color:#72827a}.login-badges{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 18px}.login-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;border:1px solid rgba(117,158,135,.18);background:rgba(240,249,244,.85);color:#3d5f50;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 8px 18px rgba(34,53,38,.05)}.login h1{font:700 34px/1.14 Manrope,sans-serif;margin:0 0 10px;letter-spacing:0}.login-sub{color:var(--muted);line-height:1.6;margin:0 0 30px}.field-label{display:block;font-weight:600;font-size:13px;margin:18px 0 8px}.text-field{width:100%;height:48px;border:1px solid var(--line);border-radius:8px;padding:0 14px;background:white;color:var(--ink)}.primary{border:0;background:var(--ink);color:white;height:48px;padding:0 18px;border-radius:8px;font-weight:700;transition:transform .2s cubic-bezier(.2,.8,.2,1),background .2s,box-shadow .2s}.primary:hover{background:#38534a;box-shadow:0 7px 18px #356b5830;transform:translateY(-2px)}.primary:active{transform:translateY(0)}.wide{width:100%;margin-top:16px}.phone-entry{height:52px;display:flex;align-items:center;gap:11px;padding:0 13px;background:#fff;border:1px solid var(--line);border-radius:12px;transition:border-color .22s,box-shadow .22s,transform .22s;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}.phone-entry:hover{border-color:#bdd9c7}.phone-entry input.text-field{height:46px;border:0;border-radius:0;padding:0;outline:0;box-shadow:none;min-width:0}.phone-country{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:8px;background:linear-gradient(180deg,#f5faf5,#edf4ef);border:1px solid rgba(125,177,146,.18);min-width:94px;max-width:140px}.phone-country-copy{display:flex;flex-direction:column;line-height:1.1}.phone-country-code{font-size:11px;font-weight:800;color:var(--green-deep);letter-spacing:.08em}.phone-country-name{font-size:9px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}.otp-row{display:flex;align-items:center;gap:12px;margin-top:10px}.otp-row .text-field{flex:1}.otp-row .primary{flex:0 0 auto;width:118px}.link-button{display:inline-flex;align-items:center;justify-content:center;margin-top:16px;border:0;background:transparent;padding:0;color:var(--green-deep);font-weight:700;cursor:pointer}.hint{font-size:12px;color:var(--muted);line-height:1.55;margin-top:18px}.notice{background:#fff4dc;color:#785d2a;border:1px solid #efddb1;border-radius:12px;padding:12px 14px;margin-bottom:18px;font-size:12px;line-height:1.5}.auth-success-overlay{position:absolute;inset:0;display:grid;place-items:center;padding:28px;pointer-events:none;opacity:0;transition:opacity .25s ease}.auth-success-overlay.is-visible{opacity:1}.auth-success-card{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:18px;background:rgba(18,31,29,.86);color:#ebf4f0;border:1px solid rgba(181,231,201,.32);box-shadow:0 18px 54px rgba(10,18,18,.28);backdrop-filter:blur(16px);transform:translateY(16px) scale(.96);transition:transform .45s cubic-bezier(.2,.8,.2,1)}.auth-success-overlay.is-visible .auth-success-card{transform:translateY(0) scale(1)}.auth-success-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#bae4c4,#79bf9d);color:#174b3d;font-size:24px;font-weight:800}.auth-success-copy{display:flex;flex-direction:column;line-height:1.2}.auth-success-copy strong{font-size:14px;letter-spacing:.04em}.auth-success-copy span{font-size:11px;color:rgba(235,244,240,.7);margin-top:4px}.login.is-transitioning .login-badges,.login.is-transitioning h1,.login.is-transitioning .login-sub,.login.is-transitioning .field-label,.login.is-transitioning .phone-entry,.login.is-transitioning .otp-row,.login.is-transitioning .hint,.login.is-transitioning .error{opacity:0;filter:blur(7px);transform:translateY(12px) scale(.98);transition:all .32s ease}.login-wrap.is-bridging{background:radial-gradient(circle at 50% 50%,rgba(189,232,211,.92),rgba(225,241,232,.92) 28%,rgba(245,242,233,.97) 100%)}.login-wrap.is-bridging .login{transform:scale(.97) translateY(8px);opacity:0;filter:blur(8px);transition:all .55s cubic-bezier(.2,.8,.2,1)}.phone-entry.has-value{border-color:#b5d5c3;box-shadow:0 0 0 3px rgba(169,214,193,.22)}.code-ready .otp-row .text-field{border-color:#8cbca2;box-shadow:0 0 0 4px rgba(155,207,177,.12)}.form-shell{position:relative}.recaptcha{margin-top:14px}.code-panel{display:block}.login-wrap::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.38;background-image:radial-gradient(#709984 1px,transparent 1px),radial-gradient(#fff 1px,transparent 1px);background-size:28px 28px,84px 84px;background-position:0 0,14px 14px;mask-image:linear-gradient(135deg,#000 0%,transparent 77%)}r .2s,box-shadow .2s,transform .2s}.phone-entry:focus-within{border-color:#8cbda4;box-shadow:0 0 0 4px #a9d6c128;transform:translateY(-1px)}.phone-country{width:95px;flex:0 0 95px;display:flex;align-items:center;gap:8px;padding-right:11px;border-right:1px solid var(--line);font-size:22px;line-height:1}.phone-country-copy{display:flex;flex-direction:column;min-width:0}.phone-country-code{font-size:12px;font-weight:700;color:var(--ink);white-space:nowrap}.phone-country-name{font-size:9px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:61px}.phone-entry input.text-field{height:46px;border:0;border-radius:0;padding:0;outline:0;box-shadow:none;min-width:0}.hint{font-size:12px;color:var(--muted);line-height:1.55;margin-top:18px}.notice{background:#fff4dc;color:#785d2a;border:1px solid #f0dfb8;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.55;margin:20px 0}.error{color:#a74936;font-size:13px;margin-top:12px;min-height:18px}.recaptcha{margin-top:12px;overflow:hidden}.otp-row{display:flex;gap:8px}.otp-row .text-field{flex:1}.link-button{border:0;background:transparent;color:var(--green-deep);font-weight:700;padding:8px}
         .app{height:100dvh;min-height:0;display:grid;grid-template-columns:76px 320px minmax(0,1fr);max-width:1600px;margin:auto;background:var(--white);box-shadow:0 0 100px #27332b0a;overflow:hidden}.rail{display:flex;flex-direction:column;align-items:center;padding:22px 0 18px;border-right:1px solid var(--line);background:#fbfcfa;min-height:0}.rail .brand-mark{width:42px;height:42px;margin-bottom:36px}.nav-stack{display:flex;flex-direction:column;gap:10px}.nav-button{width:46px;height:46px;border:0;background:transparent;color:#82908b;border-radius:13px;display:grid;place-items:center;position:relative;transition:.2s}.nav-button:hover,.nav-button.active{background:#eaf3ed;color:var(--green-deep)}.nav-button svg,.icon-button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.rail-bottom{margin-top:auto}.rail-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--coral);display:grid;place-items:center;font-size:13px;font-weight:700;color:white;overflow:hidden}
         .side{display:flex;flex-direction:column;border-right:1px solid var(--line);min-width:0;min-height:0;background:#fff}.side-head{padding:24px 22px 14px;flex:0 0 auto}.side-title-row{display:flex;align-items:center;justify-content:space-between}.side-title{font:700 24px Manrope,sans-serif;margin:0}.icon-button{border:0;background:transparent;color:#60716a;width:38px;height:38px;display:grid;place-items:center;border-radius:10px}.icon-button:hover{background:#f0f3ef}.search{margin-top:17px;height:42px;background:#f3f5f2;border-radius:8px;display:flex;align-items:center;padding:0 12px;gap:9px;color:#87918e}.search svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2}.search input{border:0;outline:0;background:transparent;width:100%;font-size:13px}.list{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:4px 10px 18px}.section-caption{padding:17px 12px 8px;font-size:10px;font-weight:700;letter-spacing:1px;color:#96a09b;text-transform:uppercase}.chat-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;cursor:pointer;transition:background .16s}.chat-item:hover{background:#f5f7f4}.chat-item.active{background:#eaf3ed}.avatar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;font-weight:700;color:#45675a;background:#d8e9dc;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.avatar.saved{background:var(--lime);color:#345044}.chat-meta{min-width:0;flex:1}.chat-line{display:flex;align-items:center;justify-content:space-between;gap:8px}.chat-name{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat-time{font-size:10px;color:#98a29d;white-space:nowrap}.chat-preview{font-size:12px;color:#84908b;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.empty-list{padding:24px 13px;color:var(--muted);font-size:13px;line-height:1.55}
         .content{display:flex;flex-direction:column;min-width:0;min-height:0;position:relative;background-color:#fcfcfa;background-image:radial-gradient(#d6ded6 0.7px,transparent 0.7px);background-size:21px 21px}.topbar{height:72px;flex:0 0 72px;background:#ffffffed;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 26px;gap:13px;z-index:1}.topbar .avatar{width:40px;height:40px}.top-title{font-weight:700;font-size:14px}.top-subtitle{font-size:11px;color:#87938d;margin-top:3px}.top-actions{margin-left:auto;display:flex;gap:5px}.messages{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:28px clamp(18px,6vw,88px);display:flex;flex-direction:column;gap:11px}.day-label{align-self:center;background:#ffffffd9;border-radius:20px;padding:7px 13px;color:#89958f;font-size:11px;margin:3px 0 14px}.bubble{max-width:min(72%,540px);align-self:flex-start;padding:10px 13px;background:white;border:1px solid #edf0eb;border-radius:5px 14px 14px 14px;box-shadow:0 3px 10px #34443c08;line-height:1.48;font-size:14px;overflow-wrap:anywhere;animation:pop .2s both}.bubble.mine{align-self:flex-end;background:#dff0e5;border-color:#d5e9db;border-radius:14px 5px 14px 14px}.bubble time{display:block;text-align:right;font-size:10px;color:#84918a;margin-top:5px}.bubble img,.bubble video{max-width:100%;max-height:320px;border-radius:8px;display:block}.bubble audio{max-width:100%;height:36px}.bubble video.note{width:190px;height:190px;object-fit:cover;border-radius:50%}.bubble a{color:var(--green-deep)}.composer{flex:0 0 auto;padding:14px 24px 20px;background:#fff;border-top:1px solid var(--line);display:flex;gap:9px;align-items:flex-end}.compose-box{flex:1;min-height:46px;border:1px solid #e8ebe6;background:#fafbf9;border-radius:12px;display:flex;align-items:flex-end;padding:5px 8px}.compose-box textarea{width:100%;max-height:130px;min-height:34px;resize:none;border:0;outline:0;background:transparent;padding:8px 7px;font-size:14px;line-height:1.4}.compose-box textarea::placeholder{color:#9aa49f}.send-button{background:var(--green);color:#214c3c;border:0;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;transition:.2s}.send-button:hover{background:#8fc7ac;transform:translateY(-2px)}.send-button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.attach-input{display:none}.typing-status{font-size:12px;color:var(--green-deep);height:15px}
@@ -96,7 +96,7 @@
         @media(prefers-reduced-motion:reduce){.text-preview-bubble{animation:none!important}}
     </style>
     <style>
-        .bubble{font-size:var(--message-font-size,14px);border-radius:3px var(--message-bubble-radius,16px) var(--message-bubble-radius,16px) var(--message-bubble-radius,16px);transition:font-size .18s ease,border-radius .18s ease,background-color .32s,color .32s}
+        .bubble{font-size:var(--message-font-size,14px);font-weight:var(--message-font-weight,400);border-radius:3px var(--message-bubble-radius,16px) var(--message-bubble-radius,16px) var(--message-bubble-radius,16px);transition:font-size .18s ease,border-radius .18s ease,background-color .32s,color .32s}
         .bubble.mine{border-radius:var(--message-bubble-radius,16px) 3px var(--message-bubble-radius,16px) var(--message-bubble-radius,16px)}
         .bubble-footer{display:flex;align-items:center;justify-content:flex-end;gap:7px;margin-top:5px;min-height:13px}.bubble-footer time{display:block;margin:0;font-size:10px;color:#84918a}.read-receipt{display:inline-flex;align-items:center;color:#82928a;font-size:12px;font-weight:700;line-height:1;white-space:nowrap}.read-receipt.is-read{color:#3c9b78;animation:receipt-pop .35s cubic-bezier(.18,.8,.25,1) both}.read-receipt.is-saved{color:#3c9b78;animation:receipt-pop .45s cubic-bezier(.18,.8,.25,1) both}
         .reaction-tray{position:relative;display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-top:7px}.reaction-pill,.reaction-trigger,.emoji-choice{min-width:31px;height:27px;display:inline-flex;align-items:center;justify-content:center;gap:4px;border:1px solid #dfe9e1;border-radius:99px;background:#f8fcf8;color:var(--ink);padding:0 8px;font-size:13px;transition:transform .18s,background .18s,border-color .18s,box-shadow .18s}.reaction-pill:hover,.reaction-trigger:hover,.emoji-choice:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 5px 13px #315a381b}.reaction-pill.selected{background:#e5f4e8;border-color:#83bb92;box-shadow:0 0 0 2px #83bb9222;animation:reaction-pop .28s cubic-bezier(.18,.8,.25,1)}.reaction-pill span{font-size:10px;font-weight:700;color:var(--green-deep)}.reaction-trigger{opacity:.66}.reaction-trigger span{font-size:10px}.emoji-picker{position:absolute;z-index:3;left:0;bottom:34px;display:flex;gap:5px;padding:7px;border:1px solid var(--line);border-radius:12px;background:var(--white);box-shadow:0 10px 28px #24372b20;animation:panel-arrive .18s both}.emoji-choice{width:32px;height:32px;padding:0;border:0;background:transparent;font-size:17px}.bot-message{border-color:#dcebdd;background:linear-gradient(145deg,#fff,#f5fbf5)}body[data-theme="night"] .reaction-pill,body[data-theme="night"] .reaction-trigger,body[data-theme="night"] .emoji-picker{background:#243637;border-color:#405152;color:#e5eeea}body[data-theme="night"] .reaction-pill.selected{background:#365747;border-color:#74a98b}body[data-theme="night"] .emoji-choice:hover{background:#365747}body[data-theme="night"] .bot-message{background:linear-gradient(145deg,#293a3b,#263936);border-color:#405a4d}
@@ -193,18 +193,34 @@
         <h1 id="loginTitle">Ваши люди<br>на связи.</h1>
         <p id="loginCopy" class="login-sub">Войдите по номеру телефона. Мы отправим одноразовый код для подтверждения.</p>
         <div id="setupNotice" class="notice hidden"></div>
-        <div id="phoneStep">
-            <label class="field-label" for="phoneInput">Номер телефона</label>
-            <div class="phone-entry"><span id="phoneCountry" class="phone-country" aria-live="polite"><span>🌐</span><span class="phone-country-copy"><span id="phoneCountryCode" class="phone-country-code">КОД</span><span id="phoneCountryName" class="phone-country-name">Страна</span></span></span><input id="phoneInput" class="text-field" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 123-45-67" aria-label="Номер телефона"></div>
-            <div id="recaptcha-container" class="recaptcha"></div>
-            <button id="sendCode" class="primary wide" type="button">Получить код</button>
+        <div class="login-badges" aria-label="Плюсы Speen">
+            <span class="login-badge">🔒 private</span>
+            <span class="login-badge">⚡ instant</span>
+            <span class="login-badge">✨ polished</span>
         </div>
-        <div id="codeStep" class="hidden">
-            <label class="field-label" for="codeInput">Код из SMS</label>
-            <div class="otp-row"><input id="codeInput" class="text-field" inputmode="numeric" autocomplete="one-time-code" placeholder="123456"><button id="verifyCode" class="primary" type="button">Войти</button></div>
-            <button id="backToPhone" class="link-button" type="button">Изменить номер</button>
+        <div class="form-shell">
+            <div id="phoneStep">
+                <label class="field-label" for="phoneInput">Номер телефона</label>
+                <div class="phone-entry"><span id="phoneCountry" class="phone-country" aria-live="polite"><span>🌐</span><span class="phone-country-copy"><span id="phoneCountryCode" class="phone-country-code">КОД</span><span id="phoneCountryName" class="phone-country-name">Страна</span></span></span><input id="phoneInput" class="text-field" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 123-45-67" aria-label="Номер телефона"></div>
+                <div id="recaptcha-container" class="recaptcha"></div>
+                <button id="sendCode" class="primary wide" type="button">Получить код</button>
+            </div>
+            <div id="codeStep" class="hidden">
+                <label class="field-label" for="codeInput">Код из SMS</label>
+                <div class="otp-row"><input id="codeInput" class="text-field" inputmode="numeric" autocomplete="one-time-code" placeholder="123456"><button id="verifyCode" class="primary" type="button">Войти</button></div>
+                <button id="backToPhone" class="link-button" type="button">Изменить номер</button>
+            </div>
         </div>
         <div id="authError" class="error" role="alert" aria-live="assertive" aria-atomic="true"></div>
+        <div id="authSuccessOverlay" class="auth-success-overlay" aria-live="polite" aria-atomic="true">
+            <div class="auth-success-card">
+                <div class="auth-success-icon">✓</div>
+                <div class="auth-success-copy">
+                    <strong>Добро пожаловать</strong>
+                    <span>Подключаем вас к чату…</span>
+                </div>
+            </div>
+        </div>
         <p class="hint">Номер используется только для входа. Мы не показываем его другим пользователям.</p>
     </section>
 </main>
@@ -234,11 +250,6 @@
         <div id="blockedNotice" class="blocked-notice hidden" role="status"></div>
         <form id="composer" class="composer">
             <div id="replyPreview" class="reply-preview hidden" aria-live="polite"><span class="reply-preview-mark"></span><span class="reply-preview-copy"><strong id="replyPreviewTitle">Ответ</strong><span id="replyPreviewText"></span></span><button class="reply-preview-close" id="cancelReply" type="button" aria-label="Отменить ответ">×</button></div>
-            <input id="photoInput" class="attach-input" type="file" accept="image/*,video/*">
-            <input id="cameraInput" class="attach-input" type="file" accept="image/*" capture="environment">
-            <button class="icon-button" id="attachButton" type="button" title="Фото или видео" aria-label="Фото или видео"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
-            <button class="icon-button" id="recordAudio" type="button" title="Записать голосовое" aria-label="Записать голосовое"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3m-4 0h8"/></svg></button>
-            <button class="icon-button" id="recordVideo" type="button" title="Записать видеосообщение" aria-label="Записать видеосообщение"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="m16 10 5-3v10l-5-3z"/></svg></button>
             <div class="compose-box"><textarea id="messageInput" rows="1" placeholder="Написать сообщение…" aria-label="Сообщение"></textarea></div>
             <button class="send-button" type="submit" title="Отправить" aria-label="Отправить"><svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4 20-7ZM22 2 11 13"/></svg></button>
         </form>
@@ -408,7 +419,7 @@ const firebaseConfig = {
     languageObserver.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['placeholder','title','aria-label']});
     applyInterfaceLanguage();
     const loginView = $('#loginView'), appView = $('#appView'), errorBox = $('#authError');
-    const appearanceDefaults = {theme:'light', wallpaper:'dots', animations:true, hidePreviews:false, fontSize:14, bubbleRadius:16};
+    const appearanceDefaults = {theme:'light', wallpaper:'dots', animations:true, hidePreviews:false, fontSize:14, fontWeight:400, bubbleRadius:16};
     let appearanceSettings = loadAppearanceSettings();
     applyAppearanceSettings();
     const callingCodes = new Map();
@@ -513,7 +524,7 @@ const firebaseConfig = {
             else{target.removeAttribute('role');target.removeAttribute('aria-label');}
         }
         if(activeRecipientUid)$('#headerTitle').textContent=contactDisplayName(profile,activeRecipientUid);
-        $('#headerSubtitle').textContent=activeChatKind==='saved'?'Личное пространство':activeChatKind==='bot'?'ИИ-бот · @speen_ai_bot':presenceLabel(profile,blockedByViewer);
+        $('#headerSubtitle').textContent=activeChatKind==='saved'?'Личное пространство':presenceLabel(profile,blockedByViewer);
         renderAvatar($('#headerAvatar'),blockedByViewer?{...profile,avatarUrl:'',blockedByViewer:true}:profile,activeChatKind==='saved');
         $('#blockUserButton').classList.toggle('hidden',activeChatKind!=='direct'||activeChatBlockedBy.includes(currentUser.uid));
         $('#unblockUserButton').classList.toggle('hidden',activeChatKind!=='direct'||!activeChatBlockedBy.includes(currentUser.uid));
@@ -579,7 +590,30 @@ const firebaseConfig = {
         }catch(error){console.error(error);toast('Не удалось очистить историю. Проверьте правила Firebase.');}
     }
     function showLogin() { document.body.classList.remove('app-active');document.documentElement.classList.remove('app-active');loginView.classList.remove('hidden'); appView.classList.add('hidden'); }
-    function showApp() { document.body.classList.add('app-active');document.documentElement.classList.add('app-active');loginView.classList.add('hidden'); appView.classList.remove('hidden'); }
+    function showApp() {
+        const transitionOverlay = $('#authSuccessOverlay');
+        document.body.classList.add('app-active');
+        document.documentElement.classList.add('app-active');
+        loginView.classList.add('hidden');
+        appView.classList.remove('hidden');
+        appView.classList.add('is-entering');
+        if (transitionOverlay) transitionOverlay.classList.remove('is-visible');
+        setTimeout(() => appView.classList.remove('is-entering'), 700);
+    }
+    function triggerAuthTransition() {
+        const loginPanel = document.querySelector('.login');
+        const loginWrap = document.getElementById('loginView');
+        const overlay = document.getElementById('authSuccessOverlay');
+        if (!loginPanel || !loginWrap || !overlay) return;
+        loginPanel.classList.add('is-transitioning');
+        loginWrap.classList.add('is-bridging');
+        overlay.classList.remove('hidden');
+        requestAnimationFrame(() => overlay.classList.add('is-visible'));
+        setTimeout(() => {
+            overlay.classList.remove('is-visible');
+            showApp();
+        }, 850);
+    }
     function clearActiveChatListeners() { stopLocalTyping();clearTimeout(typingExpiryTimer);activeRemoteTypingUntil=0;stopMessages?.();stopChatDocs?.();stopMessages=stopChatDocs=null;activeMessages=[];messageElements.clear();renderedChatId=null; }
     function clearListeners() { clearActiveChatListeners(); stopContacts?.(); stopChatList?.(); profileStops.forEach(stop=>stop());profileStops.clear();notificationStops.forEach(stop=>stop());notificationStops.clear();notifiedMessageIds.clear();contactUids.clear();contactLabels.clear();chatPeerUids.clear();contactProfiles.clear();clearInterval(lastSeenHeartbeat);clearInterval(presenceRefreshTimer);lastSeenHeartbeat=presenceRefreshTimer=null;lastSeenWriteAt=0;stopContacts=stopChatList=null;chatRows=[];contactRows=[]; }
     function makeChatId(first, second) { return [first, second].sort().join('__'); }
@@ -617,15 +651,25 @@ const firebaseConfig = {
             confirmation = await sendPhoneVerificationCode(phone);
             $('#phoneStep').classList.add('hidden'); $('#codeStep').classList.remove('hidden'); $('#loginTitle').innerHTML = 'Проверьте<br>сообщения.';
             $('#loginCopy').textContent = `Отправили код подтверждения на ${phone}.`; $('#codeInput').focus();
+            $('#codeInput').closest('.otp-row').classList.remove('code-ready');
         } catch (error) { console.error(error); setError(authErrorMessage(error)); verifier?.clear(); verifier = null; window.recaptchaVerifier = null; window.confirmationResult = null; }
         finally { sendButton.disabled = false; sendButton.classList.remove('is-loading'); }
     });
     $('#verifyCode').addEventListener('click', async () => {
-        setError(''); try { const result = window.confirmationResult || confirmation; if (!result) throw new Error('auth/no-code-request'); await result.confirm($('#codeInput').value.trim()); }
-        catch (error) { setError(authErrorMessage(error)); }
+        setError('');
+        const codeInput = $('#codeInput');
+        const otpRow = codeInput.closest('.otp-row');
+        codeInput.parentElement?.classList.add('code-ready');
+        try { const result = window.confirmationResult || confirmation; if (!result) throw new Error('auth/no-code-request'); await result.confirm(codeInput.value.trim()); triggerAuthTransition(); }
+        catch (error) { otpRow?.classList.remove('code-ready'); setError(authErrorMessage(error)); }
     });
-    $('#backToPhone').addEventListener('click', () => { $('#codeStep').classList.add('hidden'); $('#phoneStep').classList.remove('hidden'); $('#loginTitle').innerHTML='Ваши люди<br>на связи.'; $('#loginCopy').textContent='Войдите по номеру телефона. Мы отправим одноразовый код для подтверждения.'; setError(''); });
+    $('#backToPhone').addEventListener('click', () => { $('#codeStep').classList.add('hidden'); $('#phoneStep').classList.remove('hidden'); $('#loginTitle').innerHTML='Ваши люди<br>на связи.'; $('#loginCopy').textContent='Войдите по номеру телефона. Мы отправим одноразовый код для подтверждения.'; setError(''); $('#codeInput').value=''; $('#codeInput').closest('.otp-row')?.classList.remove('code-ready'); });
     $('#codeInput').addEventListener('keydown', event => { if (event.key === 'Enter') $('#verifyCode').click(); });
+    $('#codeInput').addEventListener('input', () => {
+        const value = $('#codeInput').value.trim();
+        const otpRow = $('#codeInput').closest('.otp-row');
+        otpRow?.classList.toggle('code-ready', value.length >= 4);
+    });
     function authErrorMessage(error) {
         const messages = {'auth/invalid-phone-number':'Проверьте номер телефона.','auth/invalid-verification-code':'Код неверный. Попробуйте ещё раз.','auth/code-expired':'Код истёк. Запросите новый.','auth/too-many-requests':'Слишком много попыток. Попробуйте позже.','auth/operation-not-allowed':'Включите вход по телефону в Firebase Authentication.'};
         return messages[error.code] || 'Не удалось подтвердить номер. Проверьте настройки Firebase и попробуйте снова.';
@@ -673,15 +717,12 @@ const firebaseConfig = {
         const savedId = `saved_${user.uid}`;
         const savedChatRef=doc(db,'chats',savedId);
         if(!(await getDoc(savedChatRef)).exists()) await setDoc(savedChatRef,{participants:[user.uid],kind:'saved',updatedAt:serverTimestamp(),lastMessage:''});
-        const botChatRef=doc(db,'chats',`bot_${user.uid}`);
-        if(!(await getDoc(botChatRef)).exists()) await setDoc(botChatRef,{participants:[user.uid],kind:'bot',updatedAt:serverTimestamp(),lastMessage:'Привет! Я Speen, твой ИИ-собеседник ✨'});
         let initialChat={id:savedId,kind:'saved',profile:{displayName:'Избранное'}};
         if(profileData.lastChatId&&profileData.lastChatId!==savedId){
             try{
                 const previousChat=await getDoc(doc(db,'chats',profileData.lastChatId)),data=previousChat.data();
                 if(previousChat.exists()&&data.participants?.includes(user.uid)){
-                    if(data.kind==='bot')initialChat={id:previousChat.id,kind:'bot',profile:{uid:'speen_ai_bot',displayName:'Speen AI',username:'speen_ai_bot',isBot:true}};
-                    else if(data.kind==='direct'){
+                    if(data.kind==='direct'){
                         const peerUid=data.participants.find(uid=>uid!==user.uid),peer=peerUid?await getDoc(doc(db,'users',peerUid)):null;
                         if(peer?.exists()){const profile={uid:peer.id,...peer.data()};contactProfiles.set(peer.id,profile);initialChat={id:previousChat.id,kind:'direct',profile};}
                     }
@@ -730,7 +771,6 @@ const firebaseConfig = {
                 if(snapshot.exists())contactProfiles.set(uid,{uid,...snapshot.data()});
                 else contactProfiles.delete(uid);
                 if(activeRecipientUid===uid){updateDirectHeader(contactProfiles.get(uid)||{});renderTypingIndicator();}
-                if(viewedProfileUid===uid)renderPublicUserProfile(uid);
                 refreshContactRows();
             },error=>console.error(error));
             profileStops.set(uid,stop);
@@ -816,7 +856,7 @@ const firebaseConfig = {
         const button=event.target.closest('button');if(button&&event.detail===0)playInterfaceButtonSound('press',button);
     });
     function syncNotificationListeners(){
-        const chats=chatRows.filter(chat=>chat.kind==='direct'||chat.kind==='bot'),wanted=new Set(chats.map(chat=>chat.id));
+        const chats=chatRows.filter(chat=>chat.kind==='direct'),wanted=new Set(chats.map(chat=>chat.id));
         for(const [chatId,stop] of notificationStops){if(wanted.has(chatId))continue;stop();notificationStops.delete(chatId);}
         for(const chat of chats){
             if(notificationStops.has(chat.id))continue;
@@ -840,10 +880,10 @@ const firebaseConfig = {
         playMessageSound('incoming');
         if(!notificationSettings.desktopNotifications||typeof Notification==='undefined'||Notification.permission!=='granted'||(!document.hidden&&document.hasFocus()))return;
         const peerUid=chat.kind==='direct'?chat.participants?.find(uid=>uid!==currentUser.uid):null;
-        const name=chat.kind==='bot'?'Speen AI':contactDisplayName(contactProfiles.get(peerUid),peerUid);
+        const name=contactDisplayName(contactProfiles.get(peerUid),peerUid);
         const body=appearanceSettings.hidePreviews?translatedText('Новое сообщение'):message.text||labelForType(message.type);
         const notification=new Notification(name,{body,tag:`speen-${chat.id}`,renotify:true});
-        notification.onclick=()=>{window.focus();if(chat.kind==='bot')openBotChat();else if(peerUid)openDirect(peerUid);notification.close();};
+        notification.onclick=()=>{window.focus();if(peerUid)openDirect(peerUid);notification.close();};
     }
     function updateUnreadBadges(){
         const total=chatRows.reduce((count,chat)=>chat.kind==='direct'?count+Math.max(0,Number(chat.unreadCounts?.[currentUser.uid])||0):count,0);
@@ -861,8 +901,6 @@ const firebaseConfig = {
         const archiveRow=archivedChats.length||showingArchive?`<div class="archive-row ${showingArchive?'active':''}" data-archive-toggle="true" tabindex="0" role="button"><span class="archive-icon">▤</span><span>${showingArchive?'Назад к чатам':'Архив'}</span><span class="archive-count">${archivedChats.length}</span></div>`:'';
         const savedChat = chatRows.find(chat => chat.kind === 'saved'), savedText = savedChat?.lastMessage || translatedText('Ваши заметки и файлы');
         const saved = `<div class="section-caption">Личное</div><div class="chat-item ${activeChatKind === 'saved' && currentView === 'saved' ? 'active':''}" data-saved="true"><div class="avatar saved"><svg viewBox="0 0 24 24"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.8L6 21V4.75Z"/></svg></div><div class="chat-meta"><div class="chat-line"><span class="chat-name">${translatedText('Избранное')}</span><span class="chat-time">${savedChat?.updatedAt?stamp(savedChat.updatedAt):'∞'}</span></div><div class="chat-preview">${escapeHtml(savedText)}</div></div></div>`;
-        const botChat=chatRows.find(chat=>chat.kind==='bot'),botPreview=botChat?.lastMessage||'Твой ИИ-собеседник';
-        const bot=`<div class="chat-item bot-chat-item ${activeChatKind==='bot'?'active':''}" data-bot="true"><div class="avatar bot-avatar">✦</div><div class="chat-meta"><div class="chat-line"><span class="chat-name">Speen AI</span><span class="bot-badge">БОТ</span></div><div class="chat-preview">${escapeHtml(botPreview)}</div></div></div>`;
         const shownChats=chatRows.filter(chat=>chat.kind==='direct'&&((chat.archivedBy||[]).includes(currentUser.uid)===showingArchive));
         shownChats.sort((first,second)=>{
             const firstPinned=(first.pinnedBy||[]).includes(currentUser.uid),secondPinned=(second.pinnedBy||[]).includes(currentUser.uid);
@@ -881,13 +919,12 @@ const firebaseConfig = {
         }).join('');
         const rows = contactRows.filter(contact => `${contact.contactLabel} ${contact.displayName} ${contact.username}`.toLocaleLowerCase('ru').includes(filter));
         const contacts = rows.map(contact => {const name=contactDisplayName(contact,contact.uid);const avatar=contact.isBlockedByViewer?'':contact.avatarUrl?`<img src="${escapeHtml(contact.avatarUrl)}" alt="">`:escapeHtml(initials(name));return `<div class="chat-item ${activeChatId === makeChatId(currentUser.uid,contact.uid) ? 'active':''}" data-uid="${escapeHtml(contact.uid)}"><div class="avatar ${contact.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</div><div class="chat-meta"><div class="chat-line"><span class="chat-name">${escapeHtml(name)}</span><span class="chat-time"></span></div><div class="chat-preview">${contact.username?'@'+escapeHtml(contact.username):translatedText('Новый контакт')}</div><span class="contact-status ${contact.isBlockedByViewer?'is-long':contact.availabilityMode==='online'?'is-online':''}">${presenceLabel(contact,contact.isBlockedByViewer)}</span></div></div>`;}).join('');
-        list.innerHTML = showingArchive?archiveRow+`<div class="section-caption">В архиве</div>`+(directChats||'<div class="empty-list">В архиве пока пусто.</div>'):archiveRow+saved+bot+(directChats?`<div class="section-caption">Чаты</div>${directChats}`:'')+`<div class="section-caption">Люди</div>`+(contacts||'<div class="empty-list">Контактов пока нет. Найдите человека по его имени пользователя.</div>');
+        list.innerHTML = showingArchive?archiveRow+`<div class="section-caption">В архиве</div>`+(directChats||'<div class="empty-list">В архиве пока пусто.</div>'):archiveRow+saved+(directChats?`<div class="section-caption">Чаты</div>${directChats}`:'')+`<div class="section-caption">Люди</div>`+(contacts||'<div class="empty-list">Контактов пока нет. Найдите человека по его имени пользователя.</div>');
         updateUnreadBadges();
         list.querySelector('[data-archive-toggle]')?.addEventListener('click',()=>{showingArchive=!showingArchive;renderSideList();});
         list.querySelectorAll('.chat-item').forEach(item=>{item.tabIndex=0;item.setAttribute('role','button');});
         list.querySelector('[data-archive-toggle]')?.addEventListener('click',()=>{showingArchive=!showingArchive;renderSideList();});
         list.querySelector('[data-saved]')?.addEventListener('click', () => { navigate('saved'); });
-        list.querySelector('[data-bot]')?.addEventListener('click',openBotChat);
         list.querySelectorAll('[data-uid]').forEach(item => item.addEventListener('click', () => openDirect(item.dataset.uid)));
     }
     async function openDirect(uid, profile) {
@@ -901,9 +938,6 @@ const firebaseConfig = {
         } catch(error) {
             console.error(error);toast('Не удалось открыть чат. Проверьте правила Firebase.');
         }
-    }
-    function openBotChat(){
-        openChat(`bot_${currentUser.uid}`,'bot',{uid:'speen_ai_bot',displayName:'Speen AI',username:'speen_ai_bot',isBot:true});
     }
     function openChat(chatId, kind, profile) {
         clearActiveChatListeners();
@@ -1028,7 +1062,7 @@ const firebaseConfig = {
         const receipt=isRead?`<span class="read-receipt ${activeChatKind==='saved'?'is-saved':'is-read'}" aria-label="${activeChatKind==='saved'?'Сохранено в избранном':'Прочитано'}"><svg viewBox="0 0 24 18" aria-hidden="true"><path class="receipt-check" d="m1.5 9.5 4.2 4.2L16 3.5"/><path class="receipt-check" d="m7.5 9.5 4.2 4.2L22 3.5"/></svg></span>`:'';
         const reply=message.replyTo?`<button class="reply-quote" type="button" data-reply-jump="${escapeHtml(message.replyTo.id)}"><strong>${message.replyTo.senderId===currentUser.uid?translatedText('Вы'):escapeHtml(contactDisplayName(contactProfiles.get(activeRecipientUid),activeRecipientUid))}</strong><span>${escapeHtml(message.replyTo.text||translatedText('Сообщение'))}</span></button>`:'';
         const template=document.createElement('template');
-        template.innerHTML=`<article class="bubble ${mine?'mine':''} ${message.senderId==='speen_ai_bot'?'bot-message':''}" data-message-id="${escapeHtml(message.id)}">${reply}${body}${message.caption?`<div>${escapeHtml(message.caption)}</div>`:''}<div class="bubble-footer"><time>${stamp(message.createdAt)}</time>${receipt}</div><button class="reply-trigger" type="button" data-reply-message="${escapeHtml(message.id)}" aria-label="Ответить на сообщение" title="Ответить"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h8a8 8 0 0 1 8 8v2"/></svg></button></article>`;
+        template.innerHTML=`<article class="bubble ${mine?'mine':''}" data-message-id="${escapeHtml(message.id)}">${reply}${body}${message.caption?`<div>${escapeHtml(message.caption)}</div>`:''}<div class="bubble-footer"><time>${stamp(message.createdAt)}</time>${receipt}</div><button class="reply-trigger" type="button" data-reply-message="${escapeHtml(message.id)}" aria-label="Ответить на сообщение" title="Ответить"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h8a8 8 0 0 1 8 8v2"/></svg></button></article>`;
         return template.content.firstElementChild;
     }
     function messageRenderSignature(message){
@@ -1098,59 +1132,17 @@ const firebaseConfig = {
         if(senderId===currentUser.uid)playMessageSound('outgoing');
         return messageRef;
     }
-    async function sendBotMessage(text){
-        if(!aiModel){toast('ИИ-помощник ещё не включён в Firebase Console → AI Logic.');return;}
-        if(!appCheckReady){toast('Добавьте публичный ключ reCAPTCHA Enterprise в appCheckSiteKey для защиты AI-запросов.');return;}
-        const history=activeMessages.filter(message=>message.type==='text'&&(message.senderId===currentUser.uid||message.senderId==='speen_ai_bot')).slice(-20).map(message=>({role:message.senderId===currentUser.uid?'user':'model',parts:[{text:message.text||''}]}));
-        updateLastSeen();
-        const userMessageRef=await persistMessage(activeReplyTarget?{type:'text',text,replyTo:{...activeReplyTarget}}:{type:'text',text},currentUser.uid);
-        clearReplyTarget();
-        const typing=document.createElement('div');typing.className='bot-typing';typing.setAttribute('aria-label','Speen AI печатает');typing.innerHTML='<span></span><span></span><span></span>';$('#messages').appendChild(typing);$('#messages').scrollTop=$('#messages').scrollHeight;
-        try{
-            const chat=aiModel.startChat({history});
-            const result=await chat.sendMessage(text);
-            const response=result.response||result;
-            const reply=typeof response.text==='function'?response.text():response.text;
-            if(!reply)throw new Error('AI returned an empty response');
-            await persistMessage({type:'text',text:reply},'speen_ai_bot');
-        }catch(error){console.error(error);await updateDoc(userMessageRef,{aiReplyError:true}).catch(()=>{});toast('Не удалось получить ответ ИИ. Проверьте AI Logic и App Check в Firebase Console.');}
-        finally{typing.remove();}
-    }
     function labelForType(type) { return translatedText(({image:'Фото',video:'Видеосообщение',audio:'Голосовое сообщение',file:'Файл'})[type]||'Сообщение'); }
-    $('#composer').addEventListener('submit', async event => { event.preventDefault(); const input=$('#messageInput'), text=input.value.trim(); if(!text)return; stopLocalTyping();input.value='';input.style.height='auto';if(activeChatKind==='bot')await sendBotMessage(text);else await sendMessage({type:'text',text}); });
+    $('#composer').addEventListener('submit', async event => { event.preventDefault(); const input=$('#messageInput'), text=input.value.trim(); if(!text)return; stopLocalTyping();input.value='';input.style.height='auto';await sendMessage({type:'text',text}); });
     $('#messageInput').addEventListener('keydown',event=>{if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();$('#composer').requestSubmit();}});
     $('#messageInput').addEventListener('input', event => { event.target.style.height='auto';event.target.style.height=`${Math.min(event.target.scrollHeight,130)}px`;trackLocalTyping(event.target.value); });
-    $('#attachButton').addEventListener('click',()=>$('#photoInput').click());
-    $('#photoInput').addEventListener('change', async event => { for(const file of event.target.files||[]) await uploadAndSend(file); event.target.value=''; });
-    async function uploadAndSend(file, typeOverride, videoNote=false) {
-        if(!file||file.size>100*1024*1024){toast('Файл должен занимать меньше 100 МБ.');return;}
-        try {
-            const path=`uploads/${activeChatId}/${currentUser.uid}/${Date.now()}-${file.name.replace(/[^\w.-]/g,'_')}`;
-            const result=await uploadBytes(ref(storage,path),file,{contentType:file.type}); const url=await getDownloadURL(result.ref);
-            const type=typeOverride||(file.type.startsWith('image/')?'image':file.type.startsWith('video/')?'video':'file');
-            await sendMessage({type,url,fileName:file.name,videoNote});
-        } catch(error){console.error(error);toast('Не удалось загрузить файл в облако.');}
-    }
-    $('#recordAudio').addEventListener('click',async()=>{
-        if(mediaRecorder?.state==='recording'&&mediaRecorder.kind==='audio'){mediaRecorder.stop();return;}
-        try { mediaStream=await navigator.mediaDevices.getUserMedia({audio:true}); audioChunks=[]; mediaRecorder=new MediaRecorder(mediaStream); mediaRecorder.kind='audio';
-            mediaRecorder.ondataavailable=event=>audioChunks.push(event.data); mediaRecorder.onstop=async()=>{const blob=new Blob(audioChunks,{type:mediaRecorder.mimeType||'audio/webm'});mediaStream.getTracks().forEach(track=>track.stop());$('#recordAudio').classList.remove('active');await uploadAndSend(new File([blob],`voice-${Date.now()}.webm`,{type:blob.type}),'audio');};
-            mediaRecorder.start();$('#recordAudio').classList.add('active');toast('Запись идёт. Нажмите микрофон ещё раз, чтобы отправить.');
-        } catch(error){toast('Разрешите доступ к микрофону в браузере.');}
-    });
-    $('#recordVideo').addEventListener('click',async()=>{
-        if(mediaRecorder?.state==='recording'&&mediaRecorder.kind==='video'){mediaRecorder.stop();return;}
-        try { mediaStream=await navigator.mediaDevices.getUserMedia({audio:true,video:{facingMode:'user',width:{ideal:480},height:{ideal:480}}}); videoChunks=[];mediaRecorder=new MediaRecorder(mediaStream);mediaRecorder.kind='video';
-            mediaRecorder.ondataavailable=event=>videoChunks.push(event.data);mediaRecorder.onstop=async()=>{const blob=new Blob(videoChunks,{type:mediaRecorder.mimeType||'video/webm'});mediaStream.getTracks().forEach(track=>track.stop());$('#recordVideo').classList.remove('active');await uploadAndSend(new File([blob],`video-note-${Date.now()}.webm`,{type:blob.type}),'video',true);};
-            mediaRecorder.start();$('#recordVideo').classList.add('active');toast('Видеозапись идёт. Нажмите камеру ещё раз, чтобы отправить.');
-        }catch(error){toast('Разрешите доступ к камере и микрофону.');}
-    });
 
     function updateNav(){document.querySelectorAll('[data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===currentView));}
     function navigate(view){
         if(view!=='user-profile'&&viewedProfileUid){viewedProfileUid=null;syncProfileListeners();}
         currentView=view;$('#userMenu').classList.add('hidden');updateNav();
         if(view==='saved'){openChat(`saved_${currentUser.uid}`,'saved',{displayName:'Избранное'});return;}
+        if(view==='user-profile'){toast('Профили других пользователей закрыты. Можно только писать им.'); return;}
         if(view==='chats'&&window.matchMedia('(max-width: 760px)').matches){clearActiveChatListeners();$('#sideTitle').textContent='Сообщения';renderSideList();$('#chatHeader').classList.add('hidden');$('#messages').classList.add('hidden');$('#composer').classList.add('hidden');$('#panelView').classList.add('hidden');appView.classList.add('mobile-chat-list');return;}
         appView.classList.remove('mobile-chat-list');
         clearActiveChatListeners();$('#sideTitle').textContent=view==='contacts'?'Контакты':view==='settings'?'Настройки':view==='profile'||view==='user-profile'?'Профиль':'Сообщения';renderSideList();
@@ -1158,7 +1150,7 @@ const firebaseConfig = {
         $('#chatHeader').classList.add('hidden');$('#messages').classList.add('hidden');$('#composer').classList.add('hidden');$('#blockedNotice').classList.add('hidden');$('#panelView').classList.remove('hidden');
         if(view==='contacts') renderContactsPanel(); else if(view==='profile') renderProfilePanel(); else if(view==='user-profile') renderPublicUserProfile(viewedProfileUid); else if(view==='settings') renderSettingsPanel();
     }
-    function openUserProfile(uid){if(!uid)return;if(uid===currentUser.uid){navigate('profile');return;}viewedProfileUid=uid;syncProfileListeners();navigate('user-profile');}
+    function openUserProfile(uid){if(!uid)return;if(uid===currentUser.uid){navigate('profile');return;}toast('Профили других пользователей закрыты. Можно только писать им.');}
     document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>navigate(button.dataset.view)));
     document.addEventListener('keydown',event=>{
         const target=event.target instanceof Element?event.target:null;
@@ -1183,7 +1175,7 @@ const firebaseConfig = {
                 event.preventDefault();const offset=event.key==='ArrowDown'?1:-1;items[(items.indexOf(chatItem)+offset+items.length)%items.length]?.focus();return;
             }
             if(event.key==='Enter'||event.key===' '){
-                event.preventDefault();if(chatItem.dataset.saved)navigate('saved');else if(chatItem.dataset.bot)openBotChat();else if(chatItem.dataset.uid)openDirect(chatItem.dataset.uid);return;
+                event.preventDefault();if(chatItem.dataset.saved)navigate('saved');else if(chatItem.dataset.uid)openDirect(chatItem.dataset.uid);return;
             }
         }
         const scrollArea=target.closest('#messages,#panelView,#sideList');
@@ -1225,6 +1217,7 @@ const firebaseConfig = {
             animations:typeof saved.animations==='boolean'?saved.animations:appearanceDefaults.animations,
             hidePreviews:typeof saved.hidePreviews==='boolean'?saved.hidePreviews:appearanceDefaults.hidePreviews,
             fontSize:Number.isFinite(saved.fontSize)&&saved.fontSize>=13&&saved.fontSize<=20?saved.fontSize:appearanceDefaults.fontSize,
+            fontWeight:Number.isFinite(saved.fontWeight)&&saved.fontWeight>=400&&saved.fontWeight<=800?saved.fontWeight:appearanceDefaults.fontWeight,
             bubbleRadius:Number.isFinite(saved.bubbleRadius)&&saved.bubbleRadius>=2&&saved.bubbleRadius<=28?saved.bubbleRadius:appearanceDefaults.bubbleRadius};
     }
     function loadAppearanceSettings(){try{return normalizeAppearanceSettings(JSON.parse(localStorage.getItem('speen-appearance')||'{}'));}catch{return {...appearanceDefaults};}}
@@ -1234,6 +1227,7 @@ const firebaseConfig = {
         document.body.dataset.motion=appearanceSettings.animations?'on':'off';
         document.body.classList.toggle('hide-message-preview',appearanceSettings.hidePreviews);
         document.body.style.setProperty('--message-font-size',`${appearanceSettings.fontSize}px`);
+        document.body.style.setProperty('--message-font-weight',`${appearanceSettings.fontWeight}`);
         document.body.style.setProperty('--message-bubble-radius',`${appearanceSettings.bubbleRadius}px`);
         const wallpaperColors={light:'#fcfcfa',mint:'#f4faf5',night:'#172426',sunset:'#fff7f1',lagoon:'#eff8f7',orchid:'#faf5fb'};
         document.body.style.setProperty('--wallpaper-color',appearanceSettings.wallpaperColor||wallpaperColors[appearanceSettings.theme]||wallpaperColors.light);
@@ -1426,9 +1420,6 @@ const firebaseConfig = {
     });
     $('#filterInput').addEventListener('input',renderSideList);
     $('#addContactTop').addEventListener('click',()=>navigate('contacts'));
-    $('#headerAvatar').addEventListener('click',()=>{if(activeRecipientUid)openUserProfile(activeRecipientUid);});
-    $('#headerTitle').addEventListener('click',()=>{if(activeRecipientUid)openUserProfile(activeRecipientUid);});
-    for(const target of [$('#headerAvatar'),$('#headerTitle')])target.addEventListener('keydown',event=>{if(activeRecipientUid&&(event.key==='Enter'||event.key===' ')){event.preventDefault();openUserProfile(activeRecipientUid);}});
     $('#headerMenuButton').addEventListener('click',()=>$('#userMenu').classList.toggle('hidden'));
     const renameContactButton=document.createElement('button');renameContactButton.id='renameContactButton';renameContactButton.type='button';renameContactButton.className='hidden';renameContactButton.textContent='Переименовать контакт';$('#userMenu').insertBefore(renameContactButton,$('#blockUserButton'));
     $('#userMenu').addEventListener('click',event=>{const view=event.target.dataset.view;if(view)navigate(view);});
@@ -1450,20 +1441,10 @@ const firebaseConfig = {
         $('#contactResults').addEventListener('click',event=>{const profile=event.target.closest('[data-profile]');if(profile){event.stopPropagation();openUserProfile(profile.dataset.profile);return;}const chat=event.target.closest('[data-chat]');if(chat){openDirect(chat.dataset.chat);return;}const row=event.target.closest('[data-open]');if(row)openDirect(row.dataset.open);});
         $('#contactResults').addEventListener('keydown',event=>{const row=event.target.closest('[data-open]');if(row&&(event.key==='Enter'||event.key===' ')){event.preventDefault();openDirect(row.dataset.open);}});
     }
-    function contactCard(person){const name=contactDisplayName(person,person.uid),avatar=person.isBlockedByViewer?'':person.avatarUrl?`<img src="${escapeHtml(person.avatarUrl)}" alt="">`:escapeHtml(initials(name));return `<div class="contact-row"><button class="contact-person" data-open="${escapeHtml(person.uid)}" type="button" aria-label="Открыть чат с ${escapeHtml(name)}"><span class="avatar ${person.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</span><span class="chat-meta"><span class="chat-name">${escapeHtml(name)}</span><span class="chat-preview">${person.username?'@'+escapeHtml(person.username):''}</span><span class="contact-status ${person.isBlockedByViewer?'is-long':person.availabilityMode==='online'?'is-online':''}">${presenceLabel(person,person.isBlockedByViewer)}</span></span></button><button class="icon-button contact-profile-action" data-profile="${escapeHtml(person.uid)}" type="button" aria-label="Профиль ${escapeHtml(name)}" title="Профиль"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4 20c.6-4 3.3-6 8-6s7.4 2 8 6"/></svg></button><button class="primary contact-open" data-chat="${escapeHtml(person.uid)}" type="button">Написать</button></div>`;}
+    function contactCard(person){const name=contactDisplayName(person,person.uid),avatar=person.isBlockedByViewer?'':person.avatarUrl?`<img src="${escapeHtml(person.avatarUrl)}" alt="">`:escapeHtml(initials(name));return `<div class="contact-row"><button class="contact-person" data-open="${escapeHtml(person.uid)}" type="button" aria-label="Открыть чат с ${escapeHtml(name)}"><span class="avatar ${person.isBlockedByViewer?'blocked-profile-avatar':''}">${avatar}</span><span class="chat-meta"><span class="chat-name">${escapeHtml(name)}</span><span class="chat-preview">${person.username?'@'+escapeHtml(person.username):''}</span><span class="contact-status ${person.isBlockedByViewer?'is-long':person.availabilityMode==='online'?'is-online':''}">${presenceLabel(person,person.isBlockedByViewer)}</span></span></button><button class="primary contact-open" data-chat="${escapeHtml(person.uid)}" type="button">Написать</button></div>`;}
     async function renderPublicUserProfile(uid){
         if(!uid)return;
-        try{
-            const [userSnapshot,directorySnapshot]=await Promise.all([getDoc(doc(db,'users',uid)),getDoc(doc(db,'userDirectory',uid))]);
-            if(!userSnapshot.exists()){toast('Профиль пользователя не найден.');navigate('contacts');return;}
-            const profile={uid,...userSnapshot.data()},directory=directorySnapshot.data()||{};
-            contactProfiles.set(uid,profile);
-            const name=profile.displayName||profile.username||translatedText('Пользователь'),username=profile.username?`@${profile.username}`:'',phone=profile.hidePhoneNumber===false?directory.phoneNumber||'':'',status=presenceLabel(profile);
-            const avatar=profile.avatarUrl?`<img src="${escapeHtml(profile.avatarUrl)}" alt="">`:escapeHtml(initials(name));
-            const details=[['Имя пользователя',username],['Телефон',phone],['День рождения',profile.birthday||'']].filter(([,value])=>value);
-            $('#panelView').innerHTML=`<div class="public-profile"><div class="public-profile-hero"><div class="public-profile-avatar">${avatar}</div><div class="public-profile-heading"><h2>${escapeHtml(name)}</h2>${username?`<p>${escapeHtml(username)}</p>`:''}<span class="public-profile-status ${status==='Статус скрыт'?'is-hidden':''}">${escapeHtml(status)}</span></div></div><div class="public-profile-actions"><button class="primary" type="button" data-profile-chat="${escapeHtml(uid)}">Написать</button></div><dl class="public-profile-details">${details.map(([label,value])=>`<div class="public-profile-detail"><dt>${label}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl></div>`;
-            $('#panelView').querySelector('[data-profile-chat]').addEventListener('click',()=>openDirect(uid,profile));
-        }catch(error){console.error(error);toast('Не удалось загрузить профиль.');}
+        toast('Профили других пользователей закрыты. Можно только писать им.');
     }
     async function findContact(event){
         event.preventDefault();
@@ -1558,7 +1539,7 @@ const firebaseConfig = {
     document.addEventListener('pointerdown',event=>{const picker=$('#birthdayPicker');if(picker&&!picker.contains(event.target)){const calendar=$('#birthdayCalendar');if(calendar&&!calendar.hidden){calendar.hidden=true;picker.classList.remove('is-open');$('#birthdayToggle')?.setAttribute('aria-expanded','false');}}});
     document.addEventListener('keydown',event=>{if(event.key==='Escape'){const picker=$('#birthdayPicker'),calendar=$('#birthdayCalendar');if(picker&&calendar&&!calendar.hidden){calendar.hidden=true;picker.classList.remove('is-open');$('#birthdayToggle')?.setAttribute('aria-expanded','false');$('#birthdayToggle')?.focus();}}});
     async function renderProfilePanel(){const snapshot=await getDoc(doc(db,'users',currentUser.uid));const profile=snapshot.data()||{};let pendingBirthday=null;try{pendingBirthday=localStorage.getItem(`speen-birthday-pending:${currentUser.uid}`);}catch{}if(pendingBirthday!==null)profile.birthday=pendingBirthday;currentProfile=profile;
-        $('#panelView').innerHTML=`<h2 class="panel-heading">Ваш профиль</h2><p class="panel-copy">Расскажите близким, как вас найти.</p><div class="profile-layout"><div class="profile-photo-wrap"><div id="profilePhoto" class="profile-photo">${profile.avatarUrl?`<img src="${escapeHtml(profile.avatarUrl)}" alt="Аватар">`:escapeHtml(initials(profile.displayName||'S'))}</div><button id="avatarButton" class="photo-edit" aria-label="Изменить аватар"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg></button><input id="avatarFile" class="attach-input" type="file" accept="image/*"></div><form id="profileForm" class="profile-form"><label class="field-label" for="displayName">Имя профиля</label><input id="displayName" class="text-field" maxlength="50" value="${escapeHtml(profile.displayName||'')}" placeholder="Как вас зовут?"><label class="field-label" for="username">Имя пользователя</label><input id="username" class="text-field" maxlength="24" value="${escapeHtml(profile.username||'')}" placeholder="например, anna_28"><label class="field-label" for="birthday">День рождения</label><input id="birthday" class="text-field" type="date" value="${escapeHtml(profile.birthday||'')}"><button class="primary" type="submit">Сохранить изменения</button><div class="profile-info">Номер виден только вам. Его нельзя изменить здесь.</div></form></div>`;
+        $('#panelView').innerHTML=`<h2 class="panel-heading">Ваш профиль</h2><p class="panel-copy">Расскажите близким, как вас найти.</p><div class="profile-layout"><form id="profileForm" class="profile-form"><label class="field-label" for="displayName">Имя профиля</label><input id="displayName" class="text-field" maxlength="50" value="${escapeHtml(profile.displayName||'')}" placeholder="Как вас зовут?"><label class="field-label" for="username">Имя пользователя</label><input id="username" class="text-field" maxlength="24" value="${escapeHtml(profile.username||'')}" placeholder="например, anna_28"><label class="field-label" for="birthday">День рождения</label><input id="birthday" class="text-field" type="date" value="${escapeHtml(profile.birthday||'')}"><button class="primary" type="submit">Сохранить изменения</button><div class="profile-info">Номер виден только вам. Его нельзя изменить здесь.</div></form></div>`;
         const birthdayInput=$('#birthday'),birthdayPicker=document.createElement('div');birthdayPicker.id='birthdayPicker';birthdayPicker.className='birthday-picker';
         birthdayPicker.innerHTML=`<div class="birthday-field"><span class="birthday-field-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18m-13 4h3m-3 4h7"/></svg></span><input id="birthdayDisplay" class="text-field" type="text" readonly placeholder="${escapeHtml(translatedText('Выберите дату рождения'))}" aria-label="${escapeHtml(translatedText('День рождения'))}" aria-expanded="false" aria-controls="birthdayCalendar"><button id="birthdayClear" class="birthday-trigger" type="button" aria-label="${escapeHtml(translatedText('Очистить дату рождения'))}" title="${escapeHtml(translatedText('Очистить дату рождения'))}"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button><button id="birthdayToggle" class="birthday-trigger" type="button" aria-label="${escapeHtml(translatedText('Выберите дату рождения'))}" title="${escapeHtml(translatedText('Выберите дату рождения'))}"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></button></div><input id="birthday" class="birthday-native" type="date" value="${escapeHtml(profile.birthday||'')}" tabindex="-1" aria-hidden="true"><div id="birthdayCalendar" class="birthday-calendar" role="dialog" aria-label="${escapeHtml(translatedText('День рождения'))}" hidden><div class="birthday-calendar-head"><select id="birthdayMonth" class="birthday-select" aria-label="${escapeHtml(translatedText('Месяц'))}"></select><select id="birthdayYear" class="birthday-select" aria-label="${escapeHtml(translatedText('Год'))}"></select><button id="birthdayClose" class="birthday-calendar-nav birthday-close" type="button" aria-label="${escapeHtml(translatedText('Закрыть'))}">×</button></div><div id="birthdayWeekdays" class="birthday-weekdays"></div><div id="birthdayDays" class="birthday-days"></div><div class="birthday-calendar-footer"><span id="birthdaySaveState" class="birthday-calendar-note" aria-live="polite"></span><button id="birthdayToday" class="birthday-today" type="button">${escapeHtml(translatedText('Сегодня'))}</button></div></div><span id="birthdaySaveStatus" class="birthday-save-state" role="status" aria-live="polite"></span>`;
         birthdayInput.replaceWith(birthdayPicker);
@@ -1569,14 +1550,12 @@ const firebaseConfig = {
         const logoutSection=document.createElement('div');logoutSection.className='profile-logout-wrap';
         logoutSection.innerHTML='<p class="profile-logout-note">Выход не удаляет аккаунт. Позже можно войти снова с тем же подтверждённым номером.</p><button id="profileSignOutButton" class="primary profile-logout" type="button">Выйти из аккаунта</button>';
         $('#panelView').appendChild(logoutSection);$('#profileSignOutButton').addEventListener('click',logout);
-        $('#avatarButton').addEventListener('click',()=>$('#avatarFile').click());$('#avatarFile').addEventListener('change',uploadAvatar);$('#profileForm').addEventListener('submit',saveProfile);
+        $('#profileForm').addEventListener('submit',saveProfile);
     }
-    async function uploadAvatar(event){const file=event.target.files?.[0];if(!file)return;try{const result=await uploadBytes(ref(storage,`avatars/${currentUser.uid}/${Date.now()}-${file.name}`),file);const url=await getDownloadURL(result.ref);await updateDoc(doc(db,'users',currentUser.uid),{avatarUrl:url});await syncUserDirectory({...((await getDoc(doc(db,'users',currentUser.uid))).data()||{}),avatarUrl:url}).catch(error=>console.error('User directory sync failed:',error));toast('Аватар обновлён.');await updateProfileBadge();renderProfilePanel();}catch(error){console.error(error);toast('Не удалось загрузить аватар.');}}
     async function saveProfile(event){event.preventDefault();const displayName=$('#displayName').value.trim(),raw=$('#username').value.trim().replace(/^@/,''),username=raw.toLocaleLowerCase('en'),birthday=$('#birthday').value;
         if(displayName.length<2){toast('Введите имя длиной хотя бы 2 символа.');return;}if(!/^[a-z0-9_]{4,24}$/.test(username)){toast('Имя пользователя: 4–24 символа, латиница, цифры или _.');return;}
         try{await runTransaction(db,async transaction=>{const profileRef=doc(db,'users',currentUser.uid),profileSnap=await transaction.get(profileRef),oldName=profileSnap.data()?.usernameLower;const usernameRef=doc(db,'usernames',username),nameSnap=await transaction.get(usernameRef);if(nameSnap.exists()&&nameSnap.data().uid!==currentUser.uid)throw new Error('Имя уже занято.');if(oldName&&oldName!==username)transaction.delete(doc(db,'usernames',oldName));transaction.set(usernameRef,{uid:currentUser.uid});transaction.set(profileRef,{displayName,username,usernameLower:username,birthday},{merge:true});});try{localStorage.setItem(`speen-birthday:${currentUser.uid}`,birthday);localStorage.removeItem(`speen-birthday-pending:${currentUser.uid}`);}catch{}await syncUserDirectory((await getDoc(doc(db,'users',currentUser.uid))).data()||{}).catch(error=>console.error('User directory sync failed:',error));toast('Профиль сохранён.');await updateProfileBadge();}
         catch(error){console.error(error);toast(error.message==='Имя уже занято.'?error.message:'Не удалось сохранить профиль. Проверьте правила Firebase.');}}
-    $('#cameraInput').addEventListener('change',event=>{const file=event.target.files?.[0];if(file)uploadAndSend(file);event.target.value='';});
     $('#filterInput').addEventListener('keydown',event=>{if(event.key==='Escape')event.target.value='';});
 </script>
 </body>
