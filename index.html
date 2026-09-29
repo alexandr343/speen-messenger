@@ -87,7 +87,31 @@
         .list,.messages{min-height:0;overscroll-behavior:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch}.list{flex:1}.side{min-height:0}
         .drag-scroll-enabled{cursor:grab}.drag-scroll-enabled.is-dragging{cursor:grabbing;user-select:none}.drag-scroll-enabled.is-dragging *{user-select:none}
         .profile-logout{width:100%;margin-top:24px;background:#fff0ed;color:#a83e32;border:1px solid #f1c7bf}.profile-logout:hover{background:#ffe2dc;box-shadow:0 8px 20px #b9574320}
-        .user-menu .menu-danger{color:#a83e32}.user-menu .menu-danger:hover{background:#fff0ed}
+        .user-menu{width:min(286px,calc(100vw - 24px));padding:9px;border:1px solid color-mix(in srgb,var(--green-deep) 13%,var(--line));border-radius:16px;background:color-mix(in srgb,var(--white) 94%,transparent);box-shadow:0 20px 54px #25382d24,0 2px 8px #25382d0b;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);transform-origin:top right}
+        .user-menu:not(.hidden){animation:chat-menu-in .24s cubic-bezier(.16,1,.3,1) both}
+        .user-menu button{position:relative;display:flex;align-items:center;gap:11px;min-height:44px;margin:2px 0;padding:7px 10px;border:1px solid transparent;border-radius:11px;background:transparent;color:var(--ink);font-size:12px;font-weight:650;transition:background .18s,border-color .18s,transform .18s,box-shadow .18s,color .18s}
+        .user-menu:not(.hidden) button:not(.hidden){animation:menu-item-in .28s cubic-bezier(.2,.8,.2,1) both}.user-menu:not(.hidden) button:nth-of-type(2){animation-delay:.025s}.user-menu:not(.hidden) button:nth-of-type(3){animation-delay:.05s}.user-menu:not(.hidden) button:nth-of-type(4){animation-delay:.075s}.user-menu:not(.hidden) button:nth-of-type(5){animation-delay:.1s}.user-menu:not(.hidden) button:nth-of-type(6){animation-delay:.125s}
+        .user-menu button:not(.hidden):hover{transform:translateX(2px);background:color-mix(in srgb,var(--menu-accent,#5b9d72) 10%,var(--white));border-color:color-mix(in srgb,var(--menu-accent,#5b9d72) 19%,transparent);box-shadow:0 5px 13px color-mix(in srgb,var(--menu-accent,#5b9d72) 10%,transparent)}
+        .user-menu button:active{transform:scale(.97)}.menu-action-icon{width:29px;height:29px;flex:0 0 29px;display:grid;place-items:center;border-radius:9px;background:color-mix(in srgb,var(--menu-accent,#5b9d72) 14%,var(--white));color:var(--menu-accent,#5b9d72);transition:transform .2s,background .2s}
+        .menu-action-icon svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+        .user-menu button:hover .menu-action-icon{transform:rotate(-7deg) scale(1.08)}
+        .user-menu button[data-menu-action="pin"],.user-menu button[data-menu-action="unpin"]{--menu-accent:#47845f}
+        .user-menu button[data-menu-action="mute"],.user-menu button[data-menu-action="unmute"]{--menu-accent:#4b7994}
+        .user-menu button[data-menu-action="archive"],.user-menu button[data-menu-action="restore"]{--menu-accent:#a87836}
+        .user-menu button[data-menu-action="edit"]{--menu-accent:#547ca2}
+        .user-menu button[data-menu-action="block"],.user-menu button[data-menu-action="unblock"],.user-menu button[data-menu-action="clear"],.user-menu button[data-menu-action="signout"]{--menu-accent:#b65346}
+        .user-menu button[data-menu-action="pin"]:is(:active,.is-activating) .menu-action-icon,.user-menu button[data-menu-action="unpin"]:is(:active,.is-activating) .menu-action-icon{animation:menu-pin .42s ease}
+        .user-menu button[data-menu-action="mute"]:is(:active,.is-activating) .menu-action-icon,.user-menu button[data-menu-action="unmute"]:is(:active,.is-activating) .menu-action-icon{animation:menu-mute .42s ease}
+        .user-menu button[data-menu-action="archive"]:is(:active,.is-activating) .menu-action-icon,.user-menu button[data-menu-action="restore"]:is(:active,.is-activating) .menu-action-icon{animation:menu-archive .42s ease}
+        .user-menu button[data-menu-action="clear"]:is(:active,.is-activating) .menu-action-icon,.user-menu button[data-menu-action="block"]:is(:active,.is-activating) .menu-action-icon,.user-menu button[data-menu-action="unblock"]:is(:active,.is-activating) .menu-action-icon{animation:menu-alert .42s ease}
+        .user-menu button[data-menu-action="signout"]{margin-top:7px;border-top-color:var(--line);border-radius:0 0 10px 10px;padding-top:10px;color:#a83e32}
+        #headerMenuButton[aria-expanded="true"]{background:#eaf3ed;color:var(--green-deep)}#headerMenuButton[aria-expanded="true"] svg{animation:menu-trigger-turn .32s cubic-bezier(.2,.8,.2,1) both}
+        body[data-theme="night"] .user-menu{background:color-mix(in srgb,#202f31 95%,transparent);border-color:#405152;box-shadow:0 20px 54px #08111180}
+        body[data-theme="night"] .user-menu button{color:#e5eeea}body[data-theme="night"] .user-menu button:not(.hidden):hover{background:color-mix(in srgb,var(--menu-accent,#5b9d72) 18%,#202f31)}
+        @keyframes chat-menu-in{from{opacity:0;transform:translateY(-8px) scale(.96);filter:blur(4px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}@keyframes menu-item-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes menu-trigger-turn{from{transform:rotate(-35deg) scale(.8)}to{transform:rotate(0) scale(1)}}
+        @keyframes menu-pin{35%{transform:rotate(-20deg) scale(1.18)}70%{transform:rotate(14deg) scale(.92)}}@keyframes menu-mute{35%{transform:scale(.82);box-shadow:0 0 0 5px color-mix(in srgb,var(--menu-accent) 18%,transparent)}70%{transform:scale(1.12)}}@keyframes menu-archive{35%{transform:translateY(3px) scale(.88)}70%{transform:translateY(-2px) scale(1.08)}}@keyframes menu-alert{25%{transform:translateX(-3px)}50%{transform:translateX(3px)}75%{transform:translateX(-2px)}}
+        @media(prefers-reduced-motion:reduce){.user-menu:not(.hidden),.user-menu:not(.hidden) button:not(.hidden),.user-menu button:active .menu-action-icon,.user-menu button.is-activating .menu-action-icon,#headerMenuButton[aria-expanded="true"] svg{animation:none!important}}
         .presence-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.presence-choice{min-height:42px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--white);color:var(--muted);font-size:12px;font-weight:600;transition:background .2s,border-color .2s,color .2s,transform .2s}.presence-choice:hover{transform:translateY(-1px)}.presence-choice[aria-pressed="true"]{background:#e8f4ec;border-color:#80b898;color:var(--green-deep);box-shadow:inset 0 0 0 1px #a9d6c145}body[data-theme="night"] .presence-choice{background:#202f31;color:#a9b8b2;border-color:#405152}body[data-theme="night"] .presence-choice[aria-pressed="true"]{background:#2b4540;color:#b5e0c6;border-color:#65977b}
         .text-preview{margin-top:16px;padding:18px;border:1px solid var(--line);border-radius:12px;background:var(--white);background-image:radial-gradient(#d6ded6 0.7px,transparent 0.7px);background-size:17px 17px}.text-preview-label{display:block;margin:0 0 12px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase}.text-preview-bubble{width:max-content;max-width:90%;padding:10px 13px;background:#fff;border:1px solid var(--line);border-radius:3px var(--message-bubble-radius,16px) var(--message-bubble-radius,16px) var(--message-bubble-radius,16px);font-size:var(--message-font-size,14px);line-height:1.45;transition:font-size .18s,border-radius .18s,background-color .25s,color .25s;animation:pop .35s both}.text-preview-bubble.mine{margin:9px 0 0 auto;background:#dff0e5;border-color:#d5e9db;border-radius:var(--message-bubble-radius,16px) 3px var(--message-bubble-radius,16px) var(--message-bubble-radius,16px)}body[data-theme="night"] .text-preview{background-color:#172426;background-image:radial-gradient(#405451 0.7px,transparent 0.7px)}body[data-theme="night"] .text-preview-bubble{background:#293a3b;color:#e5eeea;border-color:#405152}body[data-theme="night"] .text-preview-bubble.mine{background:#365d4b;border-color:#426d59}
         .presence-indicator{display:inline-flex;align-items:center;gap:6px}.presence-dot{width:7px;height:7px;border-radius:50%;background:#55aa78}.presence-indicator.is-recent .presence-dot{background:#a9b5ad}.presence-indicator.is-long .presence-dot{background:#bcc3bd}.blocked-profile-avatar{background:transparent!important;color:transparent!important}
@@ -243,8 +267,8 @@
     <section class="content" id="mainContent">
         <header class="topbar" id="chatHeader">
             <div id="headerAvatar" class="avatar saved"><svg viewBox="0 0 24 24"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.8L6 21V4.75Z"/></svg></div><div><div id="headerTitle" class="top-title">Избранное</div><div id="headerSubtitle" class="top-subtitle">Личное пространство</div></div>
-            <div class="top-actions"><button id="headerMenuButton" class="icon-button" aria-label="Меню" title="Меню"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></div>
-            <div id="userMenu" class="user-menu hidden"><button id="pinChatButton" class="hidden" type="button">Закрепить чат</button><button id="unpinChatButton" class="hidden" type="button">Открепить чат</button><button id="muteChatButton" class="hidden" type="button">Без звука</button><button id="unmuteChatButton" class="hidden" type="button">Включить звук</button><button id="archiveChatButton" class="hidden" type="button">В архив</button><button id="restoreChatButton" class="hidden" type="button">Вернуть из архива</button><button id="clearChatButton" class="hidden menu-danger" type="button">Очистить историю</button><button data-view="profile">Настроить профиль</button><button id="blockUserButton" class="hidden" type="button">Заблокировать пользователя</button><button id="unblockUserButton" class="hidden" type="button">Разблокировать пользователя</button><button id="signOutButton" class="menu-danger">Выйти из аккаунта</button></div>
+            <div class="top-actions"><button id="headerMenuButton" class="icon-button" aria-label="Меню" title="Меню" aria-haspopup="menu" aria-expanded="false" aria-controls="userMenu"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></div>
+            <div id="userMenu" class="user-menu hidden" role="menu" aria-label="Действия чата" aria-hidden="true"><button id="pinChatButton" class="hidden" data-menu-action="pin" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m16 3 5 5-4 1-4 4v5l-2 2-2-7-7-2 2-2h5l4-4 1-2Z"/></svg></span><span>Закрепить чат</span></button><button id="unpinChatButton" class="hidden" data-menu-action="unpin" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m16 3 5 5-4 1-4 4v5l-2 2-2-7-7-2 2-2h5l4-4 1-2Zm-9 14-4 4"/></svg></span><span>Открепить чат</span></button><button id="muteChatButton" class="hidden" data-menu-action="mute" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Zm5 4 5 6m0-6-5 6"/></svg></span><span>Без звука</span></button><button id="unmuteChatButton" class="hidden" data-menu-action="unmute" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Zm4 4a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12"/></svg></span><span>Включить звук</span></button><button id="archiveChatButton" class="hidden" data-menu-action="archive" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18v4H3zM5 8v12h14V8m-9 4h4"/></svg></span><span>В архив</span></button><button id="restoreChatButton" class="hidden" data-menu-action="restore" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h18v4H3zM5 8v12h14V8m-9 8 2-2 2 2m-2-2v5"/></svg></span><span>Вернуть из архива</span></button><button id="clearChatButton" class="hidden menu-danger" data-menu-action="clear" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16m-10 4v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"/></svg></span><span>Очистить историю</span></button><button data-view="profile" data-menu-action="edit" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg></span><span>Настроить профиль</span></button><button id="blockUserButton" class="hidden" data-menu-action="block" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></svg></span><span>Заблокировать пользователя</span></button><button id="unblockUserButton" class="hidden" data-menu-action="unblock" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg></span><span>Разблокировать пользователя</span></button><button id="signOutButton" data-menu-action="signout" type="button" role="menuitem"><span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5m5 5H3m9-9h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg></span><span>Выйти из аккаунта</span></button></div>
         </header>
         <div id="messages" class="messages" tabindex="0" role="region" aria-label="Переписка"><div class="blank-state"><div class="blank-icon">✦</div><strong>Это ваше место.</strong>Записывайте мысли и сохраняйте то, что важно.</div></div>
         <div id="blockedNotice" class="blocked-notice hidden" role="status"></div>
@@ -280,8 +304,23 @@
     body[data-theme="night"] .reply-quote{background:linear-gradient(105deg,#2d4540,#293a3b 78%);border-color:#405a4d;border-left-color:#83bf99;box-shadow:inset 0 1px #ffffff08}
     body[data-theme="night"] .reply-quote strong{color:#a8d8b6}
     body[data-theme="night"] .reply-quote span{color:#aabbb2}
-    @keyframes message-arrive{0%{opacity:0;transform:translate3d(0,12px,0) scale(.96);filter:blur(3px)}68%{opacity:1;transform:translate3d(0,-2px,0) scale(1.008);filter:blur(0)}100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
-    @media(prefers-reduced-motion:reduce){.bubble:not(.is-updating){animation:none!important}.reply-quote{transition:none}}
+    .brand-mark{position:relative;isolation:isolate;border:1px solid #ffffffa8;background:linear-gradient(145deg,#d3efc9 0%,#a9ddc2 48%,#8bcbb8 100%);box-shadow:0 8px 22px #538c7133,inset 0 1px #ffffffb0}
+    .brand-mark::before{content:"";position:absolute;inset:4px;border:1px solid #ffffff70;border-radius:11px;pointer-events:none}
+    .brand-mark svg{position:relative;z-index:1;filter:drop-shadow(0 1px 1px #ffffff70)}
+    .rail .brand-mark:hover svg{transform:rotate(8deg) scale(1.05);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+    #userMenu #clearChatButton,#userMenu #signOutButton,#userMenu>button[data-view="profile"]{display:none!important}
+    .compose-box{transition:border-color .2s,background-color .2s,box-shadow .24s,transform .24s}
+    .compose-box:focus-within{border-color:#91bda0;background:var(--white);box-shadow:0 0 0 4px #a9d6c124,0 8px 22px #315a380c;transform:translateY(-1px)}
+    .send-button{box-shadow:0 5px 13px #4e8c6826;transition:background .2s,transform .24s cubic-bezier(.2,.8,.2,1),box-shadow .24s}
+    .send-button:hover{background:#8fc7ac;transform:translateY(-2px);box-shadow:0 9px 19px #4e8c6838}
+    .send-button:active{transform:translateY(1px) scale(.92);box-shadow:0 2px 6px #4e8c6824}
+    .send-button svg{transition:transform .24s cubic-bezier(.2,.8,.2,1)}
+    .send-button:hover svg{transform:translate(2px,-2px)}
+    .bubble:not(.is-updating){animation:message-receive .52s cubic-bezier(.18,.8,.25,1) both}
+    .bubble.mine:not(.is-updating){animation-name:message-send}
+    @keyframes message-receive{0%{opacity:0;transform:translate3d(-13px,9px,0) scale(.94);filter:blur(3px)}68%{opacity:1;transform:translate3d(1px,-2px,0) scale(1.012);filter:blur(0)}100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+    @keyframes message-send{0%{opacity:0;transform:translate3d(15px,11px,0) scale(.92);filter:blur(3px)}64%{opacity:1;transform:translate3d(-1px,-2px,0) scale(1.018);filter:blur(0)}100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+    @media(prefers-reduced-motion:reduce){.bubble:not(.is-updating){animation:none!important}.reply-quote{transition:none}.send-button,.send-button svg,.compose-box{transition:none!important}}
 </style>
 
 <script type="module">
@@ -534,9 +573,18 @@ const firebaseConfig = {
         $('#blockedNotice').textContent=chatBlocked?(activeChatBlockedBy.includes(currentUser.uid)?'Вы заблокировали этого пользователя. Разблокируйте его, чтобы отправлять сообщения.':'Вы не можете отправлять сообщения этому пользователю.') : '';
         $('#composer').querySelectorAll('button,input,textarea').forEach(control=>control.disabled=chatBlocked);
     }
+    function setChatMenuOpen(open,restoreFocus=false){
+        const menu=$('#userMenu'),trigger=$('#headerMenuButton');
+        const shouldOpen=typeof open==='boolean'?open:menu.classList.contains('hidden');
+        menu.classList.toggle('hidden',!shouldOpen);
+        menu.setAttribute('aria-hidden',String(!shouldOpen));
+        trigger.setAttribute('aria-expanded',String(shouldOpen));
+        if(shouldOpen)menu.querySelector('button:not(.hidden)')?.focus({preventScroll:true});
+        else if(restoreFocus)trigger.focus({preventScroll:true});
+    }
     async function setChatBlocked(blocked){
         if(!activeChatId||activeChatKind!=='direct')return;
-        try{await updateDoc(doc(db,'chats',activeChatId),{blockedBy:blocked?arrayUnion(currentUser.uid):arrayRemove(currentUser.uid)});$('#userMenu').classList.add('hidden');toast(blocked?'Пользователь заблокирован.':'Блокировка снята.');}
+        try{await updateDoc(doc(db,'chats',activeChatId),{blockedBy:blocked?arrayUnion(currentUser.uid):arrayRemove(currentUser.uid)});setChatMenuOpen(false);toast(blocked?'Пользователь заблокирован.':'Блокировка снята.');}
         catch(error){console.error(error);toast('Не удалось изменить блокировку. Проверьте правила Firebase.');}
     }
     function updateChatMenuState(){
@@ -555,7 +603,7 @@ const firebaseConfig = {
         const actions={pin:['pinnedBy',true],unpin:['pinnedBy',false],mute:['mutedBy',true],unmute:['mutedBy',false],archive:['archivedBy',true],restore:['archivedBy',false]};
         const [field,enabled]=actions[action]||[];
         if(!field||!activeChatId||activeChatKind==='saved')return;
-        try{await updateDoc(doc(db,'chats',activeChatId),{[field]:enabled?arrayUnion(currentUser.uid):arrayRemove(currentUser.uid)});$('#userMenu').classList.add('hidden');toast(({pin:'Чат закреплён.',unpin:'Чат откреплён.',mute:'Чат без звука.',unmute:'Звук чата включён.',archive:'Чат перемещён в архив.',restore:'Чат возвращён из архива.'})[action]);}
+        try{await updateDoc(doc(db,'chats',activeChatId),{[field]:enabled?arrayUnion(currentUser.uid):arrayRemove(currentUser.uid)});setChatMenuOpen(false);toast(({pin:'Чат закреплён.',unpin:'Чат откреплён.',mute:'Чат без звука.',unmute:'Звук чата включён.',archive:'Чат перемещён в архив.',restore:'Чат возвращён из архива.'})[action]);}
         catch(error){console.error(error);toast('Не удалось изменить чат. Проверьте правила Firebase.');}
     }
     async function renameActiveContact(){
@@ -570,7 +618,7 @@ const firebaseConfig = {
             else if(previous||(await getDoc(contactRef)).data()?.label)await updateDoc(contactRef,{label:deleteField()});
             if(label)contactLabels.set(uid,label);else contactLabels.delete(uid);
             refreshContactRows();updateDirectHeader(profile);
-            $('#userMenu').classList.add('hidden');
+            setChatMenuOpen(false);
             toast(label?'Имя контакта сохранено.':'Персональное имя удалено.');
         }catch(error){console.error(error);toast('Не удалось сохранить имя контакта. Попробуйте ещё раз.');}
     }
@@ -586,7 +634,7 @@ const firebaseConfig = {
             const chat=chatRows.find(item=>item.id===activeChatId)||activeChatDocument;
             const unreadReset=Object.fromEntries((chat?.participants||[currentUser.uid]).map(uid=>[`unreadCounts.${uid}`,0]));
             await updateDoc(doc(db,'chats',activeChatId),{lastMessage:'',lastMessageType:'',lastMessageSenderId:'',updatedAt:serverTimestamp(),...unreadReset});
-            $('#userMenu').classList.add('hidden');toast('История чата очищена.');
+            setChatMenuOpen(false);toast('История чата очищена.');
         }catch(error){console.error(error);toast('Не удалось очистить историю. Проверьте правила Firebase.');}
     }
     function showLogin() { document.body.classList.remove('app-active');document.documentElement.classList.remove('app-active');loginView.classList.remove('hidden'); appView.classList.add('hidden'); }
@@ -1140,7 +1188,7 @@ const firebaseConfig = {
     function updateNav(){document.querySelectorAll('[data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===currentView));}
     function navigate(view){
         if(view!=='user-profile'&&viewedProfileUid){viewedProfileUid=null;syncProfileListeners();}
-        currentView=view;$('#userMenu').classList.add('hidden');updateNav();
+        currentView=view;setChatMenuOpen(false);updateNav();
         if(view==='saved'){openChat(`saved_${currentUser.uid}`,'saved',{displayName:'Избранное'});return;}
         if(view==='user-profile'){toast('Профили других пользователей закрыты. Можно только писать им.'); return;}
         if(view==='chats'&&window.matchMedia('(max-width: 760px)').matches){clearActiveChatListeners();$('#sideTitle').textContent='Сообщения';renderSideList();$('#chatHeader').classList.add('hidden');$('#messages').classList.add('hidden');$('#composer').classList.add('hidden');$('#panelView').classList.add('hidden');appView.classList.add('mobile-chat-list');return;}
@@ -1420,9 +1468,12 @@ const firebaseConfig = {
     });
     $('#filterInput').addEventListener('input',renderSideList);
     $('#addContactTop').addEventListener('click',()=>navigate('contacts'));
-    $('#headerMenuButton').addEventListener('click',()=>$('#userMenu').classList.toggle('hidden'));
-    const renameContactButton=document.createElement('button');renameContactButton.id='renameContactButton';renameContactButton.type='button';renameContactButton.className='hidden';renameContactButton.textContent='Переименовать контакт';$('#userMenu').insertBefore(renameContactButton,$('#blockUserButton'));
-    $('#userMenu').addEventListener('click',event=>{const view=event.target.dataset.view;if(view)navigate(view);});
+    $('#headerMenuButton').addEventListener('click',()=>setChatMenuOpen());
+    document.addEventListener('pointerdown',event=>{if(!$('#userMenu').classList.contains('hidden')&&!event.target.closest('#userMenu,#headerMenuButton'))setChatMenuOpen(false);});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!$('#userMenu').classList.contains('hidden'))setChatMenuOpen(false,true);});
+    $('#userMenu').addEventListener('pointerdown',event=>{const action=event.target.closest('[data-menu-action]');if(!action)return;action.classList.remove('is-activating');void action.offsetWidth;action.classList.add('is-activating');setTimeout(()=>action.classList.remove('is-activating'),480);});
+    const renameContactButton=document.createElement('button');renameContactButton.id='renameContactButton';renameContactButton.type='button';renameContactButton.className='hidden';renameContactButton.dataset.menuAction='edit';renameContactButton.setAttribute('role','menuitem');renameContactButton.innerHTML='<span class="menu-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg></span><span>Переименовать контакт</span>';$('#userMenu').insertBefore(renameContactButton,$('#blockUserButton'));
+    $('#userMenu').addEventListener('click',event=>{const view=event.target.closest('[data-view]')?.dataset.view;if(view){setChatMenuOpen(false);navigate(view);}});
     renameContactButton.addEventListener('click',renameActiveContact);
     $('#pinChatButton').addEventListener('click',()=>setChatPreference('pin'));
     $('#unpinChatButton').addEventListener('click',()=>setChatPreference('unpin'));
