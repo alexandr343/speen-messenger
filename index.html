@@ -10,7 +10,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#f3f6f2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Speen">
     <title>Speen Messenger — сообщения</title>
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -200,6 +206,7 @@
         @keyframes birthday-calendar-in{from{opacity:0;transform:translateY(-7px) scale(.97);filter:blur(3px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}@keyframes birthday-day-in{from{opacity:0;transform:translateY(3px) scale(.85)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes birthday-saving{to{opacity:.4;transform:scale(.78)}}
         @media(max-width:520px){.birthday-calendar{left:50%;transform-origin:top center;translate:-50% 0}.birthday-calendar-head{grid-template-columns:minmax(0,1fr) 88px 34px}.birthday-day{font-size:11px}}
         @media(prefers-reduced-motion:reduce){.birthday-calendar,.birthday-day,.birthday-save-state.is-saving::before{animation:none!important}.birthday-day,.birthday-trigger,.birthday-calendar-nav{transition:none!important}}
+        .install-app-button{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:44px;margin:0 0 18px;padding:9px 14px;border:1px solid #a7cdb4;border-radius:10px;background:linear-gradient(110deg,#edf7ed,#f5f8eb);color:#356b58;font-size:13px;font-weight:700;transition:transform .2s,box-shadow .2s,background .2s}.install-app-button:hover{transform:translateY(-2px);box-shadow:0 8px 20px #356b5820}.install-app-button:active{transform:scale(.98)}.install-app-button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.install-app-help{margin:-9px 0 17px;padding:10px 12px;border-radius:9px;background:#eef5ef;color:#526b5c;font-size:12px;line-height:1.5}.install-app-button.hidden,.install-app-help.hidden{display:none!important}body[data-theme="night"] .install-app-button{background:#293e39;border-color:#456754;color:#b5e0c6}body[data-theme="night"] .install-app-help{background:#293a3b;color:#c1d2c8}
     </style>
 </head>
 <body>
@@ -222,6 +229,8 @@
             <span class="login-badge">⚡ instant</span>
             <span class="login-badge">✨ polished</span>
         </div>
+        <button id="installAppButton" class="install-app-button hidden" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M5 17v3h14v-3"/></svg><span>Установить приложение</span></button>
+        <p id="installAppHelp" class="install-app-help hidden" role="status" aria-live="polite"></p>
         <div class="form-shell">
             <div id="phoneStep">
                 <label class="field-label" for="phoneInput">Номер телефона</label>
@@ -1644,6 +1653,3 @@ const firebaseConfig = {
         try{await runTransaction(db,async transaction=>{const profileRef=doc(db,'users',currentUser.uid),profileSnap=await transaction.get(profileRef),oldName=profileSnap.data()?.usernameLower;const usernameRef=doc(db,'usernames',username),nameSnap=await transaction.get(usernameRef);if(nameSnap.exists()&&nameSnap.data().uid!==currentUser.uid)throw new Error('Имя уже занято.');if(oldName&&oldName!==username)transaction.delete(doc(db,'usernames',oldName));transaction.set(usernameRef,{uid:currentUser.uid});transaction.set(profileRef,{displayName,username,usernameLower:username,birthday},{merge:true});});try{localStorage.setItem(`speen-birthday:${currentUser.uid}`,birthday);localStorage.removeItem(`speen-birthday-pending:${currentUser.uid}`);}catch{}await syncUserDirectory((await getDoc(doc(db,'users',currentUser.uid))).data()||{}).catch(error=>console.error('User directory sync failed:',error));toast('Профиль сохранён.');await updateProfileBadge();}
         catch(error){console.error(error);toast(error.message==='Имя уже занято.'?error.message:'Не удалось сохранить профиль. Проверьте правила Firebase.');}}
     $('#filterInput').addEventListener('keydown',event=>{if(event.key==='Escape')event.target.value='';});
-</script>
-</body>
-</html>
